@@ -1019,4 +1019,12 @@ textarea:focus {
   .contact-form {
     padding: 18px;
   }
+  #main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
 }
