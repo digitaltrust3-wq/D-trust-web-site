@@ -356,13 +356,31 @@ form?.addEventListener("submit", (event) => {
       console.log("[EmailJS] Resultado notificación:", notifOk ? "OK" : "FALLÓ");
       console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLÓ");
 
+      // Guardar en localStorage como respaldo
+      const submission = {
+        id: crypto.randomUUID?.() || Date.now().toString(),
+        timestamp: new Date().toISOString(),
+        name,
+        email,
+        phone: phone || "No proporcionado",
+        service,
+        budget,
+        message,
+        notificacionOk: notifOk,
+        bienvenidaOk: bienvenidaOk
+      };
+      const history = JSON.parse(localStorage.getItem("dtrust-submissions") || "[]");
+      history.unshift(submission);
+      localStorage.setItem("dtrust-submissions", JSON.stringify(history));
+      console.log("[D-trust] Solicitud guardada en localStorage.", submission);
+
       if (notifOk && bienvenidaOk) {
         formStatus.textContent = "Solicitud enviada. Correo recibido y confirmación enviada al cliente.";
         form.reset();
       } else if (notifOk) {
-        formStatus.textContent = "Solicitud recibida, pero el correo de confirmación al cliente falló.";
+        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmación al cliente falló.";
       } else if (bienvenidaOk) {
-        formStatus.textContent = "Confirmación enviada al cliente, pero tu correo de notificación falló.";
+        formStatus.textContent = "Confirmación enviada al cliente, pero tu correo de notificación falló. Datos guardados.";
       } else {
         const msg1 = notificacion?.err?.text || notificacion?.err?.message || "";
         const msg2 = bienvenida?.err?.text || bienvenida?.err?.message || "";
