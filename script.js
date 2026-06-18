@@ -241,7 +241,7 @@ const setLanguage = (language) => {
   });
 
   document.documentElement.lang = language;
-  localStorage.setItem("dtrust-language", language);
+  localStorage.setItem("digital-trust-language", language);
 };
 
 if (year) {
@@ -252,7 +252,7 @@ languageButtons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.langSwitch));
 });
 
-setLanguage(localStorage.getItem("dtrust-language") || "es");
+setLanguage(localStorage.getItem("digital-trust-language") || "es");
 
 const updateHeader = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 8);
@@ -369,10 +369,11 @@ form?.addEventListener("submit", (event) => {
         notificacionOk: notifOk,
         bienvenidaOk: bienvenidaOk
       };
-      const history = JSON.parse(localStorage.getItem("dtrust-submissions") || "[]");
+      const history = JSON.parse(localStorage.getItem("digital-trust-submissions") || "[]");
       history.unshift(submission);
-      localStorage.setItem("dtrust-submissions", JSON.stringify(history));
+      localStorage.setItem("digital-trust-submissions", JSON.stringify(history));
       console.log("[Digital Trust Solutions] Solicitud guardada en localStorage.", submission);
+      saveInteractionToDatabase("contact_form", submission);
 
       if (notifOk && bienvenidaOk) {
         formStatus.textContent = "Solicitud enviada. Correo recibido y confirmación enviada al cliente.";
@@ -410,15 +411,154 @@ if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
   console.warn("[EmailJS] SDK no cargado o Public Key no configurada.");
 }
 
+// ===== DATABASE CONFIG =====
+// Para guardar conversaciones reales en una base central, crea una tabla en Supabase
+// con el archivo database-schema.sql y reemplaza estos valores.
+const SUPABASE_URL = "";
+const SUPABASE_ANON_KEY = "";
+const SUPABASE_TABLE = "chat_interactions";
+
+const saveInteractionToDatabase = async (eventType, payload) => {
+  const record = {
+    event_type: eventType,
+    payload,
+    page: window.location.href,
+    user_agent: navigator.userAgent,
+    language: document.documentElement.lang,
+    created_at: new Date().toISOString()
+  };
+
+  const localHistory = JSON.parse(localStorage.getItem("digital-trust-interactions") || "[]");
+  localHistory.unshift(record);
+  localStorage.setItem("digital-trust-interactions", JSON.stringify(localHistory.slice(0, 250)));
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify(record)
+    });
+  } catch (error) {
+    console.warn("[Database] No se pudo guardar en Supabase. Quedo respaldo local.", error);
+  }
+};
+
 // ===== CHATBOT =====
 const chatbotToggle = document.querySelector("[data-chatbot-toggle]");
 const chatbotPanel = document.querySelector("[data-chatbot-panel]");
 const chatbotMessages = document.querySelector("[data-chatbot-messages]");
 const chatbotInput = document.querySelector("[data-chatbot-input]");
 const chatbotSend = document.querySelector("[data-chatbot-send]");
-const STORAGE_KEY = "dtrust-chatbot-messages";
+const STORAGE_KEY = "digital-trust-chatbot-messages";
+const CHAT_SESSION_KEY = "digital-trust-chat-session-id";
+const LEAD_EMAIL_COOLDOWN_KEY = "digital-trust-last-lead-email";
+const CHAT_LEAD_TEMPLATE_ID = EMAILJS_TEMPLATE_ID;
 
 const isEnglish = () => document.documentElement.lang === "en";
+const getSessionId = () => {
+  let sessionId = localStorage.getItem(CHAT_SESSION_KEY);
+  if (!sessionId) {
+    sessionId = crypto.randomUUID?.() || `session-${Date.now()}`;
+    localStorage.setItem(CHAT_SESSION_KEY, sessionId);
+  }
+  return sessionId;
+};
+
+const leadSignals = /cotiz|cotizar|presupuesto|precio|valor|contratar|comprar|interesad|quiero|necesito|llamar|contact|agenda|propuesta|quote|budget|price|hire|buy|interested|need|call|proposal/i;
+
+const serviceLabels = {
+  website: { es: "Pagina web / landing page", en: "Website / landing page" },
+  ecommerce: { es: "Tienda online / e-commerce", en: "Online store / e-commerce" },
+  software: { es: "Software a medida / plataforma", en: "Custom software / platform" },
+  automation: { es: "Automatizacion de procesos", en: "Process automation" },
+  support: { es: "Soporte, hosting o mantenimiento", en: "Support, hosting or maintenance" },
+  integrations: { es: "Integraciones / APIs", en: "Integrations / APIs" },
+  security: { es: "Seguridad, backups o monitoreo", en: "Security, backups or monitoring" },
+  consulting: { es: "Consultoria tecnica", en: "Technical consulting" }
+};
+
+const getChatTranscript = () => {
+  if (!chatbotMessages) return [];
+  return [...chatbotMessages.children].map((element) => ({
+    sender: element.classList.contains("bot") ? "bot" : "cliente",
+    text: element.textContent.replace(/\s+/g, " ").trim()
+  }));
+};
+
+const transcriptToText = (messages) =>
+  messages.map((message) => `${message.sender.toUpperCase()}: ${message.text}`).join("\n");
+
+const extractLeadInfo = (messages = []) => {
+  const text = messages.map((message) => message.text || message.html || "").join("\n");
+  const lower = text.toLowerCase();
+  const lang = isEnglish() ? "en" : "es";
+  const services = [];
+
+  if (/web|pagina|landing|sitio|website|site/.test(lower)) services.push("website");
+  if (/tienda|ecommerce|e-commerce|shopify|woocommerce|catalogo|store|shop|sell|vender/.test(lower)) services.push("ecommerce");
+  if (/software|app|sistema|plataforma|crm|dashboard|panel|inventario|reservas|system|platform|inventory|booking/.test(lower)) services.push("software");
+  if (/automat|automatic|workflow|proceso|process|ia|ai/.test(lower)) services.push("automation");
+  if (/api|integraci|webhook|erp|crm|integration/.test(lower)) services.push("integrations");
+  if (/soporte|mantenimiento|hosting|support|maintenance/.test(lower)) services.push("support");
+  if (/seguridad|ssl|backup|proteccion|security|secure|monitor/.test(lower)) services.push("security");
+  if (/consult|asesor|diagnostico|strategy|audit/.test(lower)) services.push("consulting");
+
+  return {
+    services: [...new Set(services)].map((service) => serviceLabels[service][lang]),
+    email: text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || "",
+    phone: text.match(/(?:\+?\d[\s-]?){8,16}/)?.[0]?.trim() || "",
+    budget: text.match(/(?:\$|usd|cop|dolares|dólares)\s?[\d.,]+|[\d.,]+\s?(?:usd|cop|dolares|dólares)/i)?.[0] || "",
+    urgency: /urgente|esta semana|hoy|rapido|rápido|asap|urgent|this week|today|soon/.test(lower)
+      ? (lang === "en" ? "High" : "Alta")
+      : (lang === "en" ? "Normal" : "Normal"),
+    rawText: text
+  };
+};
+
+const notifyLeadByEmail = async (reason = "Cliente interesado desde el chatbot") => {
+  const messages = getChatTranscript();
+  const lead = extractLeadInfo(messages);
+  const now = Date.now();
+  const lastEmail = Number(localStorage.getItem(LEAD_EMAIL_COOLDOWN_KEY) || 0);
+
+  if (now - lastEmail < 120000) return;
+  if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) return;
+
+  const emailData = {
+    name: lead.email || lead.phone || "Cliente desde chatbot",
+    email: lead.email || "No proporcionado",
+    phone: lead.phone || "No proporcionado",
+    service: lead.services.join(", ") || "Pendiente por definir",
+    budget: lead.budget || "No indicado",
+    message: `Motivo: ${reason}\nUrgencia: ${lead.urgency}\n\nResumen de solicitud:\n${lead.rawText}\n\nTranscripcion:\n${transcriptToText(messages)}`
+  };
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, CHAT_LEAD_TEMPLATE_ID, emailData);
+    localStorage.setItem(LEAD_EMAIL_COOLDOWN_KEY, String(now));
+    await saveInteractionToDatabase("chat_lead_email_sent", {
+      session_id: getSessionId(),
+      reason,
+      lead,
+      transcript: messages
+    });
+  } catch (error) {
+    await saveInteractionToDatabase("chat_lead_email_failed", {
+      session_id: getSessionId(),
+      reason,
+      lead,
+      error: error?.text || error?.message || String(error),
+      transcript: messages
+    });
+  }
+};
 
 const botReplies = {
   price: {
@@ -449,6 +589,22 @@ const botReplies = {
     es: "Ofrecemos soporte mensual desde $149/mes con backups, actualizaciones, monitoreo y mejoras. ¿Ya tienes un sitio que necesita mantenimiento?",
     en: "We offer monthly support from $149/month with backups, updates, monitoring, and improvements. Do you already have a site that needs maintenance?"
   },
+  automation: {
+    es: "Podemos automatizar formularios, reportes, WhatsApp, correos, hojas de calculo, CRM, recordatorios y procesos internos. ¿Que tarea repites todos los dias y quieres eliminar?",
+    en: "We can automate forms, reports, WhatsApp, email, spreadsheets, CRM, reminders, and internal processes. What repetitive task do you want to eliminate?"
+  },
+  integrations: {
+    es: "Integramos APIs, pasarelas de pago, CRM, ERP, Google Sheets, webhooks y servicios externos. ¿Que herramientas necesitas conectar?",
+    en: "We integrate APIs, payment gateways, CRM, ERP, Google Sheets, webhooks, and external services. Which tools do you need to connect?"
+  },
+  security: {
+    es: "Trabajamos con SSL, backups, control de accesos, actualizaciones, monitoreo y buenas practicas de seguridad. Si manejas datos de clientes, podemos revisar el nivel de proteccion necesario.",
+    en: "We work with SSL, backups, access control, updates, monitoring, and security best practices. If you handle customer data, we can review the protection level needed."
+  },
+  lead: {
+    es: "Perfecto, suena como una oportunidad real. Para prepararte una propuesta dime por favor: 1) servicio que necesitas, 2) presupuesto aproximado, 3) fecha ideal, y 4) tu correo o WhatsApp.",
+    en: "Great, this sounds like a real opportunity. To prepare a proposal, please share: 1) service needed, 2) approximate budget, 3) ideal date, and 4) your email or WhatsApp."
+  },
   hello: {
     es: "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En que puedo ayudarte hoy?",
     en: "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?"
@@ -462,12 +618,16 @@ const botReplies = {
 const getBotResponse = (text) => {
   const lower = text.toLowerCase();
   const lang = isEnglish() ? "en" : "es";
+  if (leadSignals.test(lower)) return botReplies.lead[lang];
   if (/precio|costo|cotiz|plan|price|cost|quote/.test(lower)) return botReplies.price[lang];
   if (/tiempo|tarda|cuando|dias|time|long|take|week/.test(lower)) return botReplies.time[lang];
   if (/whatsapp|chat|hablar|humano|persona|human|talk|person/.test(lower)) return botReplies.human[lang];
   if (/web|pagina|sitio|website|page|site/.test(lower)) return botReplies.web[lang];
   if (/software|app|sistema|plataforma|application|system|platform/.test(lower)) return botReplies.software[lang];
   if (/ecommerce|tienda|vender|online|store|shop|sell/.test(lower)) return botReplies.ecommerce[lang];
+  if (/automat|workflow|proceso|ia|ai|automatic/.test(lower)) return botReplies.automation[lang];
+  if (/api|integraci|webhook|erp|crm|integration/.test(lower)) return botReplies.integrations[lang];
+  if (/seguridad|ssl|backup|proteccion|security|secure/.test(lower)) return botReplies.security[lang];
   if (/soporte|mantenimiento|hosting|support|maintenance/.test(lower)) return botReplies.support[lang];
   if (/hola|buenos|hey|hello|hi/.test(lower)) return botReplies.hello[lang];
   return botReplies.fallback[lang];
@@ -480,6 +640,11 @@ const addMessage = (html, sender) => {
   chatbotMessages?.appendChild(bubble);
   chatbotMessages?.scrollTo({ top: chatbotMessages.scrollHeight, behavior: "smooth" });
   saveMessages();
+  saveInteractionToDatabase("chat_message", {
+    session_id: getSessionId(),
+    sender,
+    message: bubble.textContent.replace(/\s+/g, " ").trim()
+  });
 };
 
 const saveMessages = () => {
@@ -509,7 +674,11 @@ const showWelcome = () => {
   const text = lang === "en"
     ? "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
     : "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
-  addMessage(text, "bot");
+  addMessage(`${text}<div class="quick-replies">
+    <button type="button" data-quick-reply="${lang === "en" ? "I need a website quote" : "Necesito cotizar una pagina web"}">${lang === "en" ? "Website quote" : "Cotizar web"}</button>
+    <button type="button" data-quick-reply="${lang === "en" ? "I need custom software" : "Necesito software a medida"}">${lang === "en" ? "Custom software" : "Software a medida"}</button>
+    <button type="button" data-quick-reply="${lang === "en" ? "I want to automate a process" : "Quiero automatizar un proceso"}">${lang === "en" ? "Automation" : "Automatizacion"}</button>
+  </div>`, "bot");
 };
 
 const handleChatbotSend = () => {
@@ -519,6 +688,10 @@ const handleChatbotSend = () => {
   chatbotInput.value = "";
   setTimeout(() => {
     addMessage(getBotResponse(text), "bot");
+    const lead = extractLeadInfo(getChatTranscript());
+    if (leadSignals.test(text) || lead.email || lead.phone) {
+      notifyLeadByEmail("Cliente interesado desde el chatbot");
+    }
   }, 500 + Math.random() * 400);
 };
 
@@ -532,6 +705,13 @@ chatbotToggle?.addEventListener("click", () => {
 chatbotSend?.addEventListener("click", handleChatbotSend);
 chatbotInput?.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleChatbotSend();
+});
+
+chatbotMessages?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-quick-reply]");
+  if (!button || !chatbotInput) return;
+  chatbotInput.value = button.dataset.quickReply;
+  handleChatbotSend();
 });
 
 // ===== REVEAL ON SCROLL =====
