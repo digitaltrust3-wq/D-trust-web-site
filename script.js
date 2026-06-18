@@ -354,7 +354,7 @@ form?.addEventListener("submit", (event) => {
 const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
 const EMAILJS_SERVICE_ID = "service_2anafbr";
 const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificación a D-trust
-const EMAILJS_WELCOME_TEMPLATE_ID = "template_x8m5dos"; // Plantilla B: bienvenida al cliente (REEMPLAZAR)
+const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienvenida al cliente (REEMPLAZAR)
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
