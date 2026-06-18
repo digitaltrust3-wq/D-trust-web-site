@@ -303,7 +303,7 @@ form?.addEventListener("submit", (event) => {
     return;
   }
 
-  formStatus.textContent = "Enviando...";
+  formStatus.textContent = "Enviando correos...";
 
   const emailData = {
     name: name,
@@ -314,31 +314,60 @@ form?.addEventListener("submit", (event) => {
     message: message
   };
 
-  console.log("[EmailJS] Enviando notificación a D-trust...", emailData);
+  const welcomeData = {
+    to_email: email,
+    name: name,
+    service: service,
+    phone: phone || "No proporcionado"
+  };
 
-  // 1. Email de notificación a D-trust
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
+  console.log("[EmailJS] Datos notificación:", emailData);
+  console.log("[EmailJS] Datos bienvenida:", welcomeData);
+
+  // Envío SIMULTÁNEO de ambos correos (más rápido y robusto)
+  const notificationPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
     .then((res) => {
       console.log("[EmailJS] Notificación OK:", res.status, res.text);
-
-      // 2. Email de bienvenida al cliente
-      console.log("[EmailJS] Enviando bienvenida a:", email);
-      return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, {
-        to_email: email,
-        name: name,
-        service: service,
-        phone: phone || "No proporcionado"
-      });
-    })
-    .then((res) => {
-      console.log("[EmailJS] Bienvenida OK:", res.status, res.text);
-      formStatus.textContent = "Solicitud enviada. Revisa tu correo para confirmación.";
-      form.reset();
+      return { type: "notificacion", status: "ok", res };
     })
     .catch((err) => {
-      console.error("[EmailJS] Error completo:", err);
-      const msg = err?.text || err?.message || "Error desconocido";
-      formStatus.textContent = `Error al enviar: ${msg}. Intenta de nuevo o escribenos por WhatsApp.`;
+      console.error("[EmailJS] Notificación ERROR:", err);
+      return { type: "notificacion", status: "error", err };
+    });
+
+  const welcomePromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, welcomeData)
+    .then((res) => {
+      console.log("[EmailJS] Bienvenida OK:", res.status, res.text);
+      return { type: "bienvenida", status: "ok", res };
+    })
+    .catch((err) => {
+      console.error("[EmailJS] Bienvenida ERROR:", err);
+      return { type: "bienvenida", status: "error", err };
+    });
+
+  Promise.all([notificationPromise, welcomePromise])
+    .then((results) => {
+      const notificacion = results.find(r => r.type === "notificacion");
+      const bienvenida = results.find(r => r.type === "bienvenida");
+
+      const notifOk = notificacion?.status === "ok";
+      const bienvenidaOk = bienvenida?.status === "ok";
+
+      console.log("[EmailJS] Resultado notificación:", notifOk ? "OK" : "FALLÓ");
+      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLÓ");
+
+      if (notifOk && bienvenidaOk) {
+        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmación enviada al cliente.";
+        form.reset();
+      } else if (notifOk) {
+        formStatus.textContent = "Solicitud recibida, pero el correo de confirmación al cliente falló.";
+      } else if (bienvenidaOk) {
+        formStatus.textContent = "Confirmación enviada al cliente, pero tu correo de notificación falló.";
+      } else {
+        const msg1 = notificacion?.err?.text || notificacion?.err?.message || "";
+        const msg2 = bienvenida?.err?.text || bienvenida?.err?.message || "";
+        formStatus.textContent = `Error: ${msg1 || msg2}. Intenta de nuevo o escribenos por WhatsApp.`;
+      }
     });
 });
 
