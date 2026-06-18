@@ -534,27 +534,30 @@ chatbotInput?.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleChatbotSend();
 });
 
-/ ===== REVEAL ON SCROLL =====/
+// ===== REVEAL ON SCROLL =====
 
 const reveals = document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  },
-  {
-    threshold: 0.15
-  }
-);
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (entries, currentObserver) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          currentObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      rootMargin: "0px 0px -80px",
+      threshold: 0.12
+    }
+  );
 
-reveals.forEach((el) => observer.observe(el));
+  reveals.forEach((el) => observer.observe(el));
+} else {
+  reveals.forEach((el) => el.classList.add("visible"));
+}
 
 loadMessages();
-console.log("SCRIPT CARGADO");
-console.log(document.querySelectorAll(".reveal"));
-
 
