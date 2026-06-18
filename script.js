@@ -279,6 +279,7 @@ form?.addEventListener("submit", (event) => {
   const formData = new FormData(form);
   const name = formData.get("name");
   const email = formData.get("email");
+  const phone = formData.get("phone");
   const service = formData.get("service");
   const budget = formData.get("budget");
   const message = formData.get("message");
@@ -286,16 +287,27 @@ form?.addEventListener("submit", (event) => {
 
   if (notifyWhatsapp) {
     const waText = encodeURIComponent(
-      `Hola, soy ${name}. Vi su sitio web y quiero solicitar información sobre ${service}. Presupuesto: ${budget}. ${message}`
+      `Hola, soy ${name}. Vi su sitio web y quiero solicitar información sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Telefono: ${phone}` : ""}`
     );
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
 
   if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY && !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
     formStatus.textContent = "Enviando...";
+
+    // 1. Email de notificación a D-trust (con datos del formulario)
     emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
       .then(() => {
-        formStatus.textContent = "Solicitud enviada correctamente.";
+        // 2. Email de bienvenida al cliente (usa el email del formulario como destinatario)
+        return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, {
+          to_email: email,
+          name: name,
+          service: service,
+          phone: phone || "No proporcionado"
+        });
+      })
+      .then(() => {
+        formStatus.textContent = "Solicitud enviada. Revisa tu correo para confirmación.";
         form.reset();
       })
       .catch((err) => {
@@ -305,7 +317,7 @@ form?.addEventListener("submit", (event) => {
   } else {
     const subject = encodeURIComponent(`Solicitud de ${service}`);
     const body = encodeURIComponent(
-      `Nombre: ${name}\nEmail: ${email}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
+      `Nombre: ${name}\nEmail: ${email}\nTelefono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
     );
     formStatus.textContent = "Listo. Se abrira tu correo para enviar la solicitud.";
     window.location.href = `mailto:contacto@d-trust.com?subject=${subject}&body=${body}`;
@@ -313,10 +325,16 @@ form?.addEventListener("submit", (event) => {
 });
 
 // ===== EMAILJS CONFIG =====
-// Reemplaza estos valores con los de tu cuenta EmailJS (https://emailjs.com)
+// 1. Ve a https://emailjs.com, crea cuenta gratis y conecta tu correo (Email Service).
+// 2. Crea DOS plantillas en EmailJS:
+//    - Plantilla A (notificación a ti): recibe {{name}}, {{email}}, {{phone}}, {{service}}, {{budget}}, {{message}}
+//    - Plantilla B (bienvenida al cliente): recibe {{to_email}}, {{name}}, {{service}}, {{phone}}
+// 3. En la plantilla B, configura "To Email" como {{to_email}} (el email del cliente).
+// 4. Copia los IDs de servicio y plantillas aquí abajo.
 const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
 const EMAILJS_SERVICE_ID = "service_2anafbr";
-const EMAILJS_TEMPLATE_ID = "template_x8m5dos";
+const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla de notificación a D-trust
+const EMAILJS_WELCOME_TEMPLATE_ID = "template_bienvenida"; // Plantilla de bienvenida al cliente
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY && !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
