@@ -534,8 +534,6 @@ chatbotInput?.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleChatbotSend();
 });
 
-loadMessages();
-
 / ===== REVEAL ON SCROLL =====/
 
 const reveals = document.querySelectorAll(".reveal");
@@ -554,3 +552,9 @@ const observer = new IntersectionObserver(
 );
 
 reveals.forEach((el) => observer.observe(el));
+
+loadMessages();
+console.log("SCRIPT CARGADO");
+console.log(document.querySelectorAll(".reveal"));
+
+
