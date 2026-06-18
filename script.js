@@ -299,7 +299,7 @@ form?.addEventListener("submit", (event) => {
       `Nombre: ${name}\nEmail: ${email}\nTelefono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
     );
     formStatus.textContent = "Listo. Se abrira tu correo para enviar la solicitud.";
-    window.location.href = `mailto:contacto@d-trust.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:contacto@digitaltrustsolutions.com?subject=${subject}&body=${body}`;
     return;
   }
 
@@ -372,7 +372,7 @@ form?.addEventListener("submit", (event) => {
       const history = JSON.parse(localStorage.getItem("dtrust-submissions") || "[]");
       history.unshift(submission);
       localStorage.setItem("dtrust-submissions", JSON.stringify(history));
-      console.log("[D-trust] Solicitud guardada en localStorage.", submission);
+      console.log("[Digital Trust Solutions] Solicitud guardada en localStorage.", submission);
 
       if (notifOk && bienvenidaOk) {
         formStatus.textContent = "Solicitud enviada. Correo recibido y confirmación enviada al cliente.";
@@ -400,7 +400,7 @@ form?.addEventListener("submit", (event) => {
 // 4. Copia los IDs exactos de tu dashboard aquí abajo.
 const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
 const EMAILJS_SERVICE_ID = "service_2anafbr";
-const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificación a D-trust
+const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificación a Digital Trust Solutions
 const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienvenida al cliente (REEMPLAZAR)
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
@@ -450,8 +450,8 @@ const botReplies = {
     en: "We offer monthly support from $149/month with backups, updates, monitoring, and improvements. Do you already have a site that needs maintenance?"
   },
   hello: {
-    es: "¡Hola! Soy el asistente de D-trust. ¿En que puedo ayudarte hoy?",
-    en: "Hello! I'm the D-trust assistant. How can I help you today?"
+    es: "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En que puedo ayudarte hoy?",
+    en: "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?"
   },
   fallback: {
     es: "Entiendo. Puedo ayudarte con informacion sobre desarrollo web, software a medida, tiendas online, automatizacion y soporte. ¿Que necesitas?",
@@ -507,8 +507,8 @@ const showWelcome = () => {
   if (!chatbotMessages || chatbotMessages.children.length > 0) return;
   const lang = isEnglish() ? "en" : "es";
   const text = lang === "en"
-    ? "Hello! I'm the D-trust assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
-    : "¡Hola! Soy el asistente de D-trust. ¿En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
+    ? "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
+    : "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
   addMessage(text, "bot");
 };
 
@@ -560,4 +560,3 @@ if ("IntersectionObserver" in window) {
 }
 
 loadMessages();
-

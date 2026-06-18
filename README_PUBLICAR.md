@@ -1,11 +1,11 @@
-# Publicar la pagina D-trust
+# Publicar la pagina Digital Trust Solutions
 
 Para que cualquier persona pueda abrir la pagina desde otro ordenador, debes subir estos archivos a un servicio de hosting:
 
 - `index.html`
 - `styles.css`
 - `script.js`
-- `d-trust-logo.png`
+- `digital-trust-solutions-logo.png`
 - `hero-technology.png`
 
 ## Opcion rapida: Netlify
@@ -14,7 +14,7 @@ Para que cualquier persona pueda abrir la pagina desde otro ordenador, debes sub
 2. Crea una cuenta o inicia sesion.
 3. Ve a `Sites`.
 4. Elige `Add new site` > `Deploy manually`.
-5. Arrastra la carpeta `outputs` completa o el archivo `d-trust-site.zip`.
+5. Arrastra la carpeta `outputs` completa o el archivo `digital-trust-solutions-site.zip`.
 6. Netlify te dara una URL publica como:
 
 ```text
@@ -34,4 +34,3 @@ Si tienes un dominio, puedes conectarlo desde Netlify, Vercel, GitHub Pages o tu
 5. Asegurate de que `index.html` quede directamente dentro de `public_html`.
 
 Cuando el dominio apunte al hosting, la pagina abrira desde cualquier ordenador.
-
