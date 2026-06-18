@@ -63,9 +63,9 @@ a {
   justify-content: space-between;
   gap: 28px;
   width: min(1520px, calc(100% - 12px));
-  min-height: 315px;
+  min-height: 120px;
   margin: 0 auto;
-  padding: 34px 8px 34px 64px;
+  padding: 10px 8px 10px 20px;
   border: 1px solid var(--line);
   border-radius: 0 0 var(--radius) var(--radius);
   background: rgba(8, 17, 31, 0.82);
@@ -191,7 +191,7 @@ a {
   align-items: center;
   gap: 52px;
   width: min(1200px, calc(100% - 32px));
-  min-height: calc(100vh - 315px);
+  min-height: calc(100vh - 120px);
   margin: 0 auto;
   padding: 64px 0 52px;
 }
@@ -916,8 +916,8 @@ textarea:focus {
 
 @media (max-width: 1050px) {
   .site-header {
-    min-height: 220px;
-    padding: 24px;
+     min-height: 140px;
+  padding: 16px 30px;
   }
 
   .brand {
@@ -925,7 +925,8 @@ textarea:focus {
   }
 
   .brand-logo {
-    width: min(470px, 44vw);
+    width: 420px;
+  transition: all 0.4s ease;
   }
 
   .main-nav {
