@@ -1052,6 +1052,8 @@ textarea:focus {
   }
 }
 
+/* WhatsApp Opt-in  */
+
 .whatsapp-optin {
   display: flex;
   align-items: center;
@@ -1073,6 +1075,8 @@ textarea:focus {
   font-size: 0.82rem;
   line-height: 1.5;
 }
+
+/* Chatbot  */
 
 .chatbot-widget {
   position: fixed;
@@ -1256,4 +1260,16 @@ textarea:focus {
 .whatsapp-float svg {
   width: 28px;
   height: 28px;
+}
+/* Animaciones de aparición al hacer scroll */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
