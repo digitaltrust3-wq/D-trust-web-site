@@ -282,12 +282,168 @@ form?.addEventListener("submit", (event) => {
   const service = formData.get("service");
   const budget = formData.get("budget");
   const message = formData.get("message");
+  const notifyWhatsapp = formData.get("notify_whatsapp") === "yes";
 
-  const subject = encodeURIComponent(`Solicitud de ${service}`);
-  const body = encodeURIComponent(
-    `Nombre: ${name}\nEmail: ${email}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
-  );
+  if (notifyWhatsapp) {
+    const waText = encodeURIComponent(
+      `Hola, soy ${name}. Vi su sitio web y quiero solicitar información sobre ${service}. Presupuesto: ${budget}. ${message}`
+    );
+    window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
+  }
 
-  formStatus.textContent = "Listo. Se abrira tu correo para enviar la solicitud.";
-  window.location.href = `mailto:contacto@d-trust.com?subject=${subject}&body=${body}`;
+  if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY && !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
+    formStatus.textContent = "Enviando...";
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      .then(() => {
+        formStatus.textContent = "Solicitud enviada correctamente.";
+        form.reset();
+      })
+      .catch((err) => {
+        formStatus.textContent = "Error al enviar. Intenta de nuevo o escribenos por WhatsApp.";
+        console.error(err);
+      });
+  } else {
+    const subject = encodeURIComponent(`Solicitud de ${service}`);
+    const body = encodeURIComponent(
+      `Nombre: ${name}\nEmail: ${email}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
+    );
+    formStatus.textContent = "Listo. Se abrira tu correo para enviar la solicitud.";
+    window.location.href = `mailto:contacto@d-trust.com?subject=${subject}&body=${body}`;
+  }
 });
+
+// ===== EMAILJS CONFIG =====
+// Reemplaza estos valores con los de tu cuenta EmailJS (https://emailjs.com)
+const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
+const EMAILJS_SERVICE_ID = "service_2anafbr";
+const EMAILJS_TEMPLATE_ID = "template_x8m5dos";
+
+if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY && !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+}
+
+// ===== CHATBOT =====
+const chatbotToggle = document.querySelector("[data-chatbot-toggle]");
+const chatbotPanel = document.querySelector("[data-chatbot-panel]");
+const chatbotMessages = document.querySelector("[data-chatbot-messages]");
+const chatbotInput = document.querySelector("[data-chatbot-input]");
+const chatbotSend = document.querySelector("[data-chatbot-send]");
+const STORAGE_KEY = "dtrust-chatbot-messages";
+
+const isEnglish = () => document.documentElement.lang === "en";
+
+const botReplies = {
+  price: {
+    es: "Nuestros planes comienzan desde $499 para web profesional y $1,900 para software a medida. Puedes cotizar en el formulario de contacto o seguir hablando conmigo.",
+    en: "Our plans start at $499 for a professional website and $1,900 for custom software. You can request a quote in the contact form or keep chatting with me."
+  },
+  time: {
+    es: "Una web corporativa suele tardar 2-4 semanas. Un software a medida puede ser 30-60 dias para el MVP. ¿Tienes fecha limite?",
+    en: "A corporate website usually takes 2-4 weeks. Custom software can be 30-60 days for an MVP. Do you have a deadline?"
+  },
+  human: {
+    es: 'Te conecto con un humano. <a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Abrir WhatsApp</a>',
+    en: 'Connecting you to a human. <a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Open WhatsApp</a>'
+  },
+  web: {
+    es: "Ofrecemos diseno y desarrollo de paginas web corporativas, landing pages, blogs y tiendas online. ¿Que tipo de proyecto tienes en mente?",
+    en: "We offer design and development of corporate websites, landing pages, blogs, and online stores. What kind of project do you have in mind?"
+  },
+  software: {
+    es: "Desarrollamos software a medida: CRM, reservas, inventarios, reportes, paneles internos y mas. ¿Que proceso necesitas automatizar?",
+    en: "We develop custom software: CRM, bookings, inventory, reports, internal dashboards, and more. What process do you need to automate?"
+  },
+  ecommerce: {
+    es: "Construimos tiendas online con carrito, checkout, pasarelas de pago, inventario y envios. ¿Ya tienes productos listos?",
+    en: "We build online stores with cart, checkout, payment gateways, inventory, and shipping. Do you already have products ready?"
+  },
+  support: {
+    es: "Ofrecemos soporte mensual desde $149/mes con backups, actualizaciones, monitoreo y mejoras. ¿Ya tienes un sitio que necesita mantenimiento?",
+    en: "We offer monthly support from $149/month with backups, updates, monitoring, and improvements. Do you already have a site that needs maintenance?"
+  },
+  hello: {
+    es: "¡Hola! Soy el asistente de D-trust. ¿En que puedo ayudarte hoy?",
+    en: "Hello! I'm the D-trust assistant. How can I help you today?"
+  },
+  fallback: {
+    es: "Entiendo. Puedo ayudarte con informacion sobre desarrollo web, software a medida, tiendas online, automatizacion y soporte. ¿Que necesitas?",
+    en: "I understand. I can help you with information about web development, custom software, online stores, automation, and support. What do you need?"
+  }
+};
+
+const getBotResponse = (text) => {
+  const lower = text.toLowerCase();
+  const lang = isEnglish() ? "en" : "es";
+  if (/precio|costo|cotiz|plan|price|cost|quote/.test(lower)) return botReplies.price[lang];
+  if (/tiempo|tarda|cuando|dias|time|long|take|week/.test(lower)) return botReplies.time[lang];
+  if (/whatsapp|chat|hablar|humano|persona|human|talk|person/.test(lower)) return botReplies.human[lang];
+  if (/web|pagina|sitio|website|page|site/.test(lower)) return botReplies.web[lang];
+  if (/software|app|sistema|plataforma|application|system|platform/.test(lower)) return botReplies.software[lang];
+  if (/ecommerce|tienda|vender|online|store|shop|sell/.test(lower)) return botReplies.ecommerce[lang];
+  if (/soporte|mantenimiento|hosting|support|maintenance/.test(lower)) return botReplies.support[lang];
+  if (/hola|buenos|hey|hello|hi/.test(lower)) return botReplies.hello[lang];
+  return botReplies.fallback[lang];
+};
+
+const addMessage = (html, sender) => {
+  const bubble = document.createElement("div");
+  bubble.className = `chatbot-bubble ${sender}`;
+  bubble.innerHTML = html;
+  chatbotMessages?.appendChild(bubble);
+  chatbotMessages?.scrollTo({ top: chatbotMessages.scrollHeight, behavior: "smooth" });
+  saveMessages();
+};
+
+const saveMessages = () => {
+  if (!chatbotMessages) return;
+  const msgs = [...chatbotMessages.children].map(el => ({
+    html: el.innerHTML,
+    sender: el.classList.contains("bot") ? "bot" : "user"
+  }));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
+};
+
+const loadMessages = () => {
+  try {
+    const msgs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    msgs.forEach(m => {
+      const bubble = document.createElement("div");
+      bubble.className = `chatbot-bubble ${m.sender}`;
+      bubble.innerHTML = m.html;
+      chatbotMessages?.appendChild(bubble);
+    });
+  } catch {}
+};
+
+const showWelcome = () => {
+  if (!chatbotMessages || chatbotMessages.children.length > 0) return;
+  const lang = isEnglish() ? "en" : "es";
+  const text = lang === "en"
+    ? "Hello! I'm the D-trust assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
+    : "¡Hola! Soy el asistente de D-trust. ¿En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
+  addMessage(text, "bot");
+};
+
+const handleChatbotSend = () => {
+  const text = chatbotInput?.value.trim();
+  if (!text) return;
+  addMessage(text, "user");
+  chatbotInput.value = "";
+  setTimeout(() => {
+    addMessage(getBotResponse(text), "bot");
+  }, 500 + Math.random() * 400);
+};
+
+chatbotToggle?.addEventListener("click", () => {
+  const isOpen = chatbotPanel?.classList.toggle("is-open");
+  chatbotToggle.classList.toggle("is-open", isOpen);
+  chatbotToggle.setAttribute("aria-expanded", String(isOpen));
+  if (isOpen) showWelcome();
+});
+
+chatbotSend?.addEventListener("click", handleChatbotSend);
+chatbotInput?.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") handleChatbotSend();
+});
+
+loadMessages();
