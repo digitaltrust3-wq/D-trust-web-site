@@ -292,52 +292,75 @@ form?.addEventListener("submit", (event) => {
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
 
-  if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY && !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
-    formStatus.textContent = "Enviando...";
-
-    // 1. Email de notificación a D-trust (con datos del formulario)
-    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
-      .then(() => {
-        // 2. Email de bienvenida al cliente (usa el email del formulario como destinatario)
-        return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, {
-          to_email: email,
-          name: name,
-          service: service,
-          phone: phone || "No proporcionado"
-        });
-      })
-      .then(() => {
-        formStatus.textContent = "Solicitud enviada. Revisa tu correo para confirmación.";
-        form.reset();
-      })
-      .catch((err) => {
-        formStatus.textContent = "Error al enviar. Intenta de nuevo o escribenos por WhatsApp.";
-        console.error(err);
-      });
-  } else {
+  // Fallback si EmailJS no está cargado o no configurado
+  if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
     const subject = encodeURIComponent(`Solicitud de ${service}`);
     const body = encodeURIComponent(
       `Nombre: ${name}\nEmail: ${email}\nTelefono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
     );
     formStatus.textContent = "Listo. Se abrira tu correo para enviar la solicitud.";
     window.location.href = `mailto:contacto@d-trust.com?subject=${subject}&body=${body}`;
+    return;
   }
+
+  formStatus.textContent = "Enviando...";
+
+  const emailData = {
+    name: name,
+    email: email,
+    phone: phone || "No proporcionado",
+    service: service,
+    budget: budget,
+    message: message
+  };
+
+  console.log("[EmailJS] Enviando notificación a D-trust...", emailData);
+
+  // 1. Email de notificación a D-trust
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
+    .then((res) => {
+      console.log("[EmailJS] Notificación OK:", res.status, res.text);
+
+      // 2. Email de bienvenida al cliente
+      console.log("[EmailJS] Enviando bienvenida a:", email);
+      return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, {
+        to_email: email,
+        name: name,
+        service: service,
+        phone: phone || "No proporcionado"
+      });
+    })
+    .then((res) => {
+      console.log("[EmailJS] Bienvenida OK:", res.status, res.text);
+      formStatus.textContent = "Solicitud enviada. Revisa tu correo para confirmación.";
+      form.reset();
+    })
+    .catch((err) => {
+      console.error("[EmailJS] Error completo:", err);
+      const msg = err?.text || err?.message || "Error desconocido";
+      formStatus.textContent = `Error al enviar: ${msg}. Intenta de nuevo o escribenos por WhatsApp.`;
+    });
 });
 
 // ===== EMAILJS CONFIG =====
-// 1. Ve a https://emailjs.com, crea cuenta gratis y conecta tu correo (Email Service).
-// 2. Crea DOS plantillas en EmailJS:
-//    - Plantilla A (notificación a ti): recibe {{name}}, {{email}}, {{phone}}, {{service}}, {{budget}}, {{message}}
-//    - Plantilla B (bienvenida al cliente): recibe {{to_email}}, {{name}}, {{service}}, {{phone}}
-// 3. En la plantilla B, configura "To Email" como {{to_email}} (el email del cliente).
-// 4. Copia los IDs de servicio y plantillas aquí abajo.
+// INSTRUCCIONES OBLIGATORIAS:
+// 1. Ve a https://emailjs.com y conecta tu correo (Email Service).
+// 2. Crea DOS plantillas. En CADA UNA configura el campo "To Email" así:
+//    - Plantilla A (notificación a TI):   To Email = tu-correo@ejemplo.com (fijo)
+//    - Plantilla B (bienvenida al CLIENTE): To Email = {{to_email}} (variable)
+// 3. En el CUERPO de cada plantilla usa las variables entre {{dobles_llaves}}:
+//    {{name}}, {{email}}, {{phone}}, {{service}}, {{budget}}, {{message}}
+// 4. Copia los IDs exactos de tu dashboard aquí abajo.
 const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
 const EMAILJS_SERVICE_ID = "service_2anafbr";
-const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla de notificación a D-trust
-const EMAILJS_WELCOME_TEMPLATE_ID = "template_bienvenida"; // Plantilla de bienvenida al cliente
+const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificación a D-trust
+const EMAILJS_WELCOME_TEMPLATE_ID = "template_x8m5dos"; // Plantilla B: bienvenida al cliente (REEMPLAZAR)
 
-if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY && !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
+if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  console.log("[EmailJS] SDK inicializado correctamente.");
+} else {
+  console.warn("[EmailJS] SDK no cargado o Public Key no configurada.");
 }
 
 // ===== CHATBOT =====
