@@ -1,4 +1,4 @@
-const config = window.DTS_CONFIG || {};
+﻿const config = window.DTS_CONFIG || {};
 const loginView = document.querySelector("[data-login-view]");
 const dashboardView = document.querySelector("[data-dashboard-view]");
 const loginForm = document.querySelector("[data-login-form]");
@@ -28,16 +28,16 @@ const editableContentKeys = [
   { key: "heroPrimary", label: "Inicio - boton principal" },
   { key: "heroSecondary", label: "Inicio - boton secundario" },
   { key: "servicesTitle", label: "Servicios - titulo" },
-  { key: "servicesText", label: "Servicios - descripcion" },
+  { key: "servicesText", label: "Servicios - descripción" },
   { key: "solutionsTitle", label: "Soluciones - titulo" },
   { key: "diffTitle", label: "Diferenciales - titulo" },
   { key: "processTitle", label: "Proceso - titulo" },
-  { key: "techTitle", label: "Tecnologia - titulo" },
+  { key: "techTitle", label: "Tecnología - titulo" },
   { key: "plansTitle", label: "Planes - titulo" },
   { key: "caseTitle", label: "Caso de uso - titulo" },
   { key: "faqTitle", label: "FAQ - titulo" },
   { key: "contactTitle", label: "Contacto - titulo" },
-  { key: "contactText", label: "Contacto - descripcion" },
+  { key: "contactText", label: "Contacto - descripción" },
   { key: "footerText", label: "Footer - texto final" }
 ];
 
@@ -170,7 +170,7 @@ const groupCount = (rows, key, fallback = "Sin definir") => {
 const loadConnectionStatus = async () => {
   updateHealth("supabase", config.SUPABASE_URL ? "Configurado" : "Falta URL", config.SUPABASE_URL ? "ok" : "error");
   updateHealth("database", "Probando...", "neutral");
-  updateHealth("user", currentUser?.email || "Sin sesion", currentUser ? "ok" : "neutral");
+  updateHealth("user", currentUser?.email || "Sin sesión", currentUser ? "ok" : "neutral");
 
   try {
     await countTable("leads");
@@ -201,8 +201,8 @@ const loadOverview = async () => {
     .order("created_at", { ascending: false })
     .limit(300);
 
-  renderBarChart("[data-service-chart]", groupCount(leadData || [], "service"), "Todavia no hay servicios solicitados.");
-  renderBarChart("[data-status-chart]", groupCount(leadData || [], "status"), "Todavia no hay estados para mostrar.");
+  renderBarChart("[data-service-chart]", groupCount(leadData || [], "service"), "Todavía no hay servicios solicitados.");
+  renderBarChart("[data-status-chart]", groupCount(leadData || [], "status"), "Todavía no hay estados para mostrar.");
 
   const { data } = await supabaseClient
     .from("session_timeline")
@@ -354,7 +354,7 @@ const loadAssets = async () => {
         </div>
       </article>
     `).join("")
-    : "<p>Sin imagenes registradas.</p>";
+    : "<p>Sin imágenes registradas.</p>";
 };
 
 const loadUsers = async () => {
@@ -475,7 +475,7 @@ document.querySelector("[data-export-leads]")?.addEventListener("click", () => {
     { label: "Estado", value: (row) => leadStatusLabels[row.status] || row.status },
     { label: "Servicio", value: (row) => row.service },
     { label: "Email", value: (row) => row.email },
-    { label: "Telefono", value: (row) => row.phone },
+    { label: "Teléfono", value: (row) => row.phone },
     { label: "Presupuesto", value: (row) => row.budget },
     { label: "Urgencia", value: (row) => row.urgency },
     { label: "Mensaje", value: (row) => row.message },
@@ -487,7 +487,7 @@ document.querySelector("[data-export-leads]")?.addEventListener("click", () => {
 document.querySelector("[data-export-messages]")?.addEventListener("click", () => {
   const csv = toCsv(currentMessages, [
     { label: "Fecha", value: (row) => formatDate(row.created_at) },
-    { label: "Sesion", value: (row) => row.session_id },
+    { label: "Sesión", value: (row) => row.session_id },
     { label: "Autor", value: (row) => row.sender },
     { label: "Mensaje", value: (row) => row.message }
   ]);
@@ -536,7 +536,7 @@ document.addEventListener("click", async (event) => {
       await loadAssets();
     }
   } catch (error) {
-    alert(`No se pudo completar la accion: ${error.message}`);
+    alert(`No se pudo completar la acción: ${error.message}`);
   }
 });
 
@@ -661,3 +661,4 @@ supabaseClient?.auth.getSession().then(async ({ data }) => {
     }
   }
 });
+

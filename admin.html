@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
   <head>
     <meta charset="utf-8">
@@ -19,7 +19,7 @@
             <input type="email" name="email" autocomplete="email" required>
           </label>
           <label>
-            Contrasena
+            Contraseña
             <input type="password" name="password" autocomplete="current-password" required>
           </label>
           <button type="submit">Ingresar</button>
@@ -35,11 +35,11 @@
             <button type="button" data-panel-tab="leads">Leads</button>
             <button type="button" data-panel-tab="messages">Chat</button>
             <button type="button" data-panel-tab="content">Textos</button>
-            <button type="button" data-panel-tab="assets">Imagenes</button>
+            <button type="button" data-panel-tab="assets">Imágenes</button>
             <button type="button" data-panel-tab="users">Usuarios</button>
             <button type="button" data-panel-tab="preview">Vista web</button>
           </nav>
-          <button class="logout" type="button" data-logout>Cerrar sesion</button>
+          <button class="logout" type="button" data-logout>Cerrar sesión</button>
         </aside>
 
         <section class="workspace">
@@ -61,7 +61,7 @@
             <div class="status-grid">
               <article><strong>Supabase</strong><span data-health="supabase">Pendiente</span></article>
               <article><strong>Base de datos</strong><span data-health="database">Pendiente</span></article>
-              <article><strong>Usuario activo</strong><span data-health="user">Sin sesion</span></article>
+              <article><strong>Usuario activo</strong><span data-health="user">Sin sesión</span></article>
             </div>
             <div class="chart-grid">
               <div class="card">
@@ -88,7 +88,7 @@
             <div class="card">
               <h3>Personas interesadas</h3>
               <div class="toolbar">
-                <input type="search" placeholder="Buscar email, telefono, mensaje..." data-lead-search>
+                <input type="search" placeholder="Buscar email, teléfono, mensaje..." data-lead-search>
                 <select data-lead-status-filter>
                   <option value="">Todos los estados</option>
                   <option value="new">Nuevo</option>
@@ -103,7 +103,7 @@
               </div>
               <div class="table-wrap">
                 <table>
-                  <thead><tr><th>Fecha</th><th>Estado</th><th>Servicio</th><th>Email</th><th>Telefono</th><th>Mensaje</th><th>Notas internas</th></tr></thead>
+                  <thead><tr><th>Fecha</th><th>Estado</th><th>Servicio</th><th>Email</th><th>Teléfono</th><th>Mensaje</th><th>Notas internas</th></tr></thead>
                   <tbody data-leads></tbody>
                 </table>
               </div>
@@ -114,7 +114,7 @@
             <div class="card">
               <h3>Conversaciones del chatbot</h3>
               <div class="toolbar">
-                <input type="search" placeholder="Buscar sesion, autor o mensaje..." data-message-search>
+                <input type="search" placeholder="Buscar sesión, autor o mensaje..." data-message-search>
                 <select data-message-sender-filter>
                   <option value="">Todos los autores</option>
                   <option value="user">Cliente</option>
@@ -126,7 +126,7 @@
               </div>
               <div class="table-wrap">
                 <table>
-                  <thead><tr><th>Fecha</th><th>Sesion</th><th>Autor</th><th>Mensaje</th></tr></thead>
+                  <thead><tr><th>Fecha</th><th>Sesión</th><th>Autor</th><th>Mensaje</th></tr></thead>
                   <tbody data-messages></tbody>
                 </table>
               </div>
@@ -135,7 +135,7 @@
 
           <section class="panel" data-panel="content">
             <form class="card grid-form" data-content-form>
-              <h3>Editar textos de la pagina</h3>
+              <h3>Editar textos de la página</h3>
               <label>
                 Texto a modificar
                 <select name="content_key" data-content-key></select>
@@ -143,7 +143,7 @@
               <label>
                 Idioma
                 <select name="language">
-                  <option value="es">Espanol</option>
+                  <option value="es">Español</option>
                   <option value="en">English</option>
                   <option value="all">Todos</option>
                 </select>
@@ -168,9 +168,9 @@
 
           <section class="panel" data-panel="assets">
             <form class="card grid-form" data-asset-form>
-              <h3>Anadir o cambiar imagenes</h3>
+              <h3>Añadir o cambiar imágenes</h3>
               <label>
-                Ubicacion
+                Ubicación
                 <select name="asset_slot">
                   <option value="logo">Logo principal</option>
                   <option value="hero">Imagen principal</option>
@@ -178,7 +178,7 @@
                 </select>
               </label>
               <label>
-                Titulo
+                Título
                 <input name="title" type="text" placeholder="Logo, hero, banner...">
               </label>
               <label>
@@ -191,13 +191,13 @@
               </label>
               <label class="wide">
                 Texto alternativo
-                <input name="alt_text" type="text" placeholder="Descripcion de la imagen">
+                <input name="alt_text" type="text" placeholder="Descripción de la imagen">
               </label>
               <button type="submit">Guardar imagen</button>
               <span class="status" data-asset-status></span>
             </form>
             <div class="card">
-              <h3>Imagenes registradas</h3>
+              <h3>Imágenes registradas</h3>
               <div class="asset-grid" data-asset-list></div>
             </div>
           </section>
@@ -205,7 +205,7 @@
           <section class="panel" data-panel="users">
             <form class="card grid-form" data-user-form>
               <h3>Usuarios autorizados</h3>
-              <p>Maximo 5 usuarios activos. Primero crea el usuario en Supabase Auth, luego agrega aqui su User ID.</p>
+              <p>Máximo 5 usuarios activos. Primero crea el usuario en Supabase Auth, luego agrega aquí su User ID.</p>
               <label>
                 User ID
                 <input name="user_id" type="text" required>
@@ -234,8 +234,8 @@
 
           <section class="panel" data-panel="preview">
             <div class="card preview-card">
-              <h3>Vista completa de la pagina web</h3>
-              <iframe src="index.html" title="Vista previa de la pagina"></iframe>
+              <h3>Vista completa de la página web</h3>
+              <iframe src="index.html" title="Vista previa de la página"></iframe>
             </div>
           </section>
         </section>
@@ -247,3 +247,4 @@
     <script src="admin.js"></script>
   </body>
 </html>
+

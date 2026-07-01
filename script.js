@@ -15,106 +15,106 @@ const translations = {
     navPlans: "Planes",
     navFaq: "FAQ",
     navQuote: "Cotizar",
-    heroEyebrow: "Desarrollo web, software a medida y automatizacion",
-    heroTitle: "Impulsamos negocios con tecnologia clara, segura y lista para crecer.",
-    heroText: "Creamos paginas web corporativas, tiendas online, plataformas internas, portales de clientes, integraciones API y automatizaciones que reducen trabajo manual y mejoran la experiencia de tus usuarios.",
-    heroPrimary: "Solicitar cotizacion",
+    heroEyebrow: "Desarrollo web, software a medida y automatización",
+    heroTitle: "Impulsamos negocios con tecnología clara, segura y lista para crecer.",
+    heroText: "Creamos páginas web corporativas, tiendas online, plataformas internas, portales de clientes, integraciones API y automatizaciones que reducen trabajo manual y mejoran la experiencia de tus usuarios.",
+    heroPrimary: "Solicitar cotización",
     heroSecondary: "Explorar servicios",
     metricOne: "Tipos de soluciones digitales",
-    metricTwo: "Dias para lanzar un MVP",
+    metricTwo: "Días para lanzar un MVP",
     metricThree: "Soporte, hosting y mejora continua",
-    visualAutomation: "Automatizacion",
+    visualAutomation: "Automatización",
     visualSaved: "ahorradas por semana",
     visualPerformance: "Rendimiento digital",
     visualUptime: "Disponibilidad",
     visualMonitoring: "monitoreo activo",
-    stripWeb: "Paginas Web",
+    stripWeb: "Páginas Web",
     stripSoftware: "Software a Medida",
     stripStores: "Tiendas Online",
     stripApps: "Apps Web",
-    stripAutomation: "Automatizacion",
-    stripSupport: "Soporte Tecnico",
-    whatEyebrow: "Que hacemos",
+    stripAutomation: "Automatización",
+    stripSupport: "Soporte Técnico",
+    whatEyebrow: "Qué hacemos",
     whatTitle: "Convertimos ideas, procesos y necesidades de negocio en productos digitales funcionales.",
-    whatTextOne: "Tu pagina web no deberia ser solo una vitrina. Debe explicar tu oferta, captar clientes, responder dudas, generar confianza y conectarse con las herramientas que ya usas.",
-    whatTextTwo: "Por eso trabajamos cada proyecto con una vision completa: estrategia, diseno, desarrollo, contenido, seguridad, rendimiento, analitica y soporte posterior al lanzamiento.",
+    whatTextOne: "Tu página web no debería ser solo una vitrina. Debe explicar tu oferta, captar clientes, responder dudas, generar confianza y conectarse con las herramientas que ya usas.",
+    whatTextTwo: "Por eso trabajamos cada proyecto con una visión completa: estrategia, diseño, desarrollo, contenido, seguridad, rendimiento, analítica y soporte posterior al lanzamiento.",
     servicesEyebrow: "Servicios",
     servicesTitle: "Un portafolio completo para operar y vender mejor en internet",
     servicesText: "Integramos los componentes clave para que tu empresa pueda tener presencia digital, automatizar tareas, atender clientes y escalar procesos.",
-    serviceOneTitle: "Diseno y desarrollo de paginas web",
-    serviceOneText: "Sitios corporativos, landing pages, blogs, paginas para servicios profesionales y sitios multi-seccion con enfoque comercial.",
-    serviceTwoTitle: "Tiendas online y catalogos digitales",
-    serviceTwoText: "Soluciones e-commerce para vender productos, recibir pedidos, mostrar catalogos y conectar pasarelas de pago.",
+    serviceOneTitle: "Diseño y desarrollo de páginas web",
+    serviceOneText: "Sitios corporativos, landing pages, blogs, páginas para servicios profesionales y sitios multi-seccion con enfoque comercial.",
+    serviceTwoTitle: "Tiendas online y catálogos digitales",
+    serviceTwoText: "Soluciones e-commerce para vender productos, recibir pedidos, mostrar catálogos y conectar pasarelas de pago.",
     serviceThreeTitle: "Software a medida",
     serviceThreeText: "Aplicaciones para administrar clientes, ventas, reservas, inventarios, reportes, usuarios y operaciones internas.",
-    serviceFourTitle: "Automatizacion de procesos",
-    serviceFourText: "Reducimos tareas repetitivas conectando formularios, hojas de calculo, correos, WhatsApp, CRM y herramientas de IA.",
+    serviceFourTitle: "Automatización de procesos",
+    serviceFourText: "Reducimos tareas repetitivas conectando formularios, hojas de cálculo, correos, WhatsApp, CRM y herramientas de IA.",
     serviceFiveTitle: "Integraciones y APIs",
-    serviceFiveText: "Conectamos plataformas externas para que tus sistemas compartan informacion sin depender de procesos manuales.",
+    serviceFiveText: "Conectamos plataformas externas para que tus sistemas compartan información sin depender de procesos manuales.",
     serviceSixTitle: "Hosting, seguridad y mantenimiento",
     serviceSixText: "Mantenemos tu web o software estable, actualizado, protegido y con soporte para nuevas mejoras.",
     solutionsEyebrow: "Soluciones por necesidad",
     solutionsTitle: "Construimos herramientas para cada etapa de tu negocio",
-    solutionOneTitle: "Quiero conseguir mas clientes",
-    solutionOneText: "Landing pages, SEO basico, formularios, embudos de contacto, WhatsApp, analitica y contenido orientado a conversion.",
-    solutionTwoTitle: "Quiero ordenar mi operacion",
-    solutionTwoText: "CRM, reservas, inventario, tableros internos, control de usuarios, reportes y flujos de aprobacion.",
+    solutionOneTitle: "Quiero conseguir más clientes",
+    solutionOneText: "Landing pages, SEO básico, formularios, embudos de contacto, WhatsApp, analítica y contenido orientado a conversión.",
+    solutionTwoTitle: "Quiero ordenar mi operación",
+    solutionTwoText: "CRM, reservas, inventario, tableros internos, control de usuarios, reportes y flujos de aprobación.",
     solutionThreeTitle: "Quiero vender online",
-    solutionThreeText: "Tiendas virtuales, catalogos, pagos, gestion de pedidos, cupones, correos automaticos y seguimiento de ventas.",
+    solutionThreeText: "Tiendas virtuales, catálogos, pagos, gestión de pedidos, cupones, correos automáticos y seguimiento de ventas.",
     solutionFourTitle: "Quiero automatizar tareas",
     solutionFourText: "Integraciones con Google Sheets, correo, WhatsApp, formularios, bases de datos, IA y sistemas existentes.",
     diffEyebrow: "Diferenciales",
-    diffTitle: "No solo programamos: ayudamos a que la solucion tenga sentido de negocio.",
-    diffText: "Antes de escribir codigo revisamos objetivos, usuarios, contenido, procesos, datos, riesgos y prioridades. Asi evitamos construir funciones innecesarias y enfocamos el presupuesto en lo que realmente genera valor.",
+    diffTitle: "No solo programamos: ayudamos a que la solución tenga sentido de negocio.",
+    diffText: "Antes de escribir código revisamos objetivos, usuarios, contenido, procesos, datos, riesgos y prioridades. Así evitamos construir funciones innecesarias y enfocamos el presupuesto en lo que realmente genera valor.",
     featureOneTitle: "Arquitectura escalable",
-    featureOneText: "Tu proyecto queda preparado para crecer en usuarios, modulos y funcionalidades.",
+    featureOneText: "Tu proyecto queda preparado para crecer en usuarios, módulos y funcionalidades.",
     featureTwoTitle: "Experiencia de usuario",
-    featureTwoText: "Interfaces claras, rapidas y faciles de usar desde celular o escritorio.",
-    featureThreeTitle: "Medicion y mejora",
-    featureThreeText: "Instalamos analitica, eventos y puntos de seguimiento para tomar decisiones.",
-    featureFourTitle: "Acompanamiento tecnico",
+    featureTwoText: "Interfaces claras, rápidas y fáciles de usar desde celular o escritorio.",
+    featureThreeTitle: "Medición y mejora",
+    featureThreeText: "Instalamos analítica, eventos y puntos de seguimiento para tomar decisiones.",
+    featureFourTitle: "Acompañamiento técnico",
     featureFourText: "Te explicamos el proceso, los costos y las decisiones importantes sin lenguaje complicado.",
     industriesEyebrow: "Sectores",
     industriesTitle: "Soluciones para empresas, emprendedores y equipos en crecimiento",
     processEyebrow: "Proceso de trabajo",
-    processTitle: "Un metodo simple para pasar de idea a lanzamiento",
-    processOneTitle: "Diagnostico",
+    processTitle: "Un método simple para pasar de idea a lanzamiento",
+    processOneTitle: "Diagnóstico",
     processOneText: "Entendemos tu negocio, objetivos, clientes, competencia, procesos actuales y funcionalidades necesarias.",
     processTwoTitle: "Propuesta",
-    processTwoText: "Definimos alcance, tiempos, entregables, presupuesto, tecnologia y prioridades para la primera version.",
-    processThreeTitle: "Diseno",
-    processThreeText: "Organizamos estructura, secciones, pantallas, contenido, experiencia de usuario y rutas de conversion.",
+    processTwoText: "Definimos alcance, tiempos, entregables, presupuesto, tecnología y prioridades para la primera versión.",
+    processThreeTitle: "Diseño",
+    processThreeText: "Organizamos estructura, secciones, pantallas, contenido, experiencia de usuario y rutas de conversión.",
     processFourTitle: "Desarrollo",
     processFourText: "Construimos el sitio o sistema por etapas, con revisiones claras y pruebas funcionales.",
     processFiveTitle: "Lanzamiento",
-    processFiveText: "Publicamos en dominio y hosting, configuramos seguridad, analitica, formularios y correos.",
+    processFiveText: "Publicamos en dominio y hosting, configuramos seguridad, analítica, formularios y correos.",
     processSixTitle: "Soporte",
-    processSixText: "Acompanamos mejoras, mantenimiento, actualizaciones, nuevas integraciones y soporte mensual.",
-    techEyebrow: "Tecnologias",
-    techTitle: "Elegimos la tecnologia segun el objetivo, no por moda",
-    techText: "Podemos trabajar con herramientas modernas o plataformas administrables segun tu presupuesto, equipo y necesidad de mantenimiento.",
+    processSixText: "Acompañamos mejoras, mantenimiento, actualizaciones, nuevas integraciones y soporte mensual.",
+    techEyebrow: "Tecnologías",
+    techTitle: "Elegimos la tecnología según el objetivo, no por moda",
+    techText: "Podemos trabajar con herramientas modernas o plataformas administrables según tu presupuesto, equipo y necesidad de mantenimiento.",
     plansEyebrow: "Planes de referencia",
     plansTitle: "Elige un punto de partida y lo ajustamos a tu proyecto",
-    plansText: "Los valores son orientativos. Cada cotizacion depende del alcance, numero de pantallas, integraciones, contenido y nivel de soporte.",
+    plansText: "Los valores son orientativos. Cada cotización depende del alcance, número de pantallas, integraciones, contenido y nivel de soporte.",
     caseEyebrow: "Caso de uso",
-    caseTitle: "De operacion manual a sistema conectado",
-    caseText: "Un negocio con pedidos por WhatsApp, inventario en hojas de calculo y reportes manuales puede pasar a una plataforma con catalogo, formulario de pedido, panel interno, alertas automaticas y reportes diarios.",
+    caseTitle: "De operación manual a sistema conectado",
+    caseText: "Un negocio con pedidos por WhatsApp, inventario en hojas de cálculo y reportes manuales puede pasar a una plataforma con catalogo, formulario de pedido, panel interno, alertas automaticas y reportes diarios.",
     faqEyebrow: "Preguntas frecuentes",
-    faqTitle: "Respuestas rapidas antes de iniciar",
-    faqOneTitle: "Cuanto tarda desarrollar una pagina web?",
-    faqOneText: "Una web corporativa suele tardar entre 2 y 4 semanas, dependiendo del contenido, numero de secciones, revisiones y configuraciones necesarias.",
-    faqTwoTitle: "Puedo administrar el contenido despues?",
-    faqTwoText: "Si. Podemos construir el sitio en una plataforma administrable o dejar una estructura facil de actualizar segun tu equipo y presupuesto.",
-    faqThreeTitle: "Tambien ofrecen dominio y hosting?",
-    faqThreeText: "Podemos ayudarte a configurar dominio, hosting, correo corporativo, certificado SSL, backups, analitica y herramientas de contacto.",
-    faqFourTitle: "Que necesito para cotizar mi proyecto?",
-    faqFourText: "Una descripcion del negocio, objetivo principal, secciones o funcionalidades deseadas, referencias visuales y fecha ideal de lanzamiento.",
+    faqTitle: "Respuestas rápidas antes de iniciar",
+    faqOneTitle: "Cuánto tarda desarrollar una página web?",
+    faqOneText: "Una web corporativa suele tardar entre 2 y 4 semanas, dependiendo del contenido, número de secciones, revisiones y configuraciones necesarias.",
+    faqTwoTitle: "Puedo administrar el contenido después?",
+    faqTwoText: "Sí. Podemos construir el sitio en una plataforma administrable o dejar una estructura fácil de actualizar según tu equipo y presupuesto.",
+    faqThreeTitle: "También ofrecen dominio y hosting?",
+    faqThreeText: "Podemos ayudarte a configurar dominio, hosting, correo corporativo, certificado SSL, backups, analítica y herramientas de contacto.",
+    faqFourTitle: "Qué necesito para cotizar mi proyecto?",
+    faqFourText: "Una descripción del negocio, objetivo principal, secciones o funcionalidades deseadas, referencias visuales y fecha ideal de lanzamiento.",
     contactEyebrow: "Contacto",
-    contactTitle: "Cuentanos que quieres construir",
-    contactText: "Completa el formulario con la mayor informacion posible. Si aun no tienes claro el alcance, podemos iniciar con una llamada de diagnostico y convertir tu idea en una propuesta organizada.",
+    contactTitle: "Cuéntanos qué quieres construir",
+    contactText: "Completa el formulario con la mayor información posible. Si aún no tienes claro el alcance, podemos iniciar con una llamada de diagnóstico y convertir tu idea en una propuesta organizada.",
     contactWhatsapp: "WhatsApp: +57 318 428 9661",
     contactCall: "Llamar: +57 318 428 9661",
-    footerText: "Desarrollo web, software, automatizacion y soporte tecnico."
+    footerText: "Desarrollo web, software, automatización y soporte técnico."
   },
   en: {
     navServices: "Services",
@@ -164,7 +164,7 @@ const translations = {
     solutionsEyebrow: "Solutions by need",
     solutionsTitle: "We build tools for every stage of your business",
     solutionOneTitle: "I want more customers",
-    solutionOneText: "Landing pages, basic SEO, forms, contact funnels, WhatsApp, analytics and conversion-focused content.",
+    solutionOneText: "Landing pages, basic SEO, forms, contact funnels, WhatsApp, analytics and conversión-focused content.",
     solutionTwoTitle: "I want to organize operations",
     solutionTwoText: "CRM, bookings, inventory, internal dashboards, user control, reports and approval workflows.",
     solutionThreeTitle: "I want to sell online",
@@ -191,10 +191,10 @@ const translations = {
     processTwoTitle: "Proposal",
     processTwoText: "We define scope, timing, deliverables, budget, technology and first-version priorities.",
     processThreeTitle: "Design",
-    processThreeText: "We organize structure, sections, screens, content, user experience and conversion paths.",
+    processThreeText: "We organize structure, sections, screens, content, user experience and conversión paths.",
     processFourTitle: "Development",
     processFourText: "We build the website or system in stages, with clear reviews and functional testing.",
-    processFiveTitle: "Launch",
+    processFiveTitle: "Laúnch",
     processFiveText: "We publish on domain and hosting, configure security, analytics, forms and email.",
     processSixTitle: "Support",
     processSixText: "We support improvements, maintenance, updates, new integrations and monthly assistance.",
@@ -210,7 +210,7 @@ const translations = {
     faqEyebrow: "Frequently asked questions",
     faqTitle: "Quick answers before starting",
     faqOneTitle: "How long does a website take?",
-    faqOneText: "A corporate website usually takes 2 to 4 weeks, depending on content, number of sections, revisions and required setup.",
+    faqOneText: "A corporate website usually takes 2 to 4 weeks, depending on content, number of sections, revisións and required setup.",
     faqTwoTitle: "Can I manage the content later?",
     faqTwoText: "Yes. We can build the site on a manageable platform or leave a structure that is easy to update according to your team and budget.",
     faqThreeTitle: "Do you also offer domain and hosting?",
@@ -290,7 +290,7 @@ form?.addEventListener("submit", (event) => {
 
   if (notifyWhatsapp) {
     const waText = encodeURIComponent(
-      `Hola, soy ${name}. Vi su sitio web y quiero solicitar informacion sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Telefono: ${phone}` : ""}`
+      `Hola, soy ${name}. Vi su sitio web y quiero solicitar información sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Teléfono: ${phone}` : ""}`
     );
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
@@ -306,7 +306,7 @@ form?.addEventListener("submit", (event) => {
       service,
       budget,
       message,
-      notificacionOk: false,
+      notificaciónOk: false,
       bienvenidaOk: false,
       fallback: "mailto"
     };
@@ -314,7 +314,7 @@ form?.addEventListener("submit", (event) => {
 
     const subject = encodeURIComponent(`Solicitud de ${service}`);
     const body = encodeURIComponent(
-      `Nombre: ${name}\nEmail: ${email}\nTelefono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
+      `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
     );
     formStatus.textContent = "Listo. Se abrira tu correo para enviar la solicitud.";
     window.location.href = `mailto:contacto@digitaltrustsolutions.com?subject=${subject}&body=${body}`;
@@ -339,18 +339,18 @@ form?.addEventListener("submit", (event) => {
     phone: phone || "No proporcionado"
   };
 
-  console.log("[EmailJS] Datos notificacion:", emailData);
+  console.log("[EmailJS] Datos notificación:", emailData);
   console.log("[EmailJS] Datos bienvenida:", welcomeData);
 
   // Envio simultaneo de ambos correos.
   const notificationPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
     .then((res) => {
-      console.log("[EmailJS] Notificacion OK:", res.status, res.text);
-      return { type: "notificacion", status: "ok", res };
+      console.log("[EmailJS] Notificación OK:", res.status, res.text);
+      return { type: "notificación", status: "ok", res };
     })
     .catch((err) => {
-      console.error("[EmailJS] Notificacion ERROR:", err);
-      return { type: "notificacion", status: "error", err };
+      console.error("[EmailJS] Notificación ERROR:", err);
+      return { type: "notificación", status: "error", err };
     });
 
   const welcomePromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, welcomeData)
@@ -365,14 +365,14 @@ form?.addEventListener("submit", (event) => {
 
   Promise.all([notificationPromise, welcomePromise])
     .then((results) => {
-      const notificacion = results.find(r => r.type === "notificacion");
+      const notificación = results.find(r => r.type === "notificación");
       const bienvenida = results.find(r => r.type === "bienvenida");
 
-      const notifOk = notificacion?.status === "ok";
+      const notifOk = notificación?.status === "ok";
       const bienvenidaOk = bienvenida?.status === "ok";
 
-      console.log("[EmailJS] Resultado notificacion:", notifOk ? "OK" : "FALLO");
-      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLO");
+      console.log("[EmailJS] Resultado notificación:", notifOk ? "OK" : "FALLÓ");
+      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLÓ");
 
       // Guardar en localStorage como respaldo
       const submission = {
@@ -384,7 +384,7 @@ form?.addEventListener("submit", (event) => {
         service,
         budget,
         message,
-        notificacionOk: notifOk,
+        notificaciónOk: notifOk,
         bienvenidaOk: bienvenidaOk
       };
       const history = JSON.parse(localStorage.getItem("digital-trust-submissions") || "[]");
@@ -394,14 +394,14 @@ form?.addEventListener("submit", (event) => {
       saveInteractionToDatabase("contact_form", submission);
 
       if (notifOk && bienvenidaOk) {
-        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmacion enviada al cliente.";
+        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmación enviada al cliente.";
         form.reset();
       } else if (notifOk) {
-        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmacion al cliente fallo.";
+        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmación al cliente falló.";
       } else if (bienvenidaOk) {
-        formStatus.textContent = "Confirmacion enviada al cliente, pero tu correo de notificacion fallo. Datos guardados.";
+        formStatus.textContent = "Confirmación enviada al cliente, pero tu correo de notificación falló. Datos guardados.";
       } else {
-        const msg1 = notificacion?.err?.text || notificacion?.err?.message || "";
+        const msg1 = notificación?.err?.text || notificación?.err?.message || "";
         const msg2 = bienvenida?.err?.text || bienvenida?.err?.message || "";
         formStatus.textContent = `Error: ${msg1 || msg2}. Intenta de nuevo o escribenos por WhatsApp.`;
       }
@@ -412,14 +412,14 @@ form?.addEventListener("submit", (event) => {
 // INSTRUCCIONES OBLIGATORIAS:
 // 1. Ve a https://emailjs.com y conecta tu correo (Email Service).
 // 2. Crea DOS plantillas. En CADA UNA configura el campo "To Email" asi:
-//    - Plantilla A (notificacion a TI):   To Email = tu-correo@ejemplo.com (fijo)
+//    - Plantilla A (notificación a TI):   To Email = tu-correo@ejemplo.com (fijo)
 //    - Plantilla B (bienvenida al CLIENTE): To Email = {{to_email}} (variable)
 // 3. En el CUERPO de cada plantilla usa las variables entre {{dobles_llaves}}:
 //    {{name}}, {{email}}, {{phone}}, {{service}}, {{budget}}, {{message}}
-// 4. Copia los IDs exactos de tu dashboard aqui abajo.
+// 4. Copia los IDs exactos de tu dashboard aquí abajo.
 const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
 const EMAILJS_SERVICE_ID = "service_2anafbr";
-const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificacion a Digital Trust Solutions
+const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificación a Digital Trust Solutions
 const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienvenida al cliente
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
@@ -569,7 +569,7 @@ const saveContactRequestTrace = async (sessionId, payload) => {
     service: payload.service || "No especificado",
     budget: payload.budget || "No indicado",
     message: payload.message || "",
-    notification_ok: payload.notificacionOk ?? null,
+    notification_ok: payload.notificaciónOk ?? null,
     welcome_ok: payload.bienvenidaOk ?? null,
     metadata: payload
   });
@@ -673,14 +673,14 @@ const getSessionId = () => {
 const leadSignals = /cotiz|cotizar|presupuesto|precio|valor|contratar|comprar|interesad|quiero|necesito|llamar|contact|agenda|propuesta|quote|budget|price|hire|buy|interested|need|call|proposal/i;
 
 const serviceLabels = {
-  website: { es: "Pagina web / landing page", en: "Website / landing page" },
+  website: { es: "Página web / landing page", en: "Website / landing page" },
   ecommerce: { es: "Tienda online / e-commerce", en: "Online store / e-commerce" },
   software: { es: "Software a medida / plataforma", en: "Custom software / platform" },
-  automation: { es: "Automatizacion de procesos", en: "Process automation" },
+  automation: { es: "Automatización de procesos", en: "Process automation" },
   support: { es: "Soporte, hosting o mantenimiento", en: "Support, hosting or maintenance" },
   integrations: { es: "Integraciones / APIs", en: "Integrations / APIs" },
   security: { es: "Seguridad, backups o monitoreo", en: "Security, backups or monitoring" },
-  consulting: { es: "Consultoria tecnica", en: "Technical consulting" }
+  consulting: { es: "Consultoria técnica", en: "Technical consulting" }
 };
 
 const getChatTranscript = () => {
@@ -700,21 +700,21 @@ const extractLeadInfo = (messages = []) => {
   const lang = isEnglish() ? "en" : "es";
   const services = [];
 
-  if (/web|pagina|landing|sitio|website|site/.test(lower)) services.push("website");
+  if (/web|página|landing|sitio|website|site/.test(lower)) services.push("website");
   if (/tienda|ecommerce|e-commerce|shopify|woocommerce|catalogo|store|shop|sell|vender/.test(lower)) services.push("ecommerce");
   if (/software|app|sistema|plataforma|crm|dashboard|panel|inventario|reservas|system|platform|inventory|booking/.test(lower)) services.push("software");
   if (/automat|automatic|workflow|proceso|process|ia|ai/.test(lower)) services.push("automation");
   if (/api|integraci|webhook|erp|crm|integration/.test(lower)) services.push("integrations");
   if (/soporte|mantenimiento|hosting|support|maintenance/.test(lower)) services.push("support");
-  if (/seguridad|ssl|backup|proteccion|security|secure|monitor/.test(lower)) services.push("security");
-  if (/consult|asesor|diagnostico|strategy|audit/.test(lower)) services.push("consulting");
+  if (/seguridad|ssl|backup|protección|security|secure|monitor/.test(lower)) services.push("security");
+  if (/consult|asesor|diagnóstico|strategy|audit/.test(lower)) services.push("consulting");
 
   return {
     services: [...new Set(services)].map((service) => serviceLabels[service][lang]),
     email: text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || "",
     phone: text.match(/(?:\+?\d[\s-]?){8,16}/)?.[0]?.trim() || "",
-    budget: text.match(/(?:\$|usd|cop|dolares|dolares)\s?[\d.,]+|[\d.,]+\s?(?:usd|cop|dolares|dolares)/i)?.[0] || "",
-    urgency: /urgente|esta semana|hoy|rapido|rapido|asap|urgent|this week|today|soon/.test(lower)
+    budget: text.match(/(?:\$|usd|cop|dólares|dólares)\s?[\d.,]+|[\d.,]+\s?(?:usd|cop|dólares|dólares)/i)?.[0] || "",
+    urgency: /urgente|esta semana|hoy|rápido|rápido|asap|urgent|this week|today|soon/.test(lower)
       ? (lang === "en" ? "High" : "Alta")
       : (lang === "en" ? "Normal" : "Normal"),
     rawText: text
@@ -736,7 +736,7 @@ const notifyLeadByEmail = async (reason = "Cliente interesado desde el chatbot")
     phone: lead.phone || "No proporcionado",
     service: lead.services.join(", ") || "Pendiente por definir",
     budget: lead.budget || "No indicado",
-    message: `Motivo: ${reason}\nUrgencia: ${lead.urgency}\n\nResumen de solicitud:\n${lead.rawText}\n\nTranscripcion:\n${transcriptToText(messages)}`
+    message: `Motivo: ${reason}\nUrgencia: ${lead.urgency}\n\nResumen de solicitud:\n${lead.rawText}\n\nTranscripción:\n${transcriptToText(messages)}`
   };
 
   try {
@@ -765,51 +765,51 @@ const botReplies = {
     en: "Sure. These are reference prices:<ol><li><strong>Professional website:</strong> from $499.</li><li><strong>Custom software:</strong> from $1,900.</li><li><strong>Monthly support:</strong> from $149/month.</li></ol>For a better quote, tell me:<ul><li>Service needed.</li><li>Main features.</li><li>Approximate budget.</li><li>Ideal launch date.</li></ul>"
   },
   time: {
-    es: "Los tiempos dependen del alcance:<ol><li><strong>Landing page:</strong> 1 a 2 semanas.</li><li><strong>Web corporativa:</strong> 2 a 4 semanas.</li><li><strong>Tienda online:</strong> 3 a 6 semanas.</li><li><strong>Software a medida:</strong> 30 a 60 dias para un MVP.</li></ol>Si tienes una fecha limite, cuentamela y revisamos la mejor ruta.",
+    es: "Los tiempos dependen del alcance:<ol><li><strong>Landing page:</strong> 1 a 2 semanas.</li><li><strong>Web corporativa:</strong> 2 a 4 semanas.</li><li><strong>Tienda online:</strong> 3 a 6 semanas.</li><li><strong>Software a medida:</strong> 30 a 60 días para un MVP.</li></ol>Si tienes una fecha límite, cuéntamela y revisamos la mejor ruta.",
     en: "Timelines depend on scope:<ol><li><strong>Landing page:</strong> 1 to 2 weeks.</li><li><strong>Corporate website:</strong> 2 to 4 weeks.</li><li><strong>Online store:</strong> 3 to 6 weeks.</li><li><strong>Custom software:</strong> 30 to 60 days for an MVP.</li></ol>If you have a deadline, share it and we will review the best route."
   },
   human: {
-    es: 'Perfecto. Puedes hablar directamente con nosotros por WhatsApp:<br><br><a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Abrir WhatsApp</a><br><br>Para ayudarte mas rapido, envia:<ol><li>Tu nombre.</li><li>Servicio que necesitas.</li><li>Fecha ideal.</li><li>Presupuesto aproximado.</li></ol>',
+    es: 'Perfecto. Puedes hablar directamente con nosotros por WhatsApp:<br><br><a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Abrir WhatsApp</a><br><br>Para ayudarte más rápido, envía:<ol><li>Tu nombre.</li><li>Servicio que necesitas.</li><li>Fecha ideal.</li><li>Presupuesto aproximado.</li></ol>',
     en: 'Perfect. You can talk directly with us on WhatsApp:<br><br><a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Open WhatsApp</a><br><br>To help you faster, send:<ol><li>Your name.</li><li>Service needed.</li><li>Ideal date.</li><li>Approximate budget.</li></ol>'
   },
   web: {
-    es: "Podemos ayudarte con desarrollo web profesional:<ol><li>Landing pages para captar clientes.</li><li>Paginas corporativas para presentar servicios.</li><li>Blogs o secciones de contenido.</li><li>Formularios, WhatsApp, mapas y analitica.</li></ol>Pregunta clave: ¿quieres una web para informar, captar clientes o vender?",
+    es: "Podemos ayudarte con desarrollo web profesional:<ol><li>Landing pages para captar clientes.</li><li>Páginas corporativas para presentar servicios.</li><li>Blogs o secciones de contenido.</li><li>Formularios, WhatsApp, mapas y analítica.</li></ol>Pregunta clave: ¿quieres una web para informar, captar clientes o vender?",
     en: "We can help with professional web development:<ol><li>Landing pages to capture leads.</li><li>Corporate websites to present services.</li><li>Blogs or content sections.</li><li>Forms, WhatsApp, maps, and analytics.</li></ol>Key question: do you want a website to inform, capture leads, or sell?"
   },
   software: {
-    es: "El software a medida sirve para ordenar procesos internos. Podemos crear:<ol><li>CRM para clientes y ventas.</li><li>Sistemas de reservas o citas.</li><li>Inventarios y reportes.</li><li>Paneles administrativos.</li><li>Portales para clientes o empleados.</li></ol>Para orientarte mejor: ¿que proceso quieres controlar?",
+    es: "El software a medida sirve para ordenar procesos internos. Podemos crear:<ol><li>CRM para clientes y ventas.</li><li>Sistemas de reservas o citas.</li><li>Inventarios y reportes.</li><li>Paneles administrativos.</li><li>Portales para clientes o empleados.</li></ol>Para orientarte mejor: ¿qué proceso quieres controlar?",
     en: "Custom software helps organize internal processes. We can build:<ol><li>CRM for clients and sales.</li><li>Booking or appointment systems.</li><li>Inventory and reports.</li><li>Admin dashboards.</li><li>Client or employee portals.</li></ol>To guide you better: what process do you want to control?"
   },
   ecommerce: {
-    es: "Para una tienda online podemos incluir:<ol><li>Catalogo de productos.</li><li>Carrito y checkout.</li><li>Pasarela de pago.</li><li>Inventario y cupones.</li><li>Gestion de pedidos y envios.</li></ol>Para cotizar: ¿cuantos productos quieres vender y que metodo de pago necesitas?",
+    es: "Para una tienda online podemos incluir:<ol><li>Catálogo de productos.</li><li>Carrito y checkout.</li><li>Pasarela de pago.</li><li>Inventario y cupones.</li><li>Gestión de pedidos y envíos.</li></ol>Para cotizar: ¿cuántos productos quieres vender y qué método de pago necesitas?",
     en: "For an online store we can include:<ol><li>Product catalog.</li><li>Cart and checkout.</li><li>Payment gateway.</li><li>Inventory and coupons.</li><li>Order and shipping management.</li></ol>To quote: how many products do you want to sell and what payment method do you need?"
   },
   support: {
-    es: "El soporte mensual puede cubrir:<ol><li>Backups y recuperacion.</li><li>Actualizaciones tecnicas.</li><li>Monitoreo y seguridad.</li><li>Correccion de errores.</li><li>Mejoras pequeñas mensuales.</li></ol>Pregunta: ¿tu sitio ya esta publicado o esta en desarrollo?",
+    es: "El soporte mensual puede cubrir:<ol><li>Backups y recuperación.</li><li>Actualizaciones técnicas.</li><li>Monitoreo y seguridad.</li><li>Corrección de errores.</li><li>Mejoras pequeñas mensuales.</li></ol>Pregunta: ¿tu sitio ya está publicado o está en desarrollo?",
     en: "Monthly support can include:<ol><li>Backups and recovery.</li><li>Technical updates.</li><li>Monitoring and security.</li><li>Bug fixes.</li><li>Small monthly improvements.</li></ol>Question: is your site already published or still in development?"
   },
   automation: {
-    es: "Podemos automatizar tareas repetitivas como:<ol><li>Enviar correos o WhatsApp automaticos.</li><li>Guardar formularios en hojas de calculo o CRM.</li><li>Generar reportes programados.</li><li>Crear recordatorios y alertas.</li><li>Conectar herramientas internas.</li></ol>Para empezar: ¿que tarea repites todos los dias?",
+    es: "Podemos automatizar tareas repetitivas como:<ol><li>Enviar correos o WhatsApp automáticos.</li><li>Guardar formularios en hojas de cálculo o CRM.</li><li>Generar reportes programados.</li><li>Crear recordatorios y alertas.</li><li>Conectar herramientas internas.</li></ol>Para empezar: ¿qué tarea repites todos los días?",
     en: "We can automate repetitive tasks such as:<ol><li>Sending automatic emails or WhatsApp messages.</li><li>Saving forms into spreadsheets or CRM.</li><li>Generating scheduled reports.</li><li>Creating reminders and alerts.</li><li>Connecting internal tools.</li></ol>To start: what task do you repeat every day?"
   },
   integrations: {
-    es: "Podemos conectar tus herramientas para que trabajen juntas:<ol><li>APIs y webhooks.</li><li>Pasarelas de pago.</li><li>CRM o ERP.</li><li>Google Sheets y formularios.</li><li>Sistemas internos existentes.</li></ol>Dime que herramientas usas y que informacion debe viajar entre ellas.",
+    es: "Podemos conectar tus herramientas para que trabajen juntas:<ol><li>APIs y webhooks.</li><li>Pasarelas de pago.</li><li>CRM o ERP.</li><li>Google Sheets y formularios.</li><li>Sistemas internos existentes.</li></ol>Dime qué herramientas usas y que información debe viajar entre ellas.",
     en: "We can connect your tools so they work together:<ol><li>APIs and webhooks.</li><li>Payment gateways.</li><li>CRM or ERP.</li><li>Google Sheets and forms.</li><li>Existing internal systems.</li></ol>Tell me what tools you use and what information should move between them."
   },
   security: {
-    es: "En seguridad podemos ayudarte con:<ol><li>Certificado SSL.</li><li>Backups periodicos.</li><li>Control de accesos.</li><li>Actualizaciones y monitoreo.</li><li>Buenas practicas para datos de clientes.</li></ol>Si manejas informacion sensible, podemos revisar el nivel de proteccion necesario.",
+    es: "En seguridad podemos ayudarte con:<ol><li>Certificado SSL.</li><li>Backups periódicos.</li><li>Control de accesos.</li><li>Actualizaciones y monitoreo.</li><li>Buenas prácticas para datos de clientes.</li></ol>Si manejas información sensible, podemos revisar el nivel de protección necesario.",
     en: "For security we can help with:<ol><li>SSL certificate.</li><li>Periodic backups.</li><li>Access control.</li><li>Updates and monitoring.</li><li>Best practices for customer data.</li></ol>If you handle sensitive information, we can review the protection level needed."
   },
   lead: {
-    es: "Excelente. Para prepararte una propuesta necesito estos datos:<ol><li><strong>Servicio:</strong> web, software, tienda online, automatizacion o soporte.</li><li><strong>Objetivo:</strong> que problema quieres resolver.</li><li><strong>Presupuesto aproximado:</strong> si ya tienes un rango.</li><li><strong>Fecha ideal:</strong> cuando quieres lanzar.</li><li><strong>Contacto:</strong> correo o WhatsApp.</li></ol>Con eso puedo enviar un resumen al equipo comercial.",
+    es: "Excelente. Para prepararte una propuesta necesito estos datos:<ol><li><strong>Servicio:</strong> web, software, tienda online, automatización o soporte.</li><li><strong>Objetivo:</strong> qué problema quieres resolver.</li><li><strong>Presupuesto aproximado:</strong> si ya tienes un rango.</li><li><strong>Fecha ideal:</strong> cuándo quieres lanzar.</li><li><strong>Contacto:</strong> correo o WhatsApp.</li></ol>Con eso puedo enviar un resumen al equipo comercial.",
     en: "Excellent. To prepare a proposal, I need these details:<ol><li><strong>Service:</strong> website, software, online store, automation, or support.</li><li><strong>Goal:</strong> what problem you want to solve.</li><li><strong>Approximate budget:</strong> if you already have a range.</li><li><strong>Ideal date:</strong> when you want to launch.</li><li><strong>Contact:</strong> email or WhatsApp.</li></ol>With that, I can send a summary to the sales team."
   },
   hello: {
-    es: "Hola, soy el asistente de Digital Trust Solutions. Puedo ayudarte con:<ol><li>Paginas web.</li><li>Software a medida.</li><li>Tiendas online.</li><li>Automatizacion.</li><li>Soporte y mantenimiento.</li></ol>¿Sobre que servicio quieres informacion?",
+    es: "Hola, soy el asistente de Digital Trust Solutions. Puedo ayudarte con:<ol><li>Páginas web.</li><li>Software a medida.</li><li>Tiendas online.</li><li>Automatización.</li><li>Soporte y mantenimiento.</li></ol>¿Sobre qué servicio quieres información?",
     en: "Hello, I'm the Digital Trust Solutions assistant. I can help with:<ol><li>Websites.</li><li>Custom software.</li><li>Online stores.</li><li>Automation.</li><li>Support and maintenance.</li></ol>Which service would you like information about?"
   },
   fallback: {
-    es: "Entiendo. Para orientarte mejor, elige una opcion:<ol><li>Quiero una pagina web.</li><li>Necesito software a medida.</li><li>Quiero vender online.</li><li>Necesito automatizar un proceso.</li><li>Busco soporte o mantenimiento.</li></ol>Tambien puedes escribir tu caso con tus propias palabras.",
+    es: "Entiendo. Para orientarte mejor, elige una opción:<ol><li>Quiero una página web.</li><li>Necesito software a medida.</li><li>Quiero vender online.</li><li>Necesito automatizar un proceso.</li><li>Busco soporte o mantenimiento.</li></ol>También puedes escribir tu caso con tus propias palabras.",
     en: "I understand. To guide you better, choose one option:<ol><li>I need a website.</li><li>I need custom software.</li><li>I want to sell online.</li><li>I need to automate a process.</li><li>I need support or maintenance.</li></ol>You can also describe your case in your own words."
   }
 };
@@ -818,14 +818,14 @@ const getBotResponse = (text) => {
   const lang = isEnglish() ? "en" : "es";
   if (leadSignals.test(lower)) return botReplies.lead[lang];
   if (/precio|costo|cotiz|plan|price|cost|quote/.test(lower)) return botReplies.price[lang];
-  if (/tiempo|tarda|cuando|dias|time|long|take|week/.test(lower)) return botReplies.time[lang];
+  if (/tiempo|tarda|cuando|días|time|long|take|week/.test(lower)) return botReplies.time[lang];
   if (/whatsapp|chat|hablar|humano|persona|human|talk|person/.test(lower)) return botReplies.human[lang];
-  if (/web|pagina|sitio|website|page|site/.test(lower)) return botReplies.web[lang];
+  if (/web|página|sitio|website|page|site/.test(lower)) return botReplies.web[lang];
   if (/software|app|sistema|plataforma|application|system|platform/.test(lower)) return botReplies.software[lang];
   if (/ecommerce|tienda|vender|online|store|shop|sell/.test(lower)) return botReplies.ecommerce[lang];
   if (/automat|workflow|proceso|ia|ai|automatic/.test(lower)) return botReplies.automation[lang];
   if (/api|integraci|webhook|erp|crm|integration/.test(lower)) return botReplies.integrations[lang];
-  if (/seguridad|ssl|backup|proteccion|security|secure/.test(lower)) return botReplies.security[lang];
+  if (/seguridad|ssl|backup|protección|security|secure/.test(lower)) return botReplies.security[lang];
   if (/soporte|mantenimiento|hosting|support|maintenance/.test(lower)) return botReplies.support[lang];
   if (/hola|buenos|hey|hello|hi/.test(lower)) return botReplies.hello[lang];
   return botReplies.fallback[lang];
@@ -913,11 +913,11 @@ const showWelcome = () => {
   const lang = isEnglish() ? "en" : "es";
   const text = lang === "en"
     ? "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
-    : "Hola! Soy el asistente de Digital Trust Solutions. En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
+    : "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En qué puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
   addMessage(`${text}<div class="quick-replies">
-    <button type="button" data-quick-reply="${lang === "en" ? "I need a website quote" : "Necesito cotizar una pagina web"}">${lang === "en" ? "Website quote" : "Cotizar web"}</button>
+    <button type="button" data-quick-reply="${lang === "en" ? "I need a website quote" : "Necesito cotizar una página web"}">${lang === "en" ? "Website quote" : "Cotizar web"}</button>
     <button type="button" data-quick-reply="${lang === "en" ? "I need custom software" : "Necesito software a medida"}">${lang === "en" ? "Custom software" : "Software a medida"}</button>
-    <button type="button" data-quick-reply="${lang === "en" ? "I want to automate a process" : "Quiero automatizar un proceso"}">${lang === "en" ? "Automation" : "Automatizacion"}</button>
+    <button type="button" data-quick-reply="${lang === "en" ? "I want to automate a process" : "Quiero automatizar un proceso"}">${lang === "en" ? "Automation" : "Automatización"}</button>
   </div>`, "bot");
 };
 
@@ -981,4 +981,5 @@ if ("IntersectionObserver" in window) {
 
 loadMessages();
 applyManagedContent();
+
 
