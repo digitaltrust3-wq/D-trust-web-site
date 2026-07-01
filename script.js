@@ -636,7 +636,11 @@ const getBotResponse = (text) => {
 const addMessage = (html, sender) => {
   const bubble = document.createElement("div");
   bubble.className = `chatbot-bubble ${sender}`;
-  bubble.innerHTML = html;
+  if (sender === "user") {
+    bubble.textContent = html;
+  } else {
+    bubble.innerHTML = html;
+  }
   chatbotMessages?.appendChild(bubble);
   chatbotMessages?.scrollTo({ top: chatbotMessages.scrollHeight, behavior: "smooth" });
   saveMessages();
@@ -651,6 +655,7 @@ const saveMessages = () => {
   if (!chatbotMessages) return;
   const msgs = [...chatbotMessages.children].map(el => ({
     html: el.innerHTML,
+    text: el.textContent,
     sender: el.classList.contains("bot") ? "bot" : "user"
   }));
   localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
@@ -662,7 +667,11 @@ const loadMessages = () => {
     msgs.forEach(m => {
       const bubble = document.createElement("div");
       bubble.className = `chatbot-bubble ${m.sender}`;
-      bubble.innerHTML = m.html;
+      if (m.sender === "user") {
+        bubble.textContent = m.text || m.html || "";
+      } else {
+        bubble.innerHTML = m.html;
+      }
       chatbotMessages?.appendChild(bubble);
     });
   } catch {}

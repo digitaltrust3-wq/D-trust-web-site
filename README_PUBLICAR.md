@@ -5,7 +5,7 @@ Para que cualquier persona pueda abrir la pagina desde otro ordenador, debes sub
 - `index.html`
 - `styles.css`
 - `script.js`
-- `digital-trust-solutions-logo.png`
+- `digital-trust-logo.png`
 - `hero-technology.png`
 
 ## Opcion rapida: Netlify
