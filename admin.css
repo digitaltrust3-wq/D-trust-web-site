@@ -185,18 +185,34 @@ button {
   gap: 18px;
 }
 
-.metrics {
+.metrics,
+.status-grid,
+.chart-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 
+.metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.status-grid,
+.chart-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.chart-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .metrics article,
+.status-grid article,
 .card {
   padding: 18px;
 }
 
-.metrics article {
+.metrics article,
+.status-grid article {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(17, 29, 49, 0.82);
@@ -207,6 +223,96 @@ button {
   color: var(--white);
   font-size: 2.1rem;
   font-weight: 950;
+}
+
+.status-grid strong,
+.status-grid span {
+  display: block;
+}
+
+.status-grid span {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.status-grid span[data-state="ok"],
+.status-ok {
+  color: #68e39f;
+}
+
+.status-grid span[data-state="error"] {
+  color: #ff8b8b;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(150px, 0.8fr)) auto;
+  gap: 10px;
+  margin: 14px 0 16px;
+}
+
+.toolbar button {
+  white-space: nowrap;
+}
+
+.bar-chart {
+  display: grid;
+  gap: 12px;
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.8fr) minmax(140px, 1fr) 42px;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.chart-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chart-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(143, 160, 186, 0.18);
+}
+
+.chart-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+}
+
+.inline-select {
+  min-width: 145px;
+  padding: 8px 9px;
+}
+
+.message-cell {
+  min-width: 260px;
+  max-width: 440px;
+  white-space: normal;
+}
+
+.notes-input {
+  min-width: 220px;
+  padding: 9px;
+  font-size: 0.9rem;
+}
+
+.mini-button {
+  margin-top: 8px;
+  padding: 8px 10px;
+  font-size: 0.82rem;
+}
+
+.mini-button.muted {
+  background: rgba(17, 29, 49, 0.82);
 }
 
 .table-wrap {
@@ -276,6 +382,13 @@ td {
   padding: 12px;
 }
 
+.asset-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+}
+
 .preview-card iframe {
   width: 100%;
   height: 74vh;
@@ -295,6 +408,9 @@ td {
   }
 
   .metrics,
+  .status-grid,
+  .chart-grid,
+  .toolbar,
   .grid-form {
     grid-template-columns: 1fr;
   }

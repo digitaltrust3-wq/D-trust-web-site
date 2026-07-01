@@ -290,12 +290,12 @@ form?.addEventListener("submit", (event) => {
 
   if (notifyWhatsapp) {
     const waText = encodeURIComponent(
-      `Hola, soy ${name}. Vi su sitio web y quiero solicitar informaciÃ³n sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Telefono: ${phone}` : ""}`
+      `Hola, soy ${name}. Vi su sitio web y quiero solicitar informacion sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Telefono: ${phone}` : ""}`
     );
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
 
-  // Fallback si EmailJS no estÃ¡ cargado o no configurado
+  // Fallback si EmailJS no esta cargado o no configurado
   if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
     const fallbackSubmission = {
       id: crypto.randomUUID?.() || Date.now().toString(),
@@ -339,17 +339,17 @@ form?.addEventListener("submit", (event) => {
     phone: phone || "No proporcionado"
   };
 
-  console.log("[EmailJS] Datos notificaciÃ³n:", emailData);
+  console.log("[EmailJS] Datos notificacion:", emailData);
   console.log("[EmailJS] Datos bienvenida:", welcomeData);
 
-  // EnvÃ­o SIMULTÃNEO de ambos correos (mÃ¡s rÃ¡pido y robusto)
+  // Envio simultaneo de ambos correos.
   const notificationPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
     .then((res) => {
-      console.log("[EmailJS] NotificaciÃ³n OK:", res.status, res.text);
+      console.log("[EmailJS] Notificacion OK:", res.status, res.text);
       return { type: "notificacion", status: "ok", res };
     })
     .catch((err) => {
-      console.error("[EmailJS] NotificaciÃ³n ERROR:", err);
+      console.error("[EmailJS] Notificacion ERROR:", err);
       return { type: "notificacion", status: "error", err };
     });
 
@@ -371,8 +371,8 @@ form?.addEventListener("submit", (event) => {
       const notifOk = notificacion?.status === "ok";
       const bienvenidaOk = bienvenida?.status === "ok";
 
-      console.log("[EmailJS] Resultado notificaciÃ³n:", notifOk ? "OK" : "FALLÃ“");
-      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLÃ“");
+      console.log("[EmailJS] Resultado notificacion:", notifOk ? "OK" : "FALLO");
+      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLO");
 
       // Guardar en localStorage como respaldo
       const submission = {
@@ -394,12 +394,12 @@ form?.addEventListener("submit", (event) => {
       saveInteractionToDatabase("contact_form", submission);
 
       if (notifOk && bienvenidaOk) {
-        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmaciÃ³n enviada al cliente.";
+        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmacion enviada al cliente.";
         form.reset();
       } else if (notifOk) {
-        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmaciÃ³n al cliente fallÃ³.";
+        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmacion al cliente fallo.";
       } else if (bienvenidaOk) {
-        formStatus.textContent = "ConfirmaciÃ³n enviada al cliente, pero tu correo de notificaciÃ³n fallÃ³. Datos guardados.";
+        formStatus.textContent = "Confirmacion enviada al cliente, pero tu correo de notificacion fallo. Datos guardados.";
       } else {
         const msg1 = notificacion?.err?.text || notificacion?.err?.message || "";
         const msg2 = bienvenida?.err?.text || bienvenida?.err?.message || "";
@@ -411,16 +411,16 @@ form?.addEventListener("submit", (event) => {
 // ===== EMAILJS CONFIG =====
 // INSTRUCCIONES OBLIGATORIAS:
 // 1. Ve a https://emailjs.com y conecta tu correo (Email Service).
-// 2. Crea DOS plantillas. En CADA UNA configura el campo "To Email" asÃ­:
-//    - Plantilla A (notificaciÃ³n a TI):   To Email = tu-correo@ejemplo.com (fijo)
+// 2. Crea DOS plantillas. En CADA UNA configura el campo "To Email" asi:
+//    - Plantilla A (notificacion a TI):   To Email = tu-correo@ejemplo.com (fijo)
 //    - Plantilla B (bienvenida al CLIENTE): To Email = {{to_email}} (variable)
 // 3. En el CUERPO de cada plantilla usa las variables entre {{dobles_llaves}}:
 //    {{name}}, {{email}}, {{phone}}, {{service}}, {{budget}}, {{message}}
-// 4. Copia los IDs exactos de tu dashboard aquÃ­ abajo.
+// 4. Copia los IDs exactos de tu dashboard aqui abajo.
 const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
 const EMAILJS_SERVICE_ID = "service_2anafbr";
-const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificaciÃ³n a Digital Trust Solutions
-const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienvenida al cliente (REEMPLAZAR)
+const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificacion a Digital Trust Solutions
+const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienvenida al cliente
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
@@ -713,8 +713,8 @@ const extractLeadInfo = (messages = []) => {
     services: [...new Set(services)].map((service) => serviceLabels[service][lang]),
     email: text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || "",
     phone: text.match(/(?:\+?\d[\s-]?){8,16}/)?.[0]?.trim() || "",
-    budget: text.match(/(?:\$|usd|cop|dolares|dÃ³lares)\s?[\d.,]+|[\d.,]+\s?(?:usd|cop|dolares|dÃ³lares)/i)?.[0] || "",
-    urgency: /urgente|esta semana|hoy|rapido|rÃ¡pido|asap|urgent|this week|today|soon/.test(lower)
+    budget: text.match(/(?:\$|usd|cop|dolares|dolares)\s?[\d.,]+|[\d.,]+\s?(?:usd|cop|dolares|dolares)/i)?.[0] || "",
+    urgency: /urgente|esta semana|hoy|rapido|rapido|asap|urgent|this week|today|soon/.test(lower)
       ? (lang === "en" ? "High" : "Alta")
       : (lang === "en" ? "Normal" : "Normal"),
     rawText: text
@@ -831,13 +831,46 @@ const getBotResponse = (text) => {
   return botReplies.fallback[lang];
 };
 
+const sanitizeBotHtml = (html = "") => {
+  const template = document.createElement("template");
+  template.innerHTML = String(html);
+  const allowedTags = new Set(["A", "BR", "OL", "UL", "LI", "STRONG", "DIV", "BUTTON"]);
+  const allowedButtonAttrs = new Set(["type", "data-quick-reply"]);
+
+  [...template.content.querySelectorAll("*")].forEach((node) => {
+    if (!allowedTags.has(node.tagName)) {
+      node.replaceWith(document.createTextNode(node.textContent || ""));
+      return;
+    }
+
+    [...node.attributes].forEach((attr) => {
+      const name = attr.name.toLowerCase();
+      if (node.tagName === "A") {
+        if (!["href", "target", "rel"].includes(name)) node.removeAttribute(attr.name);
+        if (name === "href" && !/^https?:\/\//i.test(attr.value)) node.removeAttribute(attr.name);
+      } else if (node.tagName === "BUTTON") {
+        if (!allowedButtonAttrs.has(name)) node.removeAttribute(attr.name);
+      } else if (name !== "class" || node.className !== "quick-replies") {
+        node.removeAttribute(attr.name);
+      }
+    });
+
+    if (node.tagName === "A") {
+      node.setAttribute("target", "_blank");
+      node.setAttribute("rel", "noreferrer");
+    }
+  });
+
+  return template.innerHTML;
+};
+
 const addMessage = (html, sender) => {
   const bubble = document.createElement("div");
   bubble.className = `chatbot-bubble ${sender}`;
   if (sender === "user") {
     bubble.textContent = html;
   } else {
-    bubble.innerHTML = html;
+    bubble.innerHTML = sanitizeBotHtml(html);
   }
   chatbotMessages?.appendChild(bubble);
   chatbotMessages?.scrollTo({ top: chatbotMessages.scrollHeight, behavior: "smooth" });
@@ -868,7 +901,7 @@ const loadMessages = () => {
       if (m.sender === "user") {
         bubble.textContent = m.text || m.html || "";
       } else {
-        bubble.innerHTML = m.html;
+        bubble.innerHTML = sanitizeBotHtml(m.html || m.text || "");
       }
       chatbotMessages?.appendChild(bubble);
     });
@@ -880,7 +913,7 @@ const showWelcome = () => {
   const lang = isEnglish() ? "en" : "es";
   const text = lang === "en"
     ? "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
-    : "Â¡Hola! Soy el asistente de Digital Trust Solutions. Â¿En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
+    : "Hola! Soy el asistente de Digital Trust Solutions. En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
   addMessage(`${text}<div class="quick-replies">
     <button type="button" data-quick-reply="${lang === "en" ? "I need a website quote" : "Necesito cotizar una pagina web"}">${lang === "en" ? "Website quote" : "Cotizar web"}</button>
     <button type="button" data-quick-reply="${lang === "en" ? "I need custom software" : "Necesito software a medida"}">${lang === "en" ? "Custom software" : "Software a medida"}</button>

@@ -19,7 +19,7 @@
             <input type="email" name="email" autocomplete="email" required>
           </label>
           <label>
-            Contraseña
+            Contrasena
             <input type="password" name="password" autocomplete="current-password" required>
           </label>
           <button type="submit">Ingresar</button>
@@ -58,6 +58,21 @@
               <article><span data-count="messages">0</span><p>Mensajes</p></article>
               <article><span data-count="sessions">0</span><p>Sesiones</p></article>
             </div>
+            <div class="status-grid">
+              <article><strong>Supabase</strong><span data-health="supabase">Pendiente</span></article>
+              <article><strong>Base de datos</strong><span data-health="database">Pendiente</span></article>
+              <article><strong>Usuario activo</strong><span data-health="user">Sin sesion</span></article>
+            </div>
+            <div class="chart-grid">
+              <div class="card">
+                <h3>Leads por servicio</h3>
+                <div class="bar-chart" data-service-chart></div>
+              </div>
+              <div class="card">
+                <h3>Leads por estado</h3>
+                <div class="bar-chart" data-status-chart></div>
+              </div>
+            </div>
             <div class="card">
               <h3>Actividad reciente</h3>
               <div class="table-wrap">
@@ -72,9 +87,23 @@
           <section class="panel" data-panel="leads">
             <div class="card">
               <h3>Personas interesadas</h3>
+              <div class="toolbar">
+                <input type="search" placeholder="Buscar email, telefono, mensaje..." data-lead-search>
+                <select data-lead-status-filter>
+                  <option value="">Todos los estados</option>
+                  <option value="new">Nuevo</option>
+                  <option value="contacted">Contactado</option>
+                  <option value="proposal">En propuesta</option>
+                  <option value="won">Ganado</option>
+                  <option value="lost">Perdido</option>
+                </select>
+                <input type="search" placeholder="Filtrar por servicio" data-lead-service-filter>
+                <input type="date" data-lead-date-from>
+                <button type="button" data-export-leads>Exportar CSV</button>
+              </div>
               <div class="table-wrap">
                 <table>
-                  <thead><tr><th>Fecha</th><th>Estado</th><th>Servicio</th><th>Email</th><th>Telefono</th><th>Mensaje</th></tr></thead>
+                  <thead><tr><th>Fecha</th><th>Estado</th><th>Servicio</th><th>Email</th><th>Telefono</th><th>Mensaje</th><th>Notas internas</th></tr></thead>
                   <tbody data-leads></tbody>
                 </table>
               </div>
@@ -84,6 +113,17 @@
           <section class="panel" data-panel="messages">
             <div class="card">
               <h3>Conversaciones del chatbot</h3>
+              <div class="toolbar">
+                <input type="search" placeholder="Buscar sesion, autor o mensaje..." data-message-search>
+                <select data-message-sender-filter>
+                  <option value="">Todos los autores</option>
+                  <option value="user">Cliente</option>
+                  <option value="cliente">Cliente</option>
+                  <option value="bot">Bot</option>
+                  <option value="system">Sistema</option>
+                </select>
+                <button type="button" data-export-messages>Exportar CSV</button>
+              </div>
               <div class="table-wrap">
                 <table>
                   <thead><tr><th>Fecha</th><th>Sesion</th><th>Autor</th><th>Mensaje</th></tr></thead>
@@ -97,13 +137,13 @@
             <form class="card grid-form" data-content-form>
               <h3>Editar textos de la pagina</h3>
               <label>
-                Clave del texto
+                Texto a modificar
                 <select name="content_key" data-content-key></select>
               </label>
               <label>
                 Idioma
                 <select name="language">
-                  <option value="es">Español</option>
+                  <option value="es">Espanol</option>
                   <option value="en">English</option>
                   <option value="all">Todos</option>
                 </select>
@@ -119,7 +159,7 @@
               <h3>Textos administrados</h3>
               <div class="table-wrap">
                 <table>
-                  <thead><tr><th>Clave</th><th>Idioma</th><th>Texto</th><th>Publicado</th></tr></thead>
+                  <thead><tr><th>Campo</th><th>Idioma</th><th>Texto</th><th>Publicado</th></tr></thead>
                   <tbody data-content-list></tbody>
                 </table>
               </div>
@@ -128,7 +168,7 @@
 
           <section class="panel" data-panel="assets">
             <form class="card grid-form" data-asset-form>
-              <h3>Añadir o cambiar imagenes</h3>
+              <h3>Anadir o cambiar imagenes</h3>
               <label>
                 Ubicacion
                 <select name="asset_slot">
