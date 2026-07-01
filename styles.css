@@ -87,11 +87,11 @@ a {
 }
 
 .brand-logo {
-  transition: width 0.35s ease;
+  transition: height 0.35s ease;
 }
 
 .site-header.is-scrolled .brand-logo {
-  width: clamp(118px, 10vw, 145px);
+  height: clamp(38px, 4vw, 46px);
 }
 
 .brand {
@@ -105,8 +105,8 @@ a {
 
 .brand-logo {
   display: block;
-  width: clamp(168px, 15vw, 230px);
-  height: auto;
+  width: auto;
+  height: clamp(48px, 5vw, 62px);
   transition: all 0.4s ease;
 }
 
@@ -927,7 +927,7 @@ textarea:focus {
   }
 
   .brand-logo {
-    width: clamp(150px, 18vw, 190px);
+    height: clamp(44px, 5vw, 56px);
     transition: all 0.4s ease;
   }
 
@@ -956,7 +956,7 @@ textarea:focus {
   }
 
   .brand-logo {
-    width: clamp(138px, 19vw, 168px);
+    height: clamp(40px, 5vw, 50px);
   }
 
   .main-nav {
@@ -1008,7 +1008,7 @@ textarea:focus {
   }
 
   .brand-logo {
-    width: clamp(142px, 44vw, 180px);
+    height: clamp(42px, 9vw, 54px);
   }
 
   .nav-toggle {
