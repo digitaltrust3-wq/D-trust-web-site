@@ -1242,6 +1242,22 @@ textarea:focus {
   text-decoration: underline;
 }
 
+.chatbot-bubble ol,
+.chatbot-bubble ul {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.chatbot-bubble li {
+  line-height: 1.45;
+}
+
+.chatbot-bubble strong {
+  color: var(--white);
+}
+
 .chatbot-bubble .quick-replies {
   display: flex;
   flex-wrap: wrap;

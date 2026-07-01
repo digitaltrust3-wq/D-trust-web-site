@@ -1,4 +1,4 @@
-const header = document.querySelector("[data-header]");
+﻿const header = document.querySelector("[data-header]");
 const nav = document.querySelector("[data-nav]");
 const navToggle = document.querySelector("[data-nav-toggle]");
 const year = document.querySelector("[data-year]");
@@ -287,12 +287,12 @@ form?.addEventListener("submit", (event) => {
 
   if (notifyWhatsapp) {
     const waText = encodeURIComponent(
-      `Hola, soy ${name}. Vi su sitio web y quiero solicitar información sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Telefono: ${phone}` : ""}`
+      `Hola, soy ${name}. Vi su sitio web y quiero solicitar informaciÃ³n sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Telefono: ${phone}` : ""}`
     );
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
 
-  // Fallback si EmailJS no está cargado o no configurado
+  // Fallback si EmailJS no estÃ¡ cargado o no configurado
   if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
     const subject = encodeURIComponent(`Solicitud de ${service}`);
     const body = encodeURIComponent(
@@ -321,17 +321,17 @@ form?.addEventListener("submit", (event) => {
     phone: phone || "No proporcionado"
   };
 
-  console.log("[EmailJS] Datos notificación:", emailData);
+  console.log("[EmailJS] Datos notificaciÃ³n:", emailData);
   console.log("[EmailJS] Datos bienvenida:", welcomeData);
 
-  // Envío SIMULTÁNEO de ambos correos (más rápido y robusto)
+  // EnvÃ­o SIMULTÃNEO de ambos correos (mÃ¡s rÃ¡pido y robusto)
   const notificationPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
     .then((res) => {
-      console.log("[EmailJS] Notificación OK:", res.status, res.text);
+      console.log("[EmailJS] NotificaciÃ³n OK:", res.status, res.text);
       return { type: "notificacion", status: "ok", res };
     })
     .catch((err) => {
-      console.error("[EmailJS] Notificación ERROR:", err);
+      console.error("[EmailJS] NotificaciÃ³n ERROR:", err);
       return { type: "notificacion", status: "error", err };
     });
 
@@ -353,8 +353,8 @@ form?.addEventListener("submit", (event) => {
       const notifOk = notificacion?.status === "ok";
       const bienvenidaOk = bienvenida?.status === "ok";
 
-      console.log("[EmailJS] Resultado notificación:", notifOk ? "OK" : "FALLÓ");
-      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLÓ");
+      console.log("[EmailJS] Resultado notificaciÃ³n:", notifOk ? "OK" : "FALLÃ“");
+      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLÃ“");
 
       // Guardar en localStorage como respaldo
       const submission = {
@@ -376,12 +376,12 @@ form?.addEventListener("submit", (event) => {
       saveInteractionToDatabase("contact_form", submission);
 
       if (notifOk && bienvenidaOk) {
-        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmación enviada al cliente.";
+        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmaciÃ³n enviada al cliente.";
         form.reset();
       } else if (notifOk) {
-        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmación al cliente falló.";
+        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmaciÃ³n al cliente fallÃ³.";
       } else if (bienvenidaOk) {
-        formStatus.textContent = "Confirmación enviada al cliente, pero tu correo de notificación falló. Datos guardados.";
+        formStatus.textContent = "ConfirmaciÃ³n enviada al cliente, pero tu correo de notificaciÃ³n fallÃ³. Datos guardados.";
       } else {
         const msg1 = notificacion?.err?.text || notificacion?.err?.message || "";
         const msg2 = bienvenida?.err?.text || bienvenida?.err?.message || "";
@@ -393,15 +393,15 @@ form?.addEventListener("submit", (event) => {
 // ===== EMAILJS CONFIG =====
 // INSTRUCCIONES OBLIGATORIAS:
 // 1. Ve a https://emailjs.com y conecta tu correo (Email Service).
-// 2. Crea DOS plantillas. En CADA UNA configura el campo "To Email" así:
-//    - Plantilla A (notificación a TI):   To Email = tu-correo@ejemplo.com (fijo)
+// 2. Crea DOS plantillas. En CADA UNA configura el campo "To Email" asÃ­:
+//    - Plantilla A (notificaciÃ³n a TI):   To Email = tu-correo@ejemplo.com (fijo)
 //    - Plantilla B (bienvenida al CLIENTE): To Email = {{to_email}} (variable)
 // 3. En el CUERPO de cada plantilla usa las variables entre {{dobles_llaves}}:
 //    {{name}}, {{email}}, {{phone}}, {{service}}, {{budget}}, {{message}}
-// 4. Copia los IDs exactos de tu dashboard aquí abajo.
+// 4. Copia los IDs exactos de tu dashboard aquÃ­ abajo.
 const EMAILJS_PUBLIC_KEY = "eYzLueLYMlnAXPMkq";
 const EMAILJS_SERVICE_ID = "service_2anafbr";
-const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificación a Digital Trust Solutions
+const EMAILJS_TEMPLATE_ID = "template_x8m5dos";        // Plantilla A: notificaciÃ³n a Digital Trust Solutions
 const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienvenida al cliente (REEMPLAZAR)
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
@@ -514,8 +514,8 @@ const extractLeadInfo = (messages = []) => {
     services: [...new Set(services)].map((service) => serviceLabels[service][lang]),
     email: text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || "",
     phone: text.match(/(?:\+?\d[\s-]?){8,16}/)?.[0]?.trim() || "",
-    budget: text.match(/(?:\$|usd|cop|dolares|dólares)\s?[\d.,]+|[\d.,]+\s?(?:usd|cop|dolares|dólares)/i)?.[0] || "",
-    urgency: /urgente|esta semana|hoy|rapido|rápido|asap|urgent|this week|today|soon/.test(lower)
+    budget: text.match(/(?:\$|usd|cop|dolares|dÃ³lares)\s?[\d.,]+|[\d.,]+\s?(?:usd|cop|dolares|dÃ³lares)/i)?.[0] || "",
+    urgency: /urgente|esta semana|hoy|rapido|rÃ¡pido|asap|urgent|this week|today|soon/.test(lower)
       ? (lang === "en" ? "High" : "Alta")
       : (lang === "en" ? "Normal" : "Normal"),
     rawText: text
@@ -562,59 +562,58 @@ const notifyLeadByEmail = async (reason = "Cliente interesado desde el chatbot")
 
 const botReplies = {
   price: {
-    es: "Nuestros planes comienzan desde $499 para web profesional y $1,900 para software a medida. Puedes cotizar en el formulario de contacto o seguir hablando conmigo.",
-    en: "Our plans start at $499 for a professional website and $1,900 for custom software. You can request a quote in the contact form or keep chatting with me."
+    es: "Claro. Estos son valores de referencia:<ol><li><strong>Web profesional:</strong> desde $499.</li><li><strong>Software a medida:</strong> desde $1,900.</li><li><strong>Soporte mensual:</strong> desde $149/mes.</li></ol>Para cotizar mejor, dime:<ul><li>Servicio que necesitas.</li><li>Funciones principales.</li><li>Presupuesto aproximado.</li><li>Fecha ideal de lanzamiento.</li></ul>",
+    en: "Sure. These are reference prices:<ol><li><strong>Professional website:</strong> from $499.</li><li><strong>Custom software:</strong> from $1,900.</li><li><strong>Monthly support:</strong> from $149/month.</li></ol>For a better quote, tell me:<ul><li>Service needed.</li><li>Main features.</li><li>Approximate budget.</li><li>Ideal launch date.</li></ul>"
   },
   time: {
-    es: "Una web corporativa suele tardar 2-4 semanas. Un software a medida puede ser 30-60 dias para el MVP. ¿Tienes fecha limite?",
-    en: "A corporate website usually takes 2-4 weeks. Custom software can be 30-60 days for an MVP. Do you have a deadline?"
+    es: "Los tiempos dependen del alcance:<ol><li><strong>Landing page:</strong> 1 a 2 semanas.</li><li><strong>Web corporativa:</strong> 2 a 4 semanas.</li><li><strong>Tienda online:</strong> 3 a 6 semanas.</li><li><strong>Software a medida:</strong> 30 a 60 dias para un MVP.</li></ol>Si tienes una fecha limite, cuentamela y revisamos la mejor ruta.",
+    en: "Timelines depend on scope:<ol><li><strong>Landing page:</strong> 1 to 2 weeks.</li><li><strong>Corporate website:</strong> 2 to 4 weeks.</li><li><strong>Online store:</strong> 3 to 6 weeks.</li><li><strong>Custom software:</strong> 30 to 60 days for an MVP.</li></ol>If you have a deadline, share it and we will review the best route."
   },
   human: {
-    es: 'Te conecto con un humano. <a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Abrir WhatsApp</a>',
-    en: 'Connecting you to a human. <a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Open WhatsApp</a>'
+    es: 'Perfecto. Puedes hablar directamente con nosotros por WhatsApp:<br><br><a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Abrir WhatsApp</a><br><br>Para ayudarte mas rapido, envia:<ol><li>Tu nombre.</li><li>Servicio que necesitas.</li><li>Fecha ideal.</li><li>Presupuesto aproximado.</li></ol>',
+    en: 'Perfect. You can talk directly with us on WhatsApp:<br><br><a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Open WhatsApp</a><br><br>To help you faster, send:<ol><li>Your name.</li><li>Service needed.</li><li>Ideal date.</li><li>Approximate budget.</li></ol>'
   },
   web: {
-    es: "Ofrecemos diseno y desarrollo de paginas web corporativas, landing pages, blogs y tiendas online. ¿Que tipo de proyecto tienes en mente?",
-    en: "We offer design and development of corporate websites, landing pages, blogs, and online stores. What kind of project do you have in mind?"
+    es: "Podemos ayudarte con desarrollo web profesional:<ol><li>Landing pages para captar clientes.</li><li>Paginas corporativas para presentar servicios.</li><li>Blogs o secciones de contenido.</li><li>Formularios, WhatsApp, mapas y analitica.</li></ol>Pregunta clave: ¿quieres una web para informar, captar clientes o vender?",
+    en: "We can help with professional web development:<ol><li>Landing pages to capture leads.</li><li>Corporate websites to present services.</li><li>Blogs or content sections.</li><li>Forms, WhatsApp, maps, and analytics.</li></ol>Key question: do you want a website to inform, capture leads, or sell?"
   },
   software: {
-    es: "Desarrollamos software a medida: CRM, reservas, inventarios, reportes, paneles internos y mas. ¿Que proceso necesitas automatizar?",
-    en: "We develop custom software: CRM, bookings, inventory, reports, internal dashboards, and more. What process do you need to automate?"
+    es: "El software a medida sirve para ordenar procesos internos. Podemos crear:<ol><li>CRM para clientes y ventas.</li><li>Sistemas de reservas o citas.</li><li>Inventarios y reportes.</li><li>Paneles administrativos.</li><li>Portales para clientes o empleados.</li></ol>Para orientarte mejor: ¿que proceso quieres controlar?",
+    en: "Custom software helps organize internal processes. We can build:<ol><li>CRM for clients and sales.</li><li>Booking or appointment systems.</li><li>Inventory and reports.</li><li>Admin dashboards.</li><li>Client or employee portals.</li></ol>To guide you better: what process do you want to control?"
   },
   ecommerce: {
-    es: "Construimos tiendas online con carrito, checkout, pasarelas de pago, inventario y envios. ¿Ya tienes productos listos?",
-    en: "We build online stores with cart, checkout, payment gateways, inventory, and shipping. Do you already have products ready?"
+    es: "Para una tienda online podemos incluir:<ol><li>Catalogo de productos.</li><li>Carrito y checkout.</li><li>Pasarela de pago.</li><li>Inventario y cupones.</li><li>Gestion de pedidos y envios.</li></ol>Para cotizar: ¿cuantos productos quieres vender y que metodo de pago necesitas?",
+    en: "For an online store we can include:<ol><li>Product catalog.</li><li>Cart and checkout.</li><li>Payment gateway.</li><li>Inventory and coupons.</li><li>Order and shipping management.</li></ol>To quote: how many products do you want to sell and what payment method do you need?"
   },
   support: {
-    es: "Ofrecemos soporte mensual desde $149/mes con backups, actualizaciones, monitoreo y mejoras. ¿Ya tienes un sitio que necesita mantenimiento?",
-    en: "We offer monthly support from $149/month with backups, updates, monitoring, and improvements. Do you already have a site that needs maintenance?"
+    es: "El soporte mensual puede cubrir:<ol><li>Backups y recuperacion.</li><li>Actualizaciones tecnicas.</li><li>Monitoreo y seguridad.</li><li>Correccion de errores.</li><li>Mejoras pequeñas mensuales.</li></ol>Pregunta: ¿tu sitio ya esta publicado o esta en desarrollo?",
+    en: "Monthly support can include:<ol><li>Backups and recovery.</li><li>Technical updates.</li><li>Monitoring and security.</li><li>Bug fixes.</li><li>Small monthly improvements.</li></ol>Question: is your site already published or still in development?"
   },
   automation: {
-    es: "Podemos automatizar formularios, reportes, WhatsApp, correos, hojas de calculo, CRM, recordatorios y procesos internos. ¿Que tarea repites todos los dias y quieres eliminar?",
-    en: "We can automate forms, reports, WhatsApp, email, spreadsheets, CRM, reminders, and internal processes. What repetitive task do you want to eliminate?"
+    es: "Podemos automatizar tareas repetitivas como:<ol><li>Enviar correos o WhatsApp automaticos.</li><li>Guardar formularios en hojas de calculo o CRM.</li><li>Generar reportes programados.</li><li>Crear recordatorios y alertas.</li><li>Conectar herramientas internas.</li></ol>Para empezar: ¿que tarea repites todos los dias?",
+    en: "We can automate repetitive tasks such as:<ol><li>Sending automatic emails or WhatsApp messages.</li><li>Saving forms into spreadsheets or CRM.</li><li>Generating scheduled reports.</li><li>Creating reminders and alerts.</li><li>Connecting internal tools.</li></ol>To start: what task do you repeat every day?"
   },
   integrations: {
-    es: "Integramos APIs, pasarelas de pago, CRM, ERP, Google Sheets, webhooks y servicios externos. ¿Que herramientas necesitas conectar?",
-    en: "We integrate APIs, payment gateways, CRM, ERP, Google Sheets, webhooks, and external services. Which tools do you need to connect?"
+    es: "Podemos conectar tus herramientas para que trabajen juntas:<ol><li>APIs y webhooks.</li><li>Pasarelas de pago.</li><li>CRM o ERP.</li><li>Google Sheets y formularios.</li><li>Sistemas internos existentes.</li></ol>Dime que herramientas usas y que informacion debe viajar entre ellas.",
+    en: "We can connect your tools so they work together:<ol><li>APIs and webhooks.</li><li>Payment gateways.</li><li>CRM or ERP.</li><li>Google Sheets and forms.</li><li>Existing internal systems.</li></ol>Tell me what tools you use and what information should move between them."
   },
   security: {
-    es: "Trabajamos con SSL, backups, control de accesos, actualizaciones, monitoreo y buenas practicas de seguridad. Si manejas datos de clientes, podemos revisar el nivel de proteccion necesario.",
-    en: "We work with SSL, backups, access control, updates, monitoring, and security best practices. If you handle customer data, we can review the protection level needed."
+    es: "En seguridad podemos ayudarte con:<ol><li>Certificado SSL.</li><li>Backups periodicos.</li><li>Control de accesos.</li><li>Actualizaciones y monitoreo.</li><li>Buenas practicas para datos de clientes.</li></ol>Si manejas informacion sensible, podemos revisar el nivel de proteccion necesario.",
+    en: "For security we can help with:<ol><li>SSL certificate.</li><li>Periodic backups.</li><li>Access control.</li><li>Updates and monitoring.</li><li>Best practices for customer data.</li></ol>If you handle sensitive information, we can review the protection level needed."
   },
   lead: {
-    es: "Perfecto, suena como una oportunidad real. Para prepararte una propuesta dime por favor: 1) servicio que necesitas, 2) presupuesto aproximado, 3) fecha ideal, y 4) tu correo o WhatsApp.",
-    en: "Great, this sounds like a real opportunity. To prepare a proposal, please share: 1) service needed, 2) approximate budget, 3) ideal date, and 4) your email or WhatsApp."
+    es: "Excelente. Para prepararte una propuesta necesito estos datos:<ol><li><strong>Servicio:</strong> web, software, tienda online, automatizacion o soporte.</li><li><strong>Objetivo:</strong> que problema quieres resolver.</li><li><strong>Presupuesto aproximado:</strong> si ya tienes un rango.</li><li><strong>Fecha ideal:</strong> cuando quieres lanzar.</li><li><strong>Contacto:</strong> correo o WhatsApp.</li></ol>Con eso puedo enviar un resumen al equipo comercial.",
+    en: "Excellent. To prepare a proposal, I need these details:<ol><li><strong>Service:</strong> website, software, online store, automation, or support.</li><li><strong>Goal:</strong> what problem you want to solve.</li><li><strong>Approximate budget:</strong> if you already have a range.</li><li><strong>Ideal date:</strong> when you want to launch.</li><li><strong>Contact:</strong> email or WhatsApp.</li></ol>With that, I can send a summary to the sales team."
   },
   hello: {
-    es: "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En que puedo ayudarte hoy?",
-    en: "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?"
+    es: "Hola, soy el asistente de Digital Trust Solutions. Puedo ayudarte con:<ol><li>Paginas web.</li><li>Software a medida.</li><li>Tiendas online.</li><li>Automatizacion.</li><li>Soporte y mantenimiento.</li></ol>¿Sobre que servicio quieres informacion?",
+    en: "Hello, I'm the Digital Trust Solutions assistant. I can help with:<ol><li>Websites.</li><li>Custom software.</li><li>Online stores.</li><li>Automation.</li><li>Support and maintenance.</li></ol>Which service would you like information about?"
   },
   fallback: {
-    es: "Entiendo. Puedo ayudarte con informacion sobre desarrollo web, software a medida, tiendas online, automatizacion y soporte. ¿Que necesitas?",
-    en: "I understand. I can help you with information about web development, custom software, online stores, automation, and support. What do you need?"
+    es: "Entiendo. Para orientarte mejor, elige una opcion:<ol><li>Quiero una pagina web.</li><li>Necesito software a medida.</li><li>Quiero vender online.</li><li>Necesito automatizar un proceso.</li><li>Busco soporte o mantenimiento.</li></ol>Tambien puedes escribir tu caso con tus propias palabras.",
+    en: "I understand. To guide you better, choose one option:<ol><li>I need a website.</li><li>I need custom software.</li><li>I want to sell online.</li><li>I need to automate a process.</li><li>I need support or maintenance.</li></ol>You can also describe your case in your own words."
   }
 };
-
 const getBotResponse = (text) => {
   const lower = text.toLowerCase();
   const lang = isEnglish() ? "en" : "es";
@@ -682,7 +681,7 @@ const showWelcome = () => {
   const lang = isEnglish() ? "en" : "es";
   const text = lang === "en"
     ? "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
-    : "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
+    : "Â¡Hola! Soy el asistente de Digital Trust Solutions. Â¿En que puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
   addMessage(`${text}<div class="quick-replies">
     <button type="button" data-quick-reply="${lang === "en" ? "I need a website quote" : "Necesito cotizar una pagina web"}">${lang === "en" ? "Website quote" : "Cotizar web"}</button>
     <button type="button" data-quick-reply="${lang === "en" ? "I need custom software" : "Necesito software a medida"}">${lang === "en" ? "Custom software" : "Software a medida"}</button>
@@ -749,3 +748,4 @@ if ("IntersectionObserver" in window) {
 }
 
 loadMessages();
+
