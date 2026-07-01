@@ -249,7 +249,10 @@ if (year) {
 }
 
 languageButtons.forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.langSwitch));
+  button.addEventListener("click", () => {
+    setLanguage(button.dataset.langSwitch);
+    applyManagedContent();
+  });
 });
 
 setLanguage(localStorage.getItem("digital-trust-language") || "es");
@@ -294,6 +297,21 @@ form?.addEventListener("submit", (event) => {
 
   // Fallback si EmailJS no estÃ¡ cargado o no configurado
   if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
+    const fallbackSubmission = {
+      id: crypto.randomUUID?.() || Date.now().toString(),
+      timestamp: new Date().toISOString(),
+      name,
+      email,
+      phone: phone || "No proporcionado",
+      service,
+      budget,
+      message,
+      notificacionOk: false,
+      bienvenidaOk: false,
+      fallback: "mailto"
+    };
+    saveInteractionToDatabase("contact_form", fallbackSubmission);
+
     const subject = encodeURIComponent(`Solicitud de ${service}`);
     const body = encodeURIComponent(
       `Nombre: ${name}\nEmail: ${email}\nTelefono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
@@ -414,37 +432,218 @@ if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
 // ===== DATABASE CONFIG =====
 // Para guardar conversaciones reales en una base central, crea una tabla en Supabase
 // con el archivo database-schema.sql y reemplaza estos valores.
-const SUPABASE_URL = "";
-const SUPABASE_ANON_KEY = "";
-const SUPABASE_TABLE = "chat_interactions";
+const SUPABASE_URL = window.DTS_CONFIG?.SUPABASE_URL || "";
+const SUPABASE_ANON_KEY = window.DTS_CONFIG?.SUPABASE_ANON_KEY || "";
+const DATABASE_TABLES = {
+  sessions: "chat_sessions",
+  messages: "chat_messages",
+  leads: "leads",
+  contactRequests: "contact_requests",
+  events: "interaction_events"
+};
+
+const isDatabaseConfigured = () => Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+
+const postToDatabase = async (table, data, options = {}) => {
+  if (!isDatabaseConfigured()) return { skipped: true };
+
+  const params = options.upsertOnConflict ? `?on_conflict=${options.upsertOnConflict}` : "";
+  const prefer = options.upsertOnConflict ? "resolution=merge-duplicates,return=minimal" : "return=minimal";
+
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
+    method: "POST",
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      "Content-Type": "application/json",
+      Prefer: prefer
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Supabase ${table} error: ${response.status} ${errorText}`);
+  }
+
+  return { ok: true };
+};
+
+const getFromDatabase = async (table, query = "select=*") => {
+  if (!isDatabaseConfigured()) return [];
+
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Supabase ${table} read error: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+const applyManagedContent = async () => {
+  if (!isDatabaseConfigured()) return;
+
+  try {
+    const language = document.documentElement.lang || "es";
+    const contentRows = await getFromDatabase(
+      "site_content",
+      `select=content_key,language,value&is_published=eq.true&language=in.(${language},all)`
+    );
+
+    contentRows.forEach((row) => {
+      const element = document.querySelector(`[data-i18n="${row.content_key}"]`);
+      if (element && row.value) {
+        element.textContent = row.value;
+      }
+    });
+
+    const assetRows = await getFromDatabase(
+      "site_assets",
+      "select=asset_slot,file_url,alt_text&is_active=eq.true"
+    );
+
+    assetRows.forEach((asset) => {
+      if (asset.asset_slot === "logo") {
+        const logo = document.querySelector(".brand-logo");
+        if (logo && asset.file_url) {
+          logo.src = asset.file_url;
+          logo.alt = asset.alt_text || "Logo Digital Trust Solutions";
+        }
+      }
+
+      if (asset.asset_slot === "hero") {
+        const hero = document.querySelector(".hero-asset");
+        if (hero && asset.file_url) {
+          hero.src = asset.file_url;
+          hero.alt = asset.alt_text || "Imagen principal";
+        }
+      }
+    });
+  } catch (error) {
+    console.warn("[Content] No se pudo cargar contenido administrado.", error);
+  }
+};
+
+const getSessionIdSafe = (payload = {}) => {
+  if (payload.session_id) return payload.session_id;
+  if (typeof getSessionId === "function") return getSessionId();
+  return localStorage.getItem("digital-trust-chat-session-id") || `session-${Date.now()}`;
+};
+
+const createBaseDatabaseRecord = (eventType, payload) => ({
+  session_id: getSessionIdSafe(payload),
+  event_type: eventType,
+  payload,
+  page: window.location.href,
+  user_agent: navigator.userAgent,
+  language: document.documentElement.lang,
+  created_at: new Date().toISOString()
+});
+
+const upsertSessionTrace = async (sessionId) => {
+  await postToDatabase(
+    DATABASE_TABLES.sessions,
+    {
+      session_id: sessionId,
+      last_seen_at: new Date().toISOString(),
+      page: window.location.href,
+      language: document.documentElement.lang,
+      user_agent: navigator.userAgent
+    },
+    { upsertOnConflict: "session_id" }
+  );
+};
+
+const saveContactRequestTrace = async (sessionId, payload) => {
+  await postToDatabase(DATABASE_TABLES.contactRequests, {
+    session_id: sessionId,
+    name: payload.name || "No proporcionado",
+    email: payload.email || "No proporcionado",
+    phone: payload.phone || null,
+    service: payload.service || "No especificado",
+    budget: payload.budget || "No indicado",
+    message: payload.message || "",
+    notification_ok: payload.notificacionOk ?? null,
+    welcome_ok: payload.bienvenidaOk ?? null,
+    metadata: payload
+  });
+
+  await postToDatabase(DATABASE_TABLES.leads, {
+    session_id: sessionId,
+    source: "contact_form",
+    status: "new",
+    name: payload.name || null,
+    email: payload.email || null,
+    phone: payload.phone || null,
+    service: payload.service || null,
+    budget: payload.budget || null,
+    urgency: "Normal",
+    message: payload.message || "",
+    metadata: payload
+  });
+};
+
+const saveChatMessageTrace = async (sessionId, payload) => {
+  await postToDatabase(DATABASE_TABLES.messages, {
+    session_id: sessionId,
+    sender: payload.sender === "user" ? "cliente" : payload.sender,
+    message: payload.message || "",
+    page: window.location.href,
+    language: document.documentElement.lang
+  });
+};
+
+const saveLeadTrace = async (sessionId, payload) => {
+  const lead = payload.lead || {};
+  const transcript = Array.isArray(payload.transcript) ? transcriptToText(payload.transcript) : "";
+
+  await postToDatabase(DATABASE_TABLES.leads, {
+    session_id: sessionId,
+    source: "chatbot",
+    status: payload.event_type === "chat_lead_email_failed" ? "email_failed" : "new",
+    name: lead.email || lead.phone ? "Cliente desde chatbot" : null,
+    email: lead.email || null,
+    phone: lead.phone || null,
+    service: Array.isArray(lead.services) ? lead.services.join(", ") : null,
+    budget: lead.budget || null,
+    urgency: lead.urgency || null,
+    message: lead.rawText || payload.reason || "",
+    transcript,
+    metadata: payload
+  });
+};
 
 const saveInteractionToDatabase = async (eventType, payload) => {
-  const record = {
-    event_type: eventType,
-    payload,
-    page: window.location.href,
-    user_agent: navigator.userAgent,
-    language: document.documentElement.lang,
-    created_at: new Date().toISOString()
-  };
+  const record = createBaseDatabaseRecord(eventType, payload);
+  const sessionId = record.session_id;
 
   const localHistory = JSON.parse(localStorage.getItem("digital-trust-interactions") || "[]");
   localHistory.unshift(record);
   localStorage.setItem("digital-trust-interactions", JSON.stringify(localHistory.slice(0, 250)));
 
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  if (!isDatabaseConfigured()) return;
 
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`, {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-      body: JSON.stringify(record)
-    });
+    await upsertSessionTrace(sessionId);
+    await postToDatabase(DATABASE_TABLES.events, record);
+
+    if (eventType === "chat_message") {
+      await saveChatMessageTrace(sessionId, payload);
+    }
+
+    if (eventType === "contact_form") {
+      await saveContactRequestTrace(sessionId, payload);
+    }
+
+    if (eventType === "chat_lead_email_sent" || eventType === "chat_lead_email_failed") {
+      await saveLeadTrace(sessionId, { ...payload, event_type: eventType });
+    }
   } catch (error) {
     console.warn("[Database] No se pudo guardar en Supabase. Quedo respaldo local.", error);
   }
@@ -748,4 +947,5 @@ if ("IntersectionObserver" in window) {
 }
 
 loadMessages();
+applyManagedContent();
 

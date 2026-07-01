@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel | Digital Trust Solutions</title>
+    <link rel="stylesheet" href="admin.css">
+  </head>
+  <body>
+    <main class="admin-shell">
+      <section class="login-view" data-login-view>
+        <form class="login-card" data-login-form>
+          <img src="digital-trust-logo.png" alt="Digital Trust Solutions">
+          <h1>Panel de control</h1>
+          <p>Acceso privado para administradores autorizados.</p>
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label>
+            Contraseña
+            <input type="password" name="password" autocomplete="current-password" required>
+          </label>
+          <button type="submit">Ingresar</button>
+          <span class="status" data-login-status></span>
+        </form>
+      </section>
+
+      <section class="dashboard-view" data-dashboard-view hidden>
+        <aside class="sidebar">
+          <img src="digital-trust-logo.png" alt="Digital Trust Solutions">
+          <nav>
+            <button class="is-active" type="button" data-panel-tab="overview">Resumen</button>
+            <button type="button" data-panel-tab="leads">Leads</button>
+            <button type="button" data-panel-tab="messages">Chat</button>
+            <button type="button" data-panel-tab="content">Textos</button>
+            <button type="button" data-panel-tab="assets">Imagenes</button>
+            <button type="button" data-panel-tab="users">Usuarios</button>
+            <button type="button" data-panel-tab="preview">Vista web</button>
+          </nav>
+          <button class="logout" type="button" data-logout>Cerrar sesion</button>
+        </aside>
+
+        <section class="workspace">
+          <header class="topbar">
+            <div>
+              <p>Digital Trust Solutions</p>
+              <h2 data-panel-title>Resumen</h2>
+            </div>
+            <button type="button" data-refresh>Actualizar</button>
+          </header>
+
+          <section class="panel is-active" data-panel="overview">
+            <div class="metrics">
+              <article><span data-count="leads">0</span><p>Leads</p></article>
+              <article><span data-count="contacts">0</span><p>Formularios</p></article>
+              <article><span data-count="messages">0</span><p>Mensajes</p></article>
+              <article><span data-count="sessions">0</span><p>Sesiones</p></article>
+            </div>
+            <div class="card">
+              <h3>Actividad reciente</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Fecha</th><th>Tipo</th><th>Detalle</th></tr></thead>
+                  <tbody data-recent-events></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="leads">
+            <div class="card">
+              <h3>Personas interesadas</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Fecha</th><th>Estado</th><th>Servicio</th><th>Email</th><th>Telefono</th><th>Mensaje</th></tr></thead>
+                  <tbody data-leads></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="messages">
+            <div class="card">
+              <h3>Conversaciones del chatbot</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Fecha</th><th>Sesion</th><th>Autor</th><th>Mensaje</th></tr></thead>
+                  <tbody data-messages></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="content">
+            <form class="card grid-form" data-content-form>
+              <h3>Editar textos de la pagina</h3>
+              <label>
+                Clave del texto
+                <select name="content_key" data-content-key></select>
+              </label>
+              <label>
+                Idioma
+                <select name="language">
+                  <option value="es">Español</option>
+                  <option value="en">English</option>
+                  <option value="all">Todos</option>
+                </select>
+              </label>
+              <label class="wide">
+                Nuevo texto
+                <textarea name="value" rows="5" required></textarea>
+              </label>
+              <button type="submit">Guardar texto</button>
+              <span class="status" data-content-status></span>
+            </form>
+            <div class="card">
+              <h3>Textos administrados</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Clave</th><th>Idioma</th><th>Texto</th><th>Publicado</th></tr></thead>
+                  <tbody data-content-list></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="assets">
+            <form class="card grid-form" data-asset-form>
+              <h3>Añadir o cambiar imagenes</h3>
+              <label>
+                Ubicacion
+                <select name="asset_slot">
+                  <option value="logo">Logo principal</option>
+                  <option value="hero">Imagen principal</option>
+                  <option value="general">Imagen general</option>
+                </select>
+              </label>
+              <label>
+                Titulo
+                <input name="title" type="text" placeholder="Logo, hero, banner...">
+              </label>
+              <label>
+                URL de imagen
+                <input name="file_url" type="url" placeholder="https://...">
+              </label>
+              <label>
+                O subir archivo
+                <input name="file" type="file" accept="image/*">
+              </label>
+              <label class="wide">
+                Texto alternativo
+                <input name="alt_text" type="text" placeholder="Descripcion de la imagen">
+              </label>
+              <button type="submit">Guardar imagen</button>
+              <span class="status" data-asset-status></span>
+            </form>
+            <div class="card">
+              <h3>Imagenes registradas</h3>
+              <div class="asset-grid" data-asset-list></div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="users">
+            <form class="card grid-form" data-user-form>
+              <h3>Usuarios autorizados</h3>
+              <p>Maximo 5 usuarios activos. Primero crea el usuario en Supabase Auth, luego agrega aqui su User ID.</p>
+              <label>
+                User ID
+                <input name="user_id" type="text" required>
+              </label>
+              <label>
+                Email
+                <input name="email" type="email" required>
+              </label>
+              <label>
+                Nombre
+                <input name="full_name" type="text">
+              </label>
+              <button type="submit">Autorizar usuario</button>
+              <span class="status" data-user-status></span>
+            </form>
+            <div class="card">
+              <h3>Administradores</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Email</th><th>Nombre</th><th>Activo</th><th>Creado</th></tr></thead>
+                  <tbody data-users></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="preview">
+            <div class="card preview-card">
+              <h3>Vista completa de la pagina web</h3>
+              <iframe src="index.html" title="Vista previa de la pagina"></iframe>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
