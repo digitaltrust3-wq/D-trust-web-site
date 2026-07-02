@@ -8,6 +8,11 @@
     <meta property="og:title" content="Digital Trust Solutions | Desarrollo de Software y Páginas Web">
     <meta property="og:description" content="Soluciones digitales para empresas: software a medida, sitios web, tiendas online, automatizaciones, integraciones y soporte.">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="logo-digital-trust-solutions.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Digital Trust Solutions | Desarrollo de Software y Páginas Web">
+    <meta name="twitter:description" content="Soluciones digitales para empresas: software a medida, sitios web, tiendas online, automatizaciones, integraciones y soporte.">
+    <meta name="twitter:image" content="logo-digital-trust-solutions.png">
     <title>Digital Trust Solutions | Servicios de Software</title>
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -252,6 +257,32 @@
         </div>
       </section>
 
+      <section class="section trust-proof reveal" id="confianza">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="trustEyebrow">Confianza y acompañamiento</p>
+          <h2 data-i18n="trustTitle">Trabajamos con claridad, seguridad y seguimiento desde el primer contacto.</h2>
+          <p data-i18n="trustText">Cada proyecto se organiza con alcance definido, comunicación sencilla, criterios de entrega y soporte posterior para que el cliente sepa qué se está construyendo y por qué.</p>
+        </div>
+        <div class="trust-proof-grid">
+          <article>
+            <strong data-i18n="trustOneTitle">Diagnóstico inicial</strong>
+            <p data-i18n="trustOneText">Revisamos objetivos, necesidades y prioridades antes de proponer una solución.</p>
+          </article>
+          <article>
+            <strong data-i18n="trustTwoTitle">Entregas claras</strong>
+            <p data-i18n="trustTwoText">Definimos fases, tiempos, funcionalidades y próximos pasos para evitar confusión.</p>
+          </article>
+          <article>
+            <strong data-i18n="trustThreeTitle">Seguridad y respaldo</strong>
+            <p data-i18n="trustThreeText">Aplicamos buenas prácticas para proteger formularios, datos, accesos y continuidad del servicio.</p>
+          </article>
+          <article>
+            <strong data-i18n="trustFourTitle">Soporte posterior</strong>
+            <p data-i18n="trustFourText">Acompañamos ajustes, mejoras y mantenimiento después del lanzamiento.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="section industries reveal">
         <div class="section-heading">
           <p class="eyebrow" data-i18n="industriesEyebrow">Sectores</p>
@@ -393,10 +424,35 @@
           <p data-i18n="caseText">Un negocio con pedidos por WhatsApp, inventario en hojas de cálculo y reportes manuales puede pasar a una plataforma con catalogo, formulario de pedido, panel interno, alertas automaticas y reportes diarios.</p>
         </div>
         <div class="case-list">
-          <span>Menos errores de captura</span>
-          <span>Pedidos centralizados</span>
-          <span>Reportes automáticos</span>
-          <span>Clientes mejor atendidos</span>
+          <span data-i18n="caseBenefitOne">Menos errores de captura</span>
+          <span data-i18n="caseBenefitTwo">Pedidos centralizados</span>
+          <span data-i18n="caseBenefitThree">Reportes automáticos</span>
+          <span data-i18n="caseBenefitFour">Clientes mejor atendidos</span>
+        </div>
+      </section>
+
+      <section class="section examples-ready reveal" id="ejemplos">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="examplesEyebrow">Ejemplos y resultados</p>
+          <h2 data-i18n="examplesTitle">Espacio preparado para mostrar proyectos, casos reales o testimonios.</h2>
+          <p data-i18n="examplesText">Cuando tengas ejemplos listos, puedes agregar aquí capturas, resultados, nombre del sector, problema inicial y solución implementada.</p>
+        </div>
+        <div class="examples-grid" aria-label="Espacios reservados para ejemplos de proyectos">
+          <article>
+            <span data-i18n="exampleOneTag">Ejemplo 1</span>
+            <strong data-i18n="examplePlaceholderTitle">Proyecto por agregar</strong>
+            <p data-i18n="examplePlaceholderText">Espacio reservado para describir el reto, la solución y el resultado obtenido.</p>
+          </article>
+          <article>
+            <span data-i18n="exampleTwoTag">Ejemplo 2</span>
+            <strong data-i18n="examplePlaceholderTitle">Proyecto por agregar</strong>
+            <p data-i18n="examplePlaceholderText">Espacio reservado para describir el reto, la solución y el resultado obtenido.</p>
+          </article>
+          <article>
+            <span data-i18n="exampleThreeTag">Ejemplo 3</span>
+            <strong data-i18n="examplePlaceholderTitle">Proyecto por agregar</strong>
+            <p data-i18n="examplePlaceholderText">Espacio reservado para describir el reto, la solución y el resultado obtenido.</p>
+          </article>
         </div>
       </section>
 
@@ -463,48 +519,48 @@
         </div>
         <form class="contact-form" data-contact-form>
           <label>
-            Nombre
-            <input name="name" type="text" placeholder="Tu nombre" required>
+            <span data-i18n="formNameLabel">Nombre</span>
+            <input name="name" type="text" placeholder="Tu nombre" data-i18n-placeholder="formNamePlaceholder" required>
           </label>
           <label>
-            Email
-            <input name="email" type="email" placeholder="correo@empresa.com" required>
+            <span data-i18n="formEmailLabel">Email</span>
+            <input name="email" type="email" placeholder="correo@empresa.com" data-i18n-placeholder="formEmailPlaceholder" required>
           </label>
           <label>
-            Teléfono
-            <input name="phone" type="tel" placeholder="+57 318 428 9661">
+            <span data-i18n="formPhoneLabel">Teléfono</span>
+            <input name="phone" type="tel" placeholder="+57 318 428 9661" data-i18n-placeholder="formPhonePlaceholder">
           </label>
           <label>
-            Servicio de interes
+            <span data-i18n="formServiceLabel">Servicio de interés</span>
             <select name="service" required>
-              <option value="">Selecciona una opción</option>
-              <option>Página web corporativa</option>
-              <option>Tienda online</option>
-              <option>Software a medida</option>
-              <option>Automatización</option>
-              <option>Soporte y mantenimiento</option>
+              <option value="" data-i18n="formServiceDefault">Selecciona una opción</option>
+              <option data-i18n="formServiceWebsite">Página web corporativa</option>
+              <option data-i18n="formServiceStore">Tienda online</option>
+              <option data-i18n="formServiceSoftware">Software a medida</option>
+              <option data-i18n="formServiceAutomation">Automatización</option>
+              <option data-i18n="formServiceSupport">Soporte y mantenimiento</option>
             </select>
           </label>
           <label>
-            Presupuesto aproximado
+            <span data-i18n="formBudgetLabel">Presupuesto aproximado</span>
             <select name="budget" required>
-              <option value="">Selecciona un rango</option>
-              <option>Menos de $500</option>
-              <option>$500 - $1,500</option>
-              <option>$1,500 - $5,000</option>
-              <option>Mas de $5,000</option>
-              <option>Aun no lo se</option>
+              <option value="" data-i18n="formBudgetDefault">Selecciona un rango</option>
+              <option data-i18n="formBudgetOne">Menos de $500</option>
+              <option data-i18n="formBudgetTwo">$500 - $1,500</option>
+              <option data-i18n="formBudgetThree">$1,500 - $5,000</option>
+              <option data-i18n="formBudgetFour">Más de $5,000</option>
+              <option data-i18n="formBudgetUnknown">Aún no lo sé</option>
             </select>
           </label>
           <label>
-            Mensaje
-          <textarea name="message" rows="5" placeholder="Cuentanos sobre tu negocio, objetivo, funcionalidades y fecha ideal" required></textarea>
+            <span data-i18n="formMessageLabel">Mensaje</span>
+          <textarea name="message" rows="5" placeholder="Cuéntanos sobre tu negocio, objetivo, funcionalidades y fecha ideal" data-i18n-placeholder="formMessagePlaceholder" required></textarea>
           </label>
           <label class="whatsapp-optin">
             <input type="checkbox" name="notify_whatsapp" value="yes">
-            También notificar por WhatsApp
+            <span data-i18n="formWhatsappOptin">También notificar por WhatsApp</span>
           </label>
-          <button class="button primary" type="submit">Enviar solicitud</button>
+          <button class="button primary" type="submit" data-i18n="formSubmit">Enviar solicitud</button>
           <p class="form-status" data-form-status role="status"></p>
         </form>
       </section>
@@ -513,9 +569,9 @@
     <footer class="site-footer">
       <p>&copy; <span data-year></span> Digital Trust Solutions. <span data-i18n="footerText">Desarrollo web, software, automatización y soporte técnico.</span></p>
       <div>
-        <a href="#servicios">Servicios</a>
-        <a href="#planes">Planes</a>
-        <a href="#inicio">Volver arriba</a>
+        <a href="#servicios" data-i18n="footerServices">Servicios</a>
+        <a href="#planes" data-i18n="footerPlans">Planes</a>
+        <a href="#inicio" data-i18n="footerTop">Volver arriba</a>
       </div>
     </footer>
 

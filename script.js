@@ -6,6 +6,7 @@ const form = document.querySelector("[data-contact-form]");
 const formStatus = document.querySelector("[data-form-status]");
 const languageButtons = document.querySelectorAll("[data-lang-switch]");
 const translatableElements = document.querySelectorAll("[data-i18n]");
+const translatablePlaceholders = document.querySelectorAll("[data-i18n-placeholder]");
 
 const translations = {
   es: {
@@ -74,6 +75,17 @@ const translations = {
     featureThreeText: "Instalamos analítica, eventos y puntos de seguimiento para tomar decisiones.",
     featureFourTitle: "Acompañamiento técnico",
     featureFourText: "Te explicamos el proceso, los costos y las decisiones importantes sin lenguaje complicado.",
+    trustEyebrow: "Confianza y acompañamiento",
+    trustTitle: "Trabajamos con claridad, seguridad y seguimiento desde el primer contacto.",
+    trustText: "Cada proyecto se organiza con alcance definido, comunicación sencilla, criterios de entrega y soporte posterior para que el cliente sepa qué se está construyendo y por qué.",
+    trustOneTitle: "Diagnóstico inicial",
+    trustOneText: "Revisamos objetivos, necesidades y prioridades antes de proponer una solución.",
+    trustTwoTitle: "Entregas claras",
+    trustTwoText: "Definimos fases, tiempos, funcionalidades y próximos pasos para evitar confusión.",
+    trustThreeTitle: "Seguridad y respaldo",
+    trustThreeText: "Aplicamos buenas prácticas para proteger formularios, datos, accesos y continuidad del servicio.",
+    trustFourTitle: "Soporte posterior",
+    trustFourText: "Acompañamos ajustes, mejoras y mantenimiento después del lanzamiento.",
     industriesEyebrow: "Sectores",
     industriesTitle: "Soluciones para empresas, emprendedores y equipos en crecimiento",
     processEyebrow: "Proceso de trabajo",
@@ -98,7 +110,19 @@ const translations = {
     plansText: "Los valores son orientativos. Cada cotización depende del alcance, número de pantallas, integraciones, contenido y nivel de soporte.",
     caseEyebrow: "Caso de uso",
     caseTitle: "De operación manual a sistema conectado",
-    caseText: "Un negocio con pedidos por WhatsApp, inventario en hojas de cálculo y reportes manuales puede pasar a una plataforma con catalogo, formulario de pedido, panel interno, alertas automaticas y reportes diarios.",
+    caseText: "Un negocio con pedidos por WhatsApp, inventario en hojas de cálculo y reportes manuales puede pasar a una plataforma con catálogo, formulario de pedido, panel interno, alertas automáticas y reportes diarios.",
+    caseBenefitOne: "Menos errores de captura",
+    caseBenefitTwo: "Pedidos centralizados",
+    caseBenefitThree: "Reportes automáticos",
+    caseBenefitFour: "Clientes mejor atendidos",
+    examplesEyebrow: "Ejemplos y resultados",
+    examplesTitle: "Espacio preparado para mostrar proyectos, casos reales o testimonios.",
+    examplesText: "Cuando tengas ejemplos listos, puedes agregar aquí capturas, resultados, nombre del sector, problema inicial y solución implementada.",
+    exampleOneTag: "Ejemplo 1",
+    exampleTwoTag: "Ejemplo 2",
+    exampleThreeTag: "Ejemplo 3",
+    examplePlaceholderTitle: "Proyecto por agregar",
+    examplePlaceholderText: "Espacio reservado para describir el reto, la solución y el resultado obtenido.",
     faqEyebrow: "Preguntas frecuentes",
     faqTitle: "Respuestas rápidas antes de iniciar",
     faqOneTitle: "Cuánto tarda desarrollar una página web?",
@@ -120,6 +144,30 @@ const translations = {
     contactPhoneLabel: "Teléfono",
     contactLocationLabel: "Ubicación",
     contactLocation: "Colombia / Atención internacional",
+    formNameLabel: "Nombre",
+    formNamePlaceholder: "Tu nombre",
+    formEmailLabel: "Email",
+    formEmailPlaceholder: "correo@empresa.com",
+    formPhoneLabel: "Teléfono",
+    formPhonePlaceholder: "+57 318 428 9661",
+    formServiceLabel: "Servicio de interés",
+    formServiceDefault: "Selecciona una opción",
+    formServiceWebsite: "Página web corporativa",
+    formServiceStore: "Tienda online",
+    formServiceSoftware: "Software a medida",
+    formServiceAutomation: "Automatización",
+    formServiceSupport: "Soporte y mantenimiento",
+    formBudgetLabel: "Presupuesto aproximado",
+    formBudgetDefault: "Selecciona un rango",
+    formBudgetOne: "Menos de $500",
+    formBudgetTwo: "$500 - $1,500",
+    formBudgetThree: "$1,500 - $5,000",
+    formBudgetFour: "Más de $5,000",
+    formBudgetUnknown: "Aún no lo sé",
+    formMessageLabel: "Mensaje",
+    formMessagePlaceholder: "Cuéntanos sobre tu negocio, objetivo, funcionalidades y fecha ideal",
+    formWhatsappOptin: "También notificar por WhatsApp",
+    formSubmit: "Enviar solicitud",
     chatbotTooltip: "¿Cómo puedo ayudarte?",
     chatbotFlow: {
       welcome: "¡Hola! Soy el asistente de Digital Trust Solutions. Te ayudo a encontrar la mejor solución paso a paso. Elige una opción o escribe tu consulta.",
@@ -169,7 +217,10 @@ const translations = {
       edit: "Claro, volvamos a completar la información.",
       fallback: "Puedo ayudarte con páginas web, software, automatización, ciberseguridad, soporte o cotizaciones. Elige una opción para guiarte paso a paso."
     },
-    footerText: "Desarrollo web, software, automatización y soporte técnico."
+    footerText: "Desarrollo web, software, automatización y soporte técnico.",
+    footerServices: "Servicios",
+    footerPlans: "Planes",
+    footerTop: "Volver arriba"
   },
   en: {
     navServices: "Services",
@@ -237,6 +288,17 @@ const translations = {
     featureThreeText: "We set up analytics, events and tracking points to support better decisions.",
     featureFourTitle: "Technical guidance",
     featureFourText: "We explain the process, costs and key decisions without complicated language.",
+    trustEyebrow: "Trust and guidance",
+    trustTitle: "We work with clarity, security and follow-up from the first contact.",
+    trustText: "Each project is organized with defined scope, simple communication, delivery criteria and post-launch support so clients know what is being built and why.",
+    trustOneTitle: "Initial discovery",
+    trustOneText: "We review goals, needs and priorities before proposing a solution.",
+    trustTwoTitle: "Clear deliverables",
+    trustTwoText: "We define phases, timelines, features and next steps to avoid confusion.",
+    trustThreeTitle: "Security and backup",
+    trustThreeText: "We apply good practices to protect forms, data, access and service continuity.",
+    trustFourTitle: "Post-launch support",
+    trustFourText: "We support adjustments, improvements and maintenance after launch.",
     industriesEyebrow: "Industries",
     industriesTitle: "Solutions for companies, entrepreneurs and growing teams",
     processEyebrow: "Work process",
@@ -262,6 +324,18 @@ const translations = {
     caseEyebrow: "Use case",
     caseTitle: "From manual operation to connected system",
     caseText: "A business with WhatsApp orders, spreadsheet inventory and manual reports can move to a platform with catalog, order form, internal panel, automatic alerts and daily reports.",
+    caseBenefitOne: "Fewer capture errors",
+    caseBenefitTwo: "Centralized orders",
+    caseBenefitThree: "Automated reports",
+    caseBenefitFour: "Better customer support",
+    examplesEyebrow: "Examples and results",
+    examplesTitle: "A prepared space to show projects, real cases or testimonials.",
+    examplesText: "When your examples are ready, you can add screenshots, results, industry, initial problem and implemented solution here.",
+    exampleOneTag: "Example 1",
+    exampleTwoTag: "Example 2",
+    exampleThreeTag: "Example 3",
+    examplePlaceholderTitle: "Project to add",
+    examplePlaceholderText: "Reserved space to describe the challenge, solution and result.",
     faqEyebrow: "Frequently asked questions",
     faqTitle: "Quick answers before starting",
     faqOneTitle: "How long does a website take?",
@@ -283,6 +357,30 @@ const translations = {
     contactPhoneLabel: "Phone",
     contactLocationLabel: "Location",
     contactLocation: "Colombia / International support",
+    formNameLabel: "Name",
+    formNamePlaceholder: "Your name",
+    formEmailLabel: "Email",
+    formEmailPlaceholder: "email@company.com",
+    formPhoneLabel: "Phone",
+    formPhonePlaceholder: "+57 318 428 9661",
+    formServiceLabel: "Service of interest",
+    formServiceDefault: "Select an option",
+    formServiceWebsite: "Corporate website",
+    formServiceStore: "Online store",
+    formServiceSoftware: "Custom software",
+    formServiceAutomation: "Automation",
+    formServiceSupport: "Support and maintenance",
+    formBudgetLabel: "Approximate budget",
+    formBudgetDefault: "Select a range",
+    formBudgetOne: "Less than $500",
+    formBudgetTwo: "$500 - $1,500",
+    formBudgetThree: "$1,500 - $5,000",
+    formBudgetFour: "More than $5,000",
+    formBudgetUnknown: "I do not know yet",
+    formMessageLabel: "Message",
+    formMessagePlaceholder: "Tell us about your business, goal, features and ideal date",
+    formWhatsappOptin: "Also notify via WhatsApp",
+    formSubmit: "Send request",
     chatbotTooltip: "How can I help you?",
     chatbotFlow: {
       welcome: "Hello! I am the Digital Trust Solutions assistant. I can help you find the right solution step by step. Choose an option or type your question.",
@@ -332,7 +430,10 @@ const translations = {
       edit: "Sure, let us complete the information again.",
       fallback: "I can help with websites, software, automation, cybersecurity, support or quotes. Choose an option so I can guide you step by step."
     },
-    footerText: "Web development, software, automation and technical support."
+    footerText: "Web development, software, automation and technical support.",
+    footerServices: "Services",
+    footerPlans: "Plans",
+    footerTop: "Back to top"
   }
 };
 
@@ -343,6 +444,13 @@ const setLanguage = (language) => {
     const key = element.dataset.i18n;
     if (dictionary[key]) {
       element.textContent = dictionary[key];
+    }
+  });
+
+  translatablePlaceholders.forEach((element) => {
+    const key = element.dataset.i18nPlaceholder;
+    if (dictionary[key]) {
+      element.setAttribute("placeholder", dictionary[key]);
     }
   });
 

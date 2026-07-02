@@ -610,6 +610,8 @@ h3 {
 .pricing-grid,
 .solution-grid,
 .tech-grid,
+.trust-proof-grid,
+.examples-grid,
 .timeline {
   display: grid;
   gap: 16px;
@@ -618,6 +620,15 @@ h3 {
 .service-grid,
 .pricing-grid,
 .solution-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.trust-proof-grid,
+.examples-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.examples-grid {
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -633,6 +644,8 @@ h3 {
 .price-card,
 .solution-grid article,
 .tech-grid article,
+.trust-proof-grid article,
+.examples-grid article,
 .timeline article,
 .feature-panel,
 .faq-list details,
@@ -647,6 +660,8 @@ h3 {
 .price-card,
 .solution-grid article,
 .tech-grid article,
+.trust-proof-grid article,
+.examples-grid article,
 .timeline article {
   display: flex;
   flex-direction: column;
@@ -677,9 +692,33 @@ h3 {
 .timeline p,
 .price-card p,
 .price-card li,
-.tech-grid p {
+.tech-grid p,
+.trust-proof-grid p,
+.examples-grid p {
   color: var(--text);
   line-height: 1.62;
+}
+
+.trust-proof-grid article,
+.examples-grid article {
+  gap: 12px;
+}
+
+.trust-proof-grid strong,
+.examples-grid strong {
+  color: var(--white);
+  font-size: 1.02rem;
+}
+
+.examples-grid span {
+  width: fit-content;
+  padding: 6px 10px;
+  border: 1px solid rgba(61, 214, 255, 0.28);
+  border-radius: 999px;
+  color: var(--cyan);
+  background: rgba(47, 128, 255, 0.12);
+  font-size: 0.78rem;
+  font-weight: 850;
 }
 
 .service-card ul,
@@ -1045,7 +1084,9 @@ textarea:focus {
   .pricing-grid,
   .solution-grid,
   .timeline,
-  .tech-grid {
+  .tech-grid,
+  .trust-proof-grid,
+  .examples-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1151,6 +1192,8 @@ textarea:focus {
   .solution-grid,
   .timeline,
   .tech-grid,
+  .trust-proof-grid,
+  .examples-grid,
   .trust-strip,
   .pill-grid,
   .mini-grid,
