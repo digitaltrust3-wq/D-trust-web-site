@@ -121,6 +121,54 @@ const translations = {
     contactLocationLabel: "Ubicación",
     contactLocation: "Colombia / Atención internacional",
     chatbotTooltip: "¿Cómo puedo ayudarte?",
+    chatbotFlow: {
+      welcome: "¡Hola! Soy el asistente de Digital Trust Solutions. Te ayudo a encontrar la mejor solución paso a paso. Elige una opción o escribe tu consulta.",
+      optionsTitle: "Opciones rápidas",
+      optionWebsite: "Crear una página web",
+      optionImprove: "Mejorar una página existente",
+      optionAutomation: "Automatizar procesos",
+      optionQuote: "Solicitar una cotización",
+      optionAdvisor: "Hablar con un asesor",
+      optionSecurity: "Servicios de ciberseguridad",
+      optionSupport: "Soporte técnico",
+      intro: "Perfecto. Haré unas preguntas rápidas para preparar tu solicitud.",
+      askName: "1. ¿Cuál es tu nombre?",
+      askEmail: "2. ¿Cuál es tu correo electrónico?",
+      askPhone: "3. ¿Cuál es tu número de WhatsApp?",
+      askCompany: "4. ¿Cuál es el nombre de tu empresa o negocio?",
+      askService: "5. ¿Qué tipo de servicio necesitas?",
+      askBudget: "6. ¿Cuál es tu presupuesto aproximado?",
+      askUrgency: "7. ¿Qué tan urgente es el proyecto?",
+      askDescription: "8. Describe brevemente qué necesitas o qué problema quieres resolver.",
+      serviceWebsite: "Página web nueva",
+      serviceImprove: "Mejora de página existente",
+      serviceAutomation: "Automatización de procesos",
+      serviceQuote: "Cotización general",
+      serviceAdvisor: "Asesoría personalizada",
+      serviceSecurity: "Ciberseguridad",
+      serviceSupport: "Soporte técnico",
+      urgencyNormal: "Normal",
+      urgencyHigh: "Alta",
+      summaryTitle: "Resumen de tu solicitud",
+      labelName: "Nombre",
+      labelEmail: "Email",
+      labelPhone: "WhatsApp",
+      labelCompany: "Empresa",
+      labelService: "Servicio",
+      labelBudget: "Presupuesto",
+      labelPriority: "Prioridad",
+      labelRequest: "Solicitud",
+      pending: "Pendiente",
+      confirmQuestion: "¿Confirmas que deseas enviar esta solicitud al equipo de Digital Trust Solutions?",
+      confirmSend: "Sí, enviar solicitud",
+      editRequest: "Editar información",
+      cancelRequest: "Cancelar",
+      sent: "Listo. Tu solicitud fue enviada y guardada correctamente. Te contactaremos pronto.",
+      sendError: "Recibimos tu información, pero no pudimos notificar por correo en este momento. De todas formas quedó guardada para seguimiento.",
+      cancelled: "Sin problema. Puedes iniciar una nueva solicitud cuando quieras.",
+      edit: "Claro, volvamos a completar la información.",
+      fallback: "Puedo ayudarte con páginas web, software, automatización, ciberseguridad, soporte o cotizaciones. Elige una opción para guiarte paso a paso."
+    },
     footerText: "Desarrollo web, software, automatización y soporte técnico."
   },
   en: {
@@ -236,6 +284,54 @@ const translations = {
     contactLocationLabel: "Location",
     contactLocation: "Colombia / International support",
     chatbotTooltip: "How can I help you?",
+    chatbotFlow: {
+      welcome: "Hello! I am the Digital Trust Solutions assistant. I can help you find the right solution step by step. Choose an option or type your question.",
+      optionsTitle: "Quick options",
+      optionWebsite: "Create a website",
+      optionImprove: "Improve an existing website",
+      optionAutomation: "Automate processes",
+      optionQuote: "Request a quote",
+      optionAdvisor: "Talk to an advisor",
+      optionSecurity: "Cybersecurity services",
+      optionSupport: "Technical support",
+      intro: "Perfect. I will ask a few quick questions to prepare your request.",
+      askName: "1. What is your name?",
+      askEmail: "2. What is your email address?",
+      askPhone: "3. What is your WhatsApp number?",
+      askCompany: "4. What is your company or business name?",
+      askService: "5. What type of service do you need?",
+      askBudget: "6. What is your approximate budget?",
+      askUrgency: "7. How urgent is the project?",
+      askDescription: "8. Briefly describe what you need or what problem you want to solve.",
+      serviceWebsite: "New website",
+      serviceImprove: "Existing website improvement",
+      serviceAutomation: "Process automation",
+      serviceQuote: "General quote",
+      serviceAdvisor: "Personalized advisory",
+      serviceSecurity: "Cybersecurity",
+      serviceSupport: "Technical support",
+      urgencyNormal: "Normal",
+      urgencyHigh: "High",
+      summaryTitle: "Request summary",
+      labelName: "Name",
+      labelEmail: "Email",
+      labelPhone: "WhatsApp",
+      labelCompany: "Company",
+      labelService: "Service",
+      labelBudget: "Budget",
+      labelPriority: "Priority",
+      labelRequest: "Request",
+      pending: "Pending",
+      confirmQuestion: "Do you confirm that you want to send this request to the Digital Trust Solutions team?",
+      confirmSend: "Yes, send request",
+      editRequest: "Edit information",
+      cancelRequest: "Cancel",
+      sent: "Done. Your request was sent and saved successfully. We will contact you soon.",
+      sendError: "We received your information, but email notification could not be sent right now. It was still saved for follow-up.",
+      cancelled: "No problem. You can start a new request whenever you want.",
+      edit: "Sure, let us complete the information again.",
+      fallback: "I can help with websites, software, automation, cybersecurity, support or quotes. Choose an option so I can guide you step by step."
+    },
     footerText: "Web development, software, automation and technical support."
   }
 };
@@ -616,16 +712,16 @@ const saveLeadTrace = async (sessionId, payload) => {
   await postToDatabase(DATABASE_TABLES.leads, {
     session_id: sessionId,
     source: "chatbot",
-    status: payload.event_type === "chat_lead_email_failed" ? "email_failed" : "new",
-    name: lead.email || lead.phone ? "Cliente desde chatbot" : null,
+    status: "new",
+    name: lead.name || (lead.email || lead.phone ? "Cliente desde chatbot" : null),
     email: lead.email || null,
     phone: lead.phone || null,
-    service: Array.isArray(lead.services) ? lead.services.join(", ") : null,
+    service: lead.service || (Array.isArray(lead.services) ? lead.services.join(", ") : null),
     budget: lead.budget || null,
     urgency: lead.urgency || null,
-    message: lead.rawText || payload.reason || "",
+    message: lead.rawText || lead.description || payload.reason || "",
     transcript,
-    metadata: payload
+    metadata: { ...payload, company: lead.company || null }
   });
 };
 
@@ -651,7 +747,10 @@ const saveInteractionToDatabase = async (eventType, payload) => {
       await saveContactRequestTrace(sessionId, payload);
     }
 
-    if (eventType === "chat_lead_email_sent" || eventType === "chat_lead_email_failed") {
+    if (
+      eventType === "chat_lead_confirmed"
+      || ((eventType === "chat_lead_email_sent" || eventType === "chat_lead_email_failed") && !payload.skip_lead_save)
+    ) {
       await saveLeadTrace(sessionId, { ...payload, event_type: eventType });
     }
   } catch (error) {
@@ -668,9 +767,11 @@ const chatbotSend = document.querySelector("[data-chatbot-send]");
 const STORAGE_KEY = "digital-trust-chatbot-messages";
 const CHAT_SESSION_KEY = "digital-trust-chat-session-id";
 const LEAD_EMAIL_COOLDOWN_KEY = "digital-trust-last-lead-email";
+const CHAT_LEAD_DRAFT_KEY = "digital-trust-chatbot-lead-draft";
 const CHAT_LEAD_TEMPLATE_ID = EMAILJS_TEMPLATE_ID;
 
 const isEnglish = () => document.documentElement.lang === "en";
+const getChatCopy = () => translations[isEnglish() ? "en" : "es"].chatbotFlow;
 const getSessionId = () => {
   let sessionId = localStorage.getItem(CHAT_SESSION_KEY);
   if (!sessionId) {
@@ -681,6 +782,28 @@ const getSessionId = () => {
 };
 
 const leadSignals = /cotiz|cotizar|presupuesto|precio|valor|contratar|comprar|interesad|quiero|necesito|llamar|contact|agenda|propuesta|quote|budget|price|hire|buy|interested|need|call|proposal/i;
+const guidedLeadSignals = /cotiz|cotizar|asesor|presupuesto|contratar|contact|interesad|quote|advisor|budget|hire|interested/i;
+
+const chatbotServices = [
+  { key: "website", label: "optionWebsite", service: "serviceWebsite" },
+  { key: "improve", label: "optionImprove", service: "serviceImprove" },
+  { key: "automation", label: "optionAutomation", service: "serviceAutomation" },
+  { key: "quote", label: "optionQuote", service: "serviceQuote" },
+  { key: "advisor", label: "optionAdvisor", service: "serviceAdvisor" },
+  { key: "security", label: "optionSecurity", service: "serviceSecurity" },
+  { key: "support", label: "optionSupport", service: "serviceSupport" }
+];
+
+const leadQuestionFlow = [
+  { field: "name", question: "askName" },
+  { field: "email", question: "askEmail" },
+  { field: "phone", question: "askPhone" },
+  { field: "company", question: "askCompany" },
+  { field: "service", question: "askService" },
+  { field: "budget", question: "askBudget" },
+  { field: "urgency", question: "askUrgency" },
+  { field: "description", question: "askDescription" }
+];
 
 const serviceLabels = {
   website: { es: "Página web / landing page", en: "Website / landing page" },
@@ -731,22 +854,67 @@ const extractLeadInfo = (messages = []) => {
   };
 };
 
-const notifyLeadByEmail = async (reason = "Cliente interesado desde el chatbot") => {
+const getLeadDraft = () => {
+  try {
+    return JSON.parse(localStorage.getItem(CHAT_LEAD_DRAFT_KEY) || "null");
+  } catch {
+    return null;
+  }
+};
+
+const setLeadDraft = (draft) => {
+  localStorage.setItem(CHAT_LEAD_DRAFT_KEY, JSON.stringify(draft));
+};
+
+const clearLeadDraft = () => {
+  localStorage.removeItem(CHAT_LEAD_DRAFT_KEY);
+};
+
+const getServiceLabel = (serviceKey) => {
+  const copy = getChatCopy();
+  const option = chatbotServices.find((item) => item.key === serviceKey);
+  return option ? copy[option.service] : serviceKey;
+};
+
+const normalizeLeadForSubmission = (draft = {}) => {
   const messages = getChatTranscript();
-  const lead = extractLeadInfo(messages);
+  const extracted = extractLeadInfo(messages);
+  const service = draft.service || (draft.serviceKey ? getServiceLabel(draft.serviceKey) : "");
+  const urgency = draft.urgency || extracted.urgency || getChatCopy().urgencyNormal;
+  const priority = /alta|high|urgent|urgente|asap|hoy|today/i.test(urgency)
+    ? getChatCopy().urgencyHigh
+    : getChatCopy().urgencyNormal;
+
+  return {
+    name: draft.name || "",
+    email: draft.email || extracted.email || "",
+    phone: draft.phone || extracted.phone || "",
+    company: draft.company || "",
+    service: service || extracted.services.join(", ") || "",
+    budget: draft.budget || extracted.budget || "",
+    urgency: priority,
+    description: draft.description || extracted.rawText || "",
+    rawText: draft.description || extracted.rawText || "",
+    transcript: messages
+  };
+};
+
+const notifyLeadByEmail = async (reason = "Cliente interesado desde el chatbot", providedLead = null, options = {}) => {
+  const messages = getChatTranscript();
+  const lead = providedLead || normalizeLeadForSubmission(getLeadDraft() || {});
   const now = Date.now();
   const lastEmail = Number(localStorage.getItem(LEAD_EMAIL_COOLDOWN_KEY) || 0);
 
-  if (now - lastEmail < 120000) return;
-  if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) return;
+  if (now - lastEmail < 120000 && !providedLead) return { skipped: true };
+  if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) return { skipped: true };
 
   const emailData = {
-    name: lead.email || lead.phone || "Cliente desde chatbot",
+    name: lead.name || lead.email || lead.phone || "Cliente desde chatbot",
     email: lead.email || "No proporcionado",
     phone: lead.phone || "No proporcionado",
-    service: lead.services.join(", ") || "Pendiente por definir",
+    service: lead.service || lead.services?.join(", ") || "Pendiente por definir",
     budget: lead.budget || "No indicado",
-    message: `Motivo: ${reason}\nUrgencia: ${lead.urgency}\n\nResumen de solicitud:\n${lead.rawText}\n\nTranscripción:\n${transcriptToText(messages)}`
+    message: `Motivo: ${reason}\nEmpresa: ${lead.company || "No proporcionada"}\nPrioridad: ${lead.urgency || "Normal"}\n\nResumen de solicitud:\n${lead.rawText || lead.description || ""}\n\nTranscripción:\n${transcriptToText(messages)}`
   };
 
   try {
@@ -756,16 +924,20 @@ const notifyLeadByEmail = async (reason = "Cliente interesado desde el chatbot")
       session_id: getSessionId(),
       reason,
       lead,
-      transcript: messages
+      transcript: messages,
+      skip_lead_save: Boolean(options.skipLeadSave)
     });
+    return { ok: true };
   } catch (error) {
     await saveInteractionToDatabase("chat_lead_email_failed", {
       session_id: getSessionId(),
       reason,
       lead,
       error: error?.text || error?.message || String(error),
-      transcript: messages
+      transcript: messages,
+      skip_lead_save: Boolean(options.skipLeadSave)
     });
+    return { ok: false, error };
   }
 };
 
@@ -823,6 +995,146 @@ const botReplies = {
     en: "I understand. To guide you better, choose one option:<ol><li>I need a website.</li><li>I need custom software.</li><li>I want to sell online.</li><li>I need to automate a process.</li><li>I need support or maintenance.</li></ol>You can also describe your case in your own words."
   }
 };
+
+const buildActionButtons = (actions) => `
+  <div class="quick-replies">
+    ${actions.map((action) =>
+      `<button type="button" data-chat-action="${action.action}" data-chat-value="${action.value || ""}">${action.label}</button>`
+    ).join("")}
+  </div>
+`;
+
+const escapeChatText = (value = "") =>
+  String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  }[char]));
+
+const buildMainMenu = () => {
+  const copy = getChatCopy();
+  return `<strong>${copy.optionsTitle}</strong>${buildActionButtons(chatbotServices.map((service) => ({
+    action: "start-lead",
+    value: service.key,
+    label: copy[service.label]
+  })))}`
+};
+
+const askCurrentLeadQuestion = () => {
+  const draft = getLeadDraft();
+  if (!draft) return;
+  const copy = getChatCopy();
+  const question = leadQuestionFlow[draft.step];
+  if (!question) {
+    showLeadSummary();
+    return;
+  }
+
+  if (question.field === "service") {
+    addMessage(`${copy[question.question]}${buildActionButtons(chatbotServices.map((service) => ({
+      action: "answer-lead",
+      value: copy[service.service],
+      label: copy[service.label]
+    })))}`, "bot");
+    return;
+  }
+
+  if (question.field === "urgency") {
+    addMessage(`${copy[question.question]}${buildActionButtons([
+      { action: "answer-lead", value: copy.urgencyNormal, label: copy.urgencyNormal },
+      { action: "answer-lead", value: copy.urgencyHigh, label: copy.urgencyHigh }
+    ])}`, "bot");
+    return;
+  }
+
+  addMessage(copy[question.question], "bot");
+};
+
+const startGuidedLead = (serviceKey = "quote") => {
+  const copy = getChatCopy();
+  const draft = {
+    step: 0,
+    serviceKey,
+    service: getServiceLabel(serviceKey),
+    status: "collecting",
+    createdAt: new Date().toISOString()
+  };
+  setLeadDraft(draft);
+  addMessage(`${copy.intro}<br><br>${copy.askName}`, "bot");
+};
+
+const updateLeadAnswer = (answer) => {
+  const draft = getLeadDraft();
+  if (!draft) return false;
+  const question = leadQuestionFlow[draft.step];
+  if (!question) return false;
+
+  draft[question.field] = answer;
+  draft.step += 1;
+
+  if (draft.serviceKey && question.field === "service") {
+    draft.serviceKey = "";
+  }
+
+  setLeadDraft(draft);
+  askCurrentLeadQuestion();
+  return true;
+};
+
+const leadSummaryHtml = (lead) => {
+  const copy = getChatCopy();
+  const item = (label, value) => `<li><strong>${label}:</strong> ${escapeChatText(value || copy.pending)}</li>`;
+  return `
+    <strong>${copy.summaryTitle}</strong>
+    <ol>
+      ${item(copy.labelName, lead.name)}
+      ${item(copy.labelEmail, lead.email)}
+      ${item(copy.labelPhone, lead.phone)}
+      ${item(copy.labelCompany, lead.company)}
+      ${item(copy.labelService, lead.service)}
+      ${item(copy.labelBudget, lead.budget)}
+      ${item(copy.labelPriority, lead.urgency || copy.urgencyNormal)}
+      ${item(copy.labelRequest, lead.description || lead.rawText)}
+    </ol>
+    ${copy.confirmQuestion}
+    ${buildActionButtons([
+      { action: "confirm-lead", value: "send", label: copy.confirmSend },
+      { action: "edit-lead", value: "edit", label: copy.editRequest },
+      { action: "cancel-lead", value: "cancel", label: copy.cancelRequest }
+    ])}
+  `;
+};
+
+const showLeadSummary = () => {
+  const draft = getLeadDraft();
+  if (!draft) return;
+  const lead = normalizeLeadForSubmission(draft);
+  draft.status = "confirming";
+  setLeadDraft(draft);
+  addMessage(leadSummaryHtml(lead), "bot");
+};
+
+const submitGuidedLead = async () => {
+  const copy = getChatCopy();
+  const draft = getLeadDraft();
+  if (!draft) return;
+  const lead = normalizeLeadForSubmission(draft);
+  const transcript = getChatTranscript();
+
+  await saveInteractionToDatabase("chat_lead_confirmed", {
+    session_id: getSessionId(),
+    reason: "Solicitud confirmada desde chatbot",
+    lead,
+    transcript
+  });
+
+  const emailResult = await notifyLeadByEmail("Solicitud confirmada desde chatbot", lead, { skipLeadSave: true });
+  clearLeadDraft();
+  addMessage(emailResult?.ok ? copy.sent : copy.sendError, "bot");
+};
+
 const getBotResponse = (text) => {
   const lower = text.toLowerCase();
   const lang = isEnglish() ? "en" : "es";
@@ -845,7 +1157,7 @@ const sanitizeBotHtml = (html = "") => {
   const template = document.createElement("template");
   template.innerHTML = String(html);
   const allowedTags = new Set(["A", "BR", "OL", "UL", "LI", "STRONG", "DIV", "BUTTON"]);
-  const allowedButtonAttrs = new Set(["type", "data-quick-reply"]);
+  const allowedButtonAttrs = new Set(["type", "data-quick-reply", "data-chat-action", "data-chat-value"]);
 
   [...template.content.querySelectorAll("*")].forEach((node) => {
     if (!allowedTags.has(node.tagName)) {
@@ -920,15 +1232,8 @@ const loadMessages = () => {
 
 const showWelcome = () => {
   if (!chatbotMessages || chatbotMessages.children.length > 0) return;
-  const lang = isEnglish() ? "en" : "es";
-  const text = lang === "en"
-    ? "Hello! I'm the Digital Trust Solutions assistant. How can I help you today?<br><br>You can ask me about prices, timelines, web development, software, online stores, or support."
-    : "¡Hola! Soy el asistente de Digital Trust Solutions. ¿En qué puedo ayudarte hoy?<br><br>Puedes preguntarme sobre precios, tiempos, desarrollo web, software, tiendas online o soporte.";
-  addMessage(`${text}<div class="quick-replies">
-    <button type="button" data-quick-reply="${lang === "en" ? "I need a website quote" : "Necesito cotizar una página web"}">${lang === "en" ? "Website quote" : "Cotizar web"}</button>
-    <button type="button" data-quick-reply="${lang === "en" ? "I need custom software" : "Necesito software a medida"}">${lang === "en" ? "Custom software" : "Software a medida"}</button>
-    <button type="button" data-quick-reply="${lang === "en" ? "I want to automate a process" : "Quiero automatizar un proceso"}">${lang === "en" ? "Automation" : "Automatización"}</button>
-  </div>`, "bot");
+  const copy = getChatCopy();
+  addMessage(`${copy.welcome}<br><br>${buildMainMenu()}`, "bot");
 };
 
 const handleChatbotSend = () => {
@@ -937,6 +1242,29 @@ const handleChatbotSend = () => {
   addMessage(text, "user");
   chatbotInput.value = "";
   setTimeout(() => {
+    const activeDraft = getLeadDraft();
+    if (activeDraft?.status === "confirming") {
+      if (/^(si|sí|yes|confirmo|send|enviar)/i.test(text)) {
+        submitGuidedLead();
+        return;
+      }
+      if (/^(no|cancel|cancelar)/i.test(text)) {
+        clearLeadDraft();
+        addMessage(getChatCopy().cancelled, "bot");
+        return;
+      }
+    }
+
+    if (getLeadDraft()?.status === "collecting") {
+      updateLeadAnswer(text);
+      return;
+    }
+
+    if (guidedLeadSignals.test(text)) {
+      startGuidedLead("quote");
+      return;
+    }
+
     addMessage(getBotResponse(text), "bot");
     const lead = extractLeadInfo(getChatTranscript());
     if (leadSignals.test(text) || lead.email || lead.phone) {
@@ -958,6 +1286,43 @@ chatbotInput?.addEventListener("keydown", (e) => {
 });
 
 chatbotMessages?.addEventListener("click", (event) => {
+  const actionButton = event.target.closest("[data-chat-action]");
+  if (actionButton) {
+    const action = actionButton.dataset.chatAction;
+    const value = actionButton.dataset.chatValue || "";
+
+    addMessage(actionButton.textContent.trim(), "user");
+
+    if (action === "start-lead") {
+      startGuidedLead(value || "quote");
+      return;
+    }
+
+    if (action === "answer-lead") {
+      updateLeadAnswer(value || actionButton.textContent.trim());
+      return;
+    }
+
+    if (action === "confirm-lead") {
+      submitGuidedLead();
+      return;
+    }
+
+    if (action === "edit-lead") {
+      const copy = getChatCopy();
+      clearLeadDraft();
+      addMessage(copy.edit, "bot");
+      startGuidedLead("quote");
+      return;
+    }
+
+    if (action === "cancel-lead") {
+      clearLeadDraft();
+      addMessage(getChatCopy().cancelled, "bot");
+      return;
+    }
+  }
+
   const button = event.target.closest("[data-quick-reply]");
   if (!button || !chatbotInput) return;
   chatbotInput.value = button.dataset.quickReply;

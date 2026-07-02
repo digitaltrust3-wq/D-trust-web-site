@@ -15,10 +15,10 @@ const userForm = document.querySelector("[data-user-form]");
 
 const leadStatusLabels = {
   new: "Nuevo",
+  review: "En revisión",
   contacted: "Contactado",
-  proposal: "En propuesta",
-  won: "Ganado",
-  lost: "Perdido"
+  quote_sent: "Cotización enviada",
+  closed: "Cerrado"
 };
 
 const editableContentKeys = [
@@ -226,7 +226,7 @@ const applyLeadFilters = () => {
   const fromDate = document.querySelector("[data-lead-date-from]")?.value || "";
 
   const rows = currentLeads.filter((lead) => {
-    const haystack = [lead.email, lead.phone, lead.message, lead.service, lead.budget, lead.urgency, lead.notes]
+    const haystack = [lead.name, lead.email, lead.phone, lead.message, lead.service, lead.budget, lead.urgency, lead.notes]
       .join(" ")
       .toLowerCase();
     const created = lead.created_at ? lead.created_at.slice(0, 10) : "";
@@ -246,9 +246,11 @@ const applyLeadFilters = () => {
           ).join("")}
         </select>
       </td>
+      <td>${escapeHtml(lead.name || "")}</td>
       <td>${escapeHtml(lead.service || "")}<br><small>${escapeHtml(lead.budget || "")} ${escapeHtml(lead.urgency || "")}</small></td>
       <td>${escapeHtml(lead.email || "")}</td>
       <td>${escapeHtml(lead.phone || "")}</td>
+      <td>${escapeHtml(lead.urgency || "Normal")}</td>
       <td class="message-cell">${escapeHtml(lead.message || "")}</td>
       <td>
         <textarea class="notes-input" rows="3" data-lead-notes data-lead-id="${lead.id}" placeholder="Nota interna">${escapeHtml(lead.notes || "")}</textarea>
@@ -261,14 +263,14 @@ const applyLeadFilters = () => {
 const loadLeads = async () => {
   let { data, error } = await supabaseClient
     .from("leads")
-    .select("id,created_at,updated_at,status,service,email,phone,message,budget,urgency,notes,session_id")
+    .select("id,created_at,updated_at,status,name,service,email,phone,message,budget,urgency,notes,session_id")
     .order("created_at", { ascending: false })
     .limit(300);
 
   if (error && String(error.message || "").includes("notes")) {
     const fallback = await supabaseClient
       .from("leads")
-      .select("id,created_at,updated_at,status,service,email,phone,message,budget,urgency,session_id")
+      .select("id,created_at,updated_at,status,name,service,email,phone,message,budget,urgency,session_id")
       .order("created_at", { ascending: false })
       .limit(300);
     data = (fallback.data || []).map((lead) => ({ ...lead, notes: "" }));
@@ -473,11 +475,12 @@ document.querySelector("[data-export-leads]")?.addEventListener("click", () => {
   const csv = toCsv(currentLeads, [
     { label: "Fecha", value: (row) => formatDate(row.created_at) },
     { label: "Estado", value: (row) => leadStatusLabels[row.status] || row.status },
+    { label: "Nombre", value: (row) => row.name },
     { label: "Servicio", value: (row) => row.service },
     { label: "Email", value: (row) => row.email },
-    { label: "Teléfono", value: (row) => row.phone },
+    { label: "WhatsApp", value: (row) => row.phone },
     { label: "Presupuesto", value: (row) => row.budget },
-    { label: "Urgencia", value: (row) => row.urgency },
+    { label: "Prioridad", value: (row) => row.urgency },
     { label: "Mensaje", value: (row) => row.message },
     { label: "Notas", value: (row) => row.notes }
   ]);

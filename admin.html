@@ -92,10 +92,10 @@
                 <select data-lead-status-filter>
                   <option value="">Todos los estados</option>
                   <option value="new">Nuevo</option>
+                  <option value="review">En revisión</option>
                   <option value="contacted">Contactado</option>
-                  <option value="proposal">En propuesta</option>
-                  <option value="won">Ganado</option>
-                  <option value="lost">Perdido</option>
+                  <option value="quote_sent">Cotización enviada</option>
+                  <option value="closed">Cerrado</option>
                 </select>
                 <input type="search" placeholder="Filtrar por servicio" data-lead-service-filter>
                 <input type="date" data-lead-date-from>
@@ -103,7 +103,7 @@
               </div>
               <div class="table-wrap">
                 <table>
-                  <thead><tr><th>Fecha</th><th>Estado</th><th>Servicio</th><th>Email</th><th>Teléfono</th><th>Mensaje</th><th>Notas internas</th></tr></thead>
+                  <thead><tr><th>Fecha</th><th>Estado</th><th>Nombre</th><th>Servicio</th><th>Email</th><th>WhatsApp</th><th>Prioridad</th><th>Mensaje</th><th>Notas internas</th></tr></thead>
                   <tbody data-leads></tbody>
                 </table>
               </div>
