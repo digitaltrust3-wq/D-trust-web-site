@@ -120,8 +120,7 @@ const translations = {
     contactPhoneLabel: "Teléfono",
     contactLocationLabel: "Ubicación",
     contactLocation: "Colombia / Atención internacional",
-    contactScheduleLabel: "Horario",
-    contactSchedule: "Lunes a viernes · 8:00 a.m. - 6:00 p.m.",
+    chatbotTooltip: "¿Cómo puedo ayudarte?",
     footerText: "Desarrollo web, software, automatización y soporte técnico."
   },
   en: {
@@ -236,8 +235,7 @@ const translations = {
     contactPhoneLabel: "Phone",
     contactLocationLabel: "Location",
     contactLocation: "Colombia / International support",
-    contactScheduleLabel: "Hours",
-    contactSchedule: "Monday to Friday · 8:00 a.m. - 6:00 p.m.",
+    chatbotTooltip: "How can I help you?",
     footerText: "Web development, software, automation and technical support."
   }
 };
@@ -305,9 +303,7 @@ form?.addEventListener("submit", (event) => {
   const notifyWhatsapp = formData.get("notify_whatsapp") === "yes";
 
   if (notifyWhatsapp) {
-    const waText = encodeURIComponent(
-      `Hola, soy ${name}. Vi su sitio web y quiero solicitar información sobre ${service}. Presupuesto: ${budget}. ${message}${phone ? ` Teléfono: ${phone}` : ""}`
-    );
+    const waText = encodeURIComponent("¡Hola! 👋 Vi su página web y estoy interesado en los servicios que ofrecen. Me gustaría recibir más información y, si es posible, una asesoría para conocer cuál es la mejor solución para mi empresa. ¡Muchas gracias!");
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
 
@@ -783,8 +779,8 @@ const botReplies = {
     en: "Timelines depend on scope:<ol><li><strong>Landing page:</strong> 1 to 2 weeks.</li><li><strong>Corporate website:</strong> 2 to 4 weeks.</li><li><strong>Online store:</strong> 3 to 6 weeks.</li><li><strong>Custom software:</strong> 30 to 60 days for an MVP.</li></ol>If you have a deadline, share it and we will review the best route."
   },
   human: {
-    es: 'Perfecto. Puedes hablar directamente con nosotros por WhatsApp:<br><br><a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Abrir WhatsApp</a><br><br>Para ayudarte más rápido, envía:<ol><li>Tu nombre.</li><li>Servicio que necesitas.</li><li>Fecha ideal.</li><li>Presupuesto aproximado.</li></ol>',
-    en: 'Perfect. You can talk directly with us on WhatsApp:<br><br><a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">Open WhatsApp</a><br><br>To help you faster, send:<ol><li>Your name.</li><li>Service needed.</li><li>Ideal date.</li><li>Approximate budget.</li></ol>'
+    es: 'Perfecto. Puedes hablar directamente con nosotros por WhatsApp:<br><br><a href="https://wa.me/573184289661?text=%C2%A1Hola!%20%F0%9F%91%8B%20Vi%20su%20p%C3%A1gina%20web%20y%20estoy%20interesado%20en%20los%20servicios%20que%20ofrecen.%20Me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20y%2C%20si%20es%20posible%2C%20una%20asesor%C3%ADa%20para%20conocer%20cu%C3%A1l%20es%20la%20mejor%20soluci%C3%B3n%20para%20mi%20empresa.%20%C2%A1Muchas%20gracias!" target="_blank" rel="noreferrer">Abrir WhatsApp</a><br><br>Para ayudarte más rápido, envía:<ol><li>Tu nombre.</li><li>Servicio que necesitas.</li><li>Fecha ideal.</li><li>Presupuesto aproximado.</li></ol>',
+    en: 'Perfect. You can talk directly with us on WhatsApp:<br><br><a href="https://wa.me/573184289661?text=%C2%A1Hola!%20%F0%9F%91%8B%20Vi%20su%20p%C3%A1gina%20web%20y%20estoy%20interesado%20en%20los%20servicios%20que%20ofrecen.%20Me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20y%2C%20si%20es%20posible%2C%20una%20asesor%C3%ADa%20para%20conocer%20cu%C3%A1l%20es%20la%20mejor%20soluci%C3%B3n%20para%20mi%20empresa.%20%C2%A1Muchas%20gracias!" target="_blank" rel="noreferrer">Open WhatsApp</a><br><br>To help you faster, send:<ol><li>Your name.</li><li>Service needed.</li><li>Ideal date.</li><li>Approximate budget.</li></ol>'
   },
   web: {
     es: "Podemos ayudarte con desarrollo web profesional:<ol><li>Landing pages para captar clientes.</li><li>Páginas corporativas para presentar servicios.</li><li>Blogs o secciones de contenido.</li><li>Formularios, WhatsApp, mapas y analítica.</li></ol>Pregunta clave: ¿quieres una web para informar, captar clientes o vender?",
@@ -995,5 +991,3 @@ if ("IntersectionObserver" in window) {
 
 loadMessages();
 applyManagedContent();
-
-
