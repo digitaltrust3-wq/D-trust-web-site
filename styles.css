@@ -91,14 +91,14 @@ a {
 }
 
 .site-header.is-scrolled .brand-logo {
-  height: clamp(38px, 4vw, 46px);
+  height: clamp(44px, 4.8vw, 54px);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  flex: 1 1 auto;
-  min-width: 280px;
+  flex: 0 1 360px;
+  min-width: 300px;
   color: var(--ink);
   font-weight: 850;
 }
@@ -106,7 +106,9 @@ a {
 .brand-logo {
   display: block;
   width: auto;
-  height: clamp(48px, 5vw, 62px);
+  height: clamp(58px, 6vw, 74px);
+  max-width: min(36vw, 360px);
+  object-fit: contain;
   transition: all 0.4s ease;
 }
 
@@ -923,11 +925,13 @@ textarea:focus {
   }
 
   .brand {
-    min-width: 210px;
+    flex-basis: 300px;
+    min-width: 250px;
   }
 
   .brand-logo {
-    height: clamp(44px, 5vw, 56px);
+    height: clamp(50px, 5.6vw, 64px);
+    max-width: min(32vw, 300px);
     transition: all 0.4s ease;
   }
 
@@ -952,11 +956,13 @@ textarea:focus {
   }
 
   .brand {
-    min-width: 180px;
+    flex-basis: 245px;
+    min-width: 220px;
   }
 
   .brand-logo {
-    height: clamp(40px, 5vw, 50px);
+    height: clamp(46px, 5.5vw, 56px);
+    max-width: min(30vw, 250px);
   }
 
   .main-nav {
@@ -1005,10 +1011,12 @@ textarea:focus {
 
   .brand {
     min-width: 0;
+    flex: 1 1 auto;
   }
 
   .brand-logo {
     height: clamp(42px, 9vw, 54px);
+    max-width: min(58vw, 240px);
   }
 
   .nav-toggle {
