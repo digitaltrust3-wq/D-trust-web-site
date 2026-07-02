@@ -1,4 +1,4 @@
-﻿-- Digital Trust Solutions CRM-lite database for Supabase.
+-- Digital Trust Solutions CRM-lite database for Supabase.
 -- Run this file in Supabase SQL Editor.
 -- Then copy Project URL and anon public key into script.js.
 
@@ -115,6 +115,37 @@ create table if not exists public.interaction_events (
   language text,
   created_at timestamptz not null default now()
 );
+
+-- Compatibilidad con tablas creadas en pruebas anteriores.
+alter table public.chat_sessions add column if not exists first_seen_at timestamptz not null default now();
+alter table public.chat_sessions add column if not exists last_seen_at timestamptz not null default now();
+alter table public.chat_sessions add column if not exists page text;
+alter table public.chat_sessions add column if not exists language text;
+alter table public.chat_sessions add column if not exists user_agent text;
+alter table public.chat_sessions add column if not exists lead_status text not null default 'new';
+alter table public.chat_sessions add column if not exists notes text;
+
+alter table public.chat_messages add column if not exists page text;
+alter table public.chat_messages add column if not exists language text;
+
+alter table public.leads add column if not exists source text not null default 'website';
+alter table public.leads add column if not exists status text not null default 'new';
+alter table public.leads add column if not exists name text;
+alter table public.leads add column if not exists email text;
+alter table public.leads add column if not exists phone text;
+alter table public.leads add column if not exists service text;
+alter table public.leads add column if not exists budget text;
+alter table public.leads add column if not exists urgency text;
+alter table public.leads add column if not exists message text;
+alter table public.leads add column if not exists notes text;
+alter table public.leads add column if not exists transcript text;
+alter table public.leads add column if not exists metadata jsonb not null default '{}'::jsonb;
+alter table public.leads add column if not exists created_at timestamptz not null default now();
+alter table public.leads add column if not exists updated_at timestamptz not null default now();
+
+alter table public.contact_requests add column if not exists notification_ok boolean;
+alter table public.contact_requests add column if not exists welcome_ok boolean;
+alter table public.contact_requests add column if not exists metadata jsonb not null default '{}'::jsonb;
 
 do $$
 begin
