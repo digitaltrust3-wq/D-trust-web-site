@@ -1278,8 +1278,8 @@ textarea:focus {
 
 .chatbot-open img {
   display: block;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(61, 214, 255, 0.45));
 }
@@ -1327,9 +1327,9 @@ textarea:focus {
 }
 
 .chatbot-header img {
-  flex: 0 0 42px;
-  width: 42px;
-  height: 42px;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
   object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(61, 214, 255, 0.38));
 }
