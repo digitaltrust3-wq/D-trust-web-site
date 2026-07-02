@@ -422,6 +422,10 @@
             <summary data-i18n="faqFourTitle">Qué necesito para cotizar mi proyecto?</summary>
             <p data-i18n="faqFourText">Una descripción del negocio, objetivo principal, secciones o funcionalidades deseadas, referencias visuales y fecha ideal de lanzamiento.</p>
           </details>
+          <details>
+            <summary data-i18n="faqFiveTitle">¿Qué es el SEO?</summary>
+            <p data-i18n="faqFiveText">El SEO, o posicionamiento en buscadores, es el conjunto de estrategias que ayudan a que una página web aparezca mejor ubicada en Google y otros motores de búsqueda. Una web optimizada con SEO puede atraer más visitantes, generar más oportunidades comerciales y mejorar la presencia digital de una empresa.</p>
+          </details>
         </div>
       </section>
 
@@ -430,10 +434,27 @@
           <p class="eyebrow" data-i18n="contactEyebrow">Contacto</p>
           <h2 data-i18n="contactTitle">Cuéntanos qué quieres construir</h2>
           <p data-i18n="contactText">Completa el formulario con la mayor información posible. Si aún no tienes claro el alcance, podemos iniciar con una llamada de diagnóstico y convertir tu idea en una propuesta organizada.</p>
-          <div class="contact-options">
-            <a href="mailto:contacto@digitaltrustsolutions.com">contacto@digitaltrustsolutions.com</a>
-            <a href="https://wa.me/573184289661" target="_blank" rel="noreferrer" data-i18n="contactWhatsapp">WhatsApp: +57 318 428 9661</a>
-            <a href="tel:+573184289661" data-i18n="contactCall">Llamar: +57 318 428 9661</a>
+          <div class="contact-options" aria-label="Datos de contacto">
+            <a href="https://wa.me/573184289661" target="_blank" rel="noreferrer">
+              <span class="contact-icon" aria-hidden="true">WA</span>
+              <span><strong data-i18n="contactWhatsappLabel">WhatsApp</strong><small data-i18n="contactWhatsapp">Atención directa</small></span>
+            </a>
+            <a href="mailto:contacto@digitaltrustsolutions.com">
+              <span class="contact-icon" aria-hidden="true">@</span>
+              <span><strong data-i18n="contactEmailLabel">Email</strong><small>contacto@digitaltrustsolutions.com</small></span>
+            </a>
+            <a href="tel:+573184289661">
+              <span class="contact-icon" aria-hidden="true">☎</span>
+              <span><strong data-i18n="contactPhoneLabel">Teléfono</strong><small>+57 318 428 9661</small></span>
+            </a>
+            <span class="contact-option">
+              <span class="contact-icon" aria-hidden="true">⌖</span>
+              <span><strong data-i18n="contactLocationLabel">Ubicación</strong><small data-i18n="contactLocation">Colombia / Atención internacional</small></span>
+            </span>
+            <span class="contact-option">
+              <span class="contact-icon" aria-hidden="true">⏱</span>
+              <span><strong data-i18n="contactScheduleLabel">Horario</strong><small data-i18n="contactSchedule">Lunes a viernes · 8:00 a.m. - 6:00 p.m.</small></span>
+            </span>
           </div>
         </div>
         <form class="contact-form" data-contact-form>
@@ -481,7 +502,6 @@
           </label>
           <button class="button primary" type="submit">Enviar solicitud</button>
           <p class="form-status" data-form-status role="status"></p>
-          <p class="form-note">Para enviar correos reales, configura EmailJS (ver instrucciones en README).</p>
         </form>
       </section>
     </main>
@@ -501,13 +521,16 @@
 
     <div class="chatbot-widget" data-chatbot>
       <button class="chatbot-toggle" type="button" aria-label="Abrir chat" aria-expanded="false" data-chatbot-toggle>
-        <span class="chatbot-open">💬</span>
+        <span class="chatbot-open"><img src="dt-app-logo.png" alt="Digital Trust chat"></span>
         <span class="chatbot-close">✕</span>
       </button>
       <div class="chatbot-panel" data-chatbot-panel>
         <div class="chatbot-header">
-          <strong>Digital Trust Solutions Assistant</strong>
-          <span>Respondo en segúndos</span>
+          <img src="dt-app-logo.png" alt="Digital Trust Assistant">
+          <div>
+            <strong>Digital Trust Solutions Assistant</strong>
+            <span>Respondo en segundos</span>
+          </div>
         </div>
         <div class="chatbot-messages" data-chatbot-messages></div>
         <div class="chatbot-input">

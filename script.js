@@ -109,11 +109,19 @@ const translations = {
     faqThreeText: "Podemos ayudarte a configurar dominio, hosting, correo corporativo, certificado SSL, backups, analítica y herramientas de contacto.",
     faqFourTitle: "Qué necesito para cotizar mi proyecto?",
     faqFourText: "Una descripción del negocio, objetivo principal, secciones o funcionalidades deseadas, referencias visuales y fecha ideal de lanzamiento.",
+    faqFiveTitle: "¿Qué es el SEO?",
+    faqFiveText: "El SEO, o posicionamiento en buscadores, es el conjunto de estrategias que ayudan a que una página web aparezca mejor ubicada en Google y otros motores de búsqueda. Una web optimizada con SEO puede atraer más visitantes, generar más oportunidades comerciales y mejorar la presencia digital de una empresa.",
     contactEyebrow: "Contacto",
     contactTitle: "Cuéntanos qué quieres construir",
     contactText: "Completa el formulario con la mayor información posible. Si aún no tienes claro el alcance, podemos iniciar con una llamada de diagnóstico y convertir tu idea en una propuesta organizada.",
-    contactWhatsapp: "WhatsApp: +57 318 428 9661",
-    contactCall: "Llamar: +57 318 428 9661",
+    contactWhatsappLabel: "WhatsApp",
+    contactWhatsapp: "Atención directa",
+    contactEmailLabel: "Email",
+    contactPhoneLabel: "Teléfono",
+    contactLocationLabel: "Ubicación",
+    contactLocation: "Colombia / Atención internacional",
+    contactScheduleLabel: "Horario",
+    contactSchedule: "Lunes a viernes · 8:00 a.m. - 6:00 p.m.",
     footerText: "Desarrollo web, software, automatización y soporte técnico."
   },
   en: {
@@ -164,7 +172,7 @@ const translations = {
     solutionsEyebrow: "Solutions by need",
     solutionsTitle: "We build tools for every stage of your business",
     solutionOneTitle: "I want more customers",
-    solutionOneText: "Landing pages, basic SEO, forms, contact funnels, WhatsApp, analytics and conversión-focused content.",
+    solutionOneText: "Landing pages, basic SEO, forms, contact funnels, WhatsApp, analytics and conversion-focused content.",
     solutionTwoTitle: "I want to organize operations",
     solutionTwoText: "CRM, bookings, inventory, internal dashboards, user control, reports and approval workflows.",
     solutionThreeTitle: "I want to sell online",
@@ -191,10 +199,10 @@ const translations = {
     processTwoTitle: "Proposal",
     processTwoText: "We define scope, timing, deliverables, budget, technology and first-version priorities.",
     processThreeTitle: "Design",
-    processThreeText: "We organize structure, sections, screens, content, user experience and conversión paths.",
+    processThreeText: "We organize structure, sections, screens, content, user experience and conversion paths.",
     processFourTitle: "Development",
     processFourText: "We build the website or system in stages, with clear reviews and functional testing.",
-    processFiveTitle: "Laúnch",
+    processFiveTitle: "Launch",
     processFiveText: "We publish on domain and hosting, configure security, analytics, forms and email.",
     processSixTitle: "Support",
     processSixText: "We support improvements, maintenance, updates, new integrations and monthly assistance.",
@@ -210,18 +218,26 @@ const translations = {
     faqEyebrow: "Frequently asked questions",
     faqTitle: "Quick answers before starting",
     faqOneTitle: "How long does a website take?",
-    faqOneText: "A corporate website usually takes 2 to 4 weeks, depending on content, number of sections, revisións and required setup.",
+    faqOneText: "A corporate website usually takes 2 to 4 weeks, depending on content, number of sections, reviews and required setup.",
     faqTwoTitle: "Can I manage the content later?",
     faqTwoText: "Yes. We can build the site on a manageable platform or leave a structure that is easy to update according to your team and budget.",
     faqThreeTitle: "Do you also offer domain and hosting?",
     faqThreeText: "We can help configure domain, hosting, business email, SSL certificate, backups, analytics and contact tools.",
     faqFourTitle: "What do I need to quote my project?",
     faqFourText: "A description of the business, main goal, desired sections or features, visual references and ideal launch date.",
+    faqFiveTitle: "What is SEO?",
+    faqFiveText: "SEO, or Search Engine Optimization, is the set of strategies that help a website rank better on Google and other search engines. An SEO-optimized website can attract more visitors, generate more business opportunities, and improve a company’s digital presence.",
     contactEyebrow: "Contact",
     contactTitle: "Tell us what you want to build",
     contactText: "Complete the form with as much information as possible. If the scope is not clear yet, we can start with a discovery call and turn your idea into an organized proposal.",
-    contactWhatsapp: "WhatsApp: +57 318 428 9661",
-    contactCall: "Call: +57 318 428 9661",
+    contactWhatsappLabel: "WhatsApp",
+    contactWhatsapp: "Direct support",
+    contactEmailLabel: "Email",
+    contactPhoneLabel: "Phone",
+    contactLocationLabel: "Location",
+    contactLocation: "Colombia / International support",
+    contactScheduleLabel: "Hours",
+    contactSchedule: "Monday to Friday · 8:00 a.m. - 6:00 p.m.",
     footerText: "Web development, software, automation and technical support."
   }
 };
@@ -295,7 +311,7 @@ form?.addEventListener("submit", (event) => {
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
 
-  // Fallback si EmailJS no esta cargado o no configurado
+  // Fallback cuando el servicio de correo no esta disponible.
   if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
     const fallbackSubmission = {
       id: crypto.randomUUID?.() || Date.now().toString(),
@@ -306,7 +322,7 @@ form?.addEventListener("submit", (event) => {
       service,
       budget,
       message,
-      notificaciónOk: false,
+      notificacionOk: false,
       bienvenidaOk: false,
       fallback: "mailto"
     };
@@ -316,12 +332,12 @@ form?.addEventListener("submit", (event) => {
     const body = encodeURIComponent(
       `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
     );
-    formStatus.textContent = "Listo. Se abrira tu correo para enviar la solicitud.";
+    formStatus.textContent = "Abriremos tu correo para completar el envío. También puedes contactarnos por WhatsApp.";
     window.location.href = `mailto:contacto@digitaltrustsolutions.com?subject=${subject}&body=${body}`;
     return;
   }
 
-  formStatus.textContent = "Enviando correos...";
+  formStatus.textContent = "Enviando tu solicitud...";
 
   const emailData = {
     name: name,
@@ -339,27 +355,27 @@ form?.addEventListener("submit", (event) => {
     phone: phone || "No proporcionado"
   };
 
-  console.log("[EmailJS] Datos notificación:", emailData);
-  console.log("[EmailJS] Datos bienvenida:", welcomeData);
+  console.log("[Contacto] Datos de solicitud:", emailData);
+  console.log("[Contacto] Datos de confirmación:", welcomeData);
 
   // Envio simultaneo de ambos correos.
   const notificationPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
     .then((res) => {
-      console.log("[EmailJS] Notificación OK:", res.status, res.text);
+      console.log("[Contacto] Notificación enviada:", res.status, res.text);
       return { type: "notificación", status: "ok", res };
     })
     .catch((err) => {
-      console.error("[EmailJS] Notificación ERROR:", err);
+      console.error("[Contacto] No se pudo enviar la notificación:", err);
       return { type: "notificación", status: "error", err };
     });
 
   const welcomePromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, welcomeData)
     .then((res) => {
-      console.log("[EmailJS] Bienvenida OK:", res.status, res.text);
+      console.log("[Contacto] Confirmación enviada:", res.status, res.text);
       return { type: "bienvenida", status: "ok", res };
     })
     .catch((err) => {
-      console.error("[EmailJS] Bienvenida ERROR:", err);
+      console.error("[Contacto] No se pudo enviar la confirmación:", err);
       return { type: "bienvenida", status: "error", err };
     });
 
@@ -371,8 +387,8 @@ form?.addEventListener("submit", (event) => {
       const notifOk = notificación?.status === "ok";
       const bienvenidaOk = bienvenida?.status === "ok";
 
-      console.log("[EmailJS] Resultado notificación:", notifOk ? "OK" : "FALLÓ");
-      console.log("[EmailJS] Resultado bienvenida:", bienvenidaOk ? "OK" : "FALLÓ");
+      console.log("[Contacto] Resultado notificación:", notifOk ? "OK" : "FALLÓ");
+      console.log("[Contacto] Resultado confirmación:", bienvenidaOk ? "OK" : "FALLÓ");
 
       // Guardar en localStorage como respaldo
       const submission = {
@@ -384,7 +400,7 @@ form?.addEventListener("submit", (event) => {
         service,
         budget,
         message,
-        notificaciónOk: notifOk,
+        notificacionOk: notifOk,
         bienvenidaOk: bienvenidaOk
       };
       const history = JSON.parse(localStorage.getItem("digital-trust-submissions") || "[]");
@@ -394,16 +410,14 @@ form?.addEventListener("submit", (event) => {
       saveInteractionToDatabase("contact_form", submission);
 
       if (notifOk && bienvenidaOk) {
-        formStatus.textContent = "Solicitud enviada. Correo recibido y confirmación enviada al cliente.";
+        formStatus.textContent = "Tu mensaje fue enviado correctamente.";
         form.reset();
       } else if (notifOk) {
-        formStatus.textContent = "Solicitud recibida y guardada, pero el correo de confirmación al cliente falló.";
+        formStatus.textContent = "Tu solicitud fue recibida. Te contactaremos pronto.";
       } else if (bienvenidaOk) {
-        formStatus.textContent = "Confirmación enviada al cliente, pero tu correo de notificación falló. Datos guardados.";
+        formStatus.textContent = "Recibimos tu información. Si necesitas respuesta inmediata, contáctanos por WhatsApp.";
       } else {
-        const msg1 = notificación?.err?.text || notificación?.err?.message || "";
-        const msg2 = bienvenida?.err?.text || bienvenida?.err?.message || "";
-        formStatus.textContent = `Error: ${msg1 || msg2}. Intenta de nuevo o escribenos por WhatsApp.`;
+        formStatus.textContent = "No pudimos enviar tu mensaje en este momento. Intenta nuevamente o contáctanos por WhatsApp.";
       }
     });
 });
@@ -424,9 +438,9 @@ const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienveni
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  console.log("[EmailJS] SDK inicializado correctamente.");
+  console.log("[Contacto] Servicio de correo inicializado correctamente.");
 } else {
-  console.warn("[EmailJS] SDK no cargado o Public Key no configurada.");
+  console.warn("[Contacto] Servicio de correo no disponible.");
 }
 
 // ===== DATABASE CONFIG =====
