@@ -494,7 +494,7 @@ nav?.querySelectorAll("a").forEach((link) => {
   });
 });
 
-form?.addEventListener("submit", (event) => {
+form?.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
@@ -511,115 +511,80 @@ form?.addEventListener("submit", (event) => {
     window.open(`https://wa.me/573184289661?text=${waText}`, "_blank", "noopener,noreferrer");
   }
 
-  // Fallback cuando el servicio de correo no esta disponible.
-  if (typeof emailjs === "undefined" || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
-    const fallbackSubmission = {
-      id: crypto.randomUUID?.() || Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      name,
-      email,
-      phone: phone || "No proporcionado",
-      service,
-      budget,
-      message,
-      notificacionOk: false,
-      bienvenidaOk: false,
-      fallback: "mailto"
-    };
-    saveInteractionToDatabase("contact_form", fallbackSubmission);
-
-    const subject = encodeURIComponent(`Solicitud de ${service}`);
-    const body = encodeURIComponent(
-      `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || "No proporcionado"}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`
-    );
-    formStatus.textContent = "Abriremos tu correo para completar el envío. También puedes contactarnos por WhatsApp.";
-    window.location.href = `mailto:contacto@digitaltrustsolutions.com?subject=${subject}&body=${body}`;
-    return;
-  }
-
-  formStatus.textContent = "Enviando tu solicitud...";
-
-  const emailData = {
-    name: name,
-    email: email,
+  // Crear objeto de envío
+  const submission = {
+    id: crypto.randomUUID?.() || Date.now().toString(),
+    timestamp: new Date().toISOString(),
+    name,
+    email,
     phone: phone || "No proporcionado",
-    service: service,
-    budget: budget,
-    message: message
+    service,
+    budget,
+    message,
+    notificacionOk: false,
+    bienvenidaOk: false
   };
 
-  const welcomeData = {
-    to_email: email,
-    name: name,
-    service: service,
-    phone: phone || "No proporcionado"
-  };
+  formStatus.textContent = "Guardando tu solicitud...";
 
-  console.log("[Contacto] Datos de solicitud:", emailData);
-  console.log("[Contacto] Datos de confirmación:", welcomeData);
+  try {
+    // PASO 1: GUARDAR EN BD (PRIORITARIO)
+    logBackend("[Contacto] Guardando en Supabase...");
+    await saveInteractionToDatabase("contact_form", submission);
+    logBackend("[Contacto] Guardado en Supabase correctamente");
 
-  // Envio simultaneo de ambos correos.
-  const notificationPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailData)
-    .then((res) => {
-      console.log("[Contacto] Notificación enviada:", res.status, res.text);
-      return { type: "notificación", status: "ok", res };
-    })
-    .catch((err) => {
-      console.error("[Contacto] No se pudo enviar la notificación:", err);
-      return { type: "notificación", status: "error", err };
-    });
+    // PASO 2: Guardar backup en localStorage
+    const history = JSON.parse(localStorage.getItem("digital-trust-submissions") || "[]");
+    history.unshift(submission);
+    localStorage.setItem("digital-trust-submissions", JSON.stringify(history));
+    logBackend("[Contacto] Backup guardado en localStorage");
 
-  const welcomePromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, welcomeData)
-    .then((res) => {
-      console.log("[Contacto] Confirmación enviada:", res.status, res.text);
-      return { type: "bienvenida", status: "ok", res };
-    })
-    .catch((err) => {
-      console.error("[Contacto] No se pudo enviar la confirmación:", err);
-      return { type: "bienvenida", status: "error", err };
-    });
+    // PASO 3: Intentar enviar emails (no bloquea si falla)
+    let notifOk = false;
+    let bienvenidaOk = false;
 
-  Promise.all([notificationPromise, welcomePromise])
-    .then((results) => {
-      const notificación = results.find(r => r.type === "notificación");
-      const bienvenida = results.find(r => r.type === "bienvenida");
-
-      const notifOk = notificación?.status === "ok";
-      const bienvenidaOk = bienvenida?.status === "ok";
-
-      console.log("[Contacto] Resultado notificación:", notifOk ? "OK" : "FALLÓ");
-      console.log("[Contacto] Resultado confirmación:", bienvenidaOk ? "OK" : "FALLÓ");
-
-      // Guardar en localStorage como respaldo
-      const submission = {
-        id: crypto.randomUUID?.() || Date.now().toString(),
-        timestamp: new Date().toISOString(),
-        name,
-        email,
-        phone: phone || "No proporcionado",
-        service,
-        budget,
-        message,
-        notificacionOk: notifOk,
-        bienvenidaOk: bienvenidaOk
-      };
-      const history = JSON.parse(localStorage.getItem("digital-trust-submissions") || "[]");
-      history.unshift(submission);
-      localStorage.setItem("digital-trust-submissions", JSON.stringify(history));
-      console.log("[Digital Trust Solutions] Solicitud guardada en localStorage.", submission);
-      saveInteractionToDatabase("contact_form", submission);
-
-      if (notifOk && bienvenidaOk) {
-        formStatus.textContent = "Tu mensaje fue enviado correctamente.";
-        form.reset();
-      } else if (notifOk) {
-        formStatus.textContent = "Tu solicitud fue recibida. Te contactaremos pronto.";
-      } else if (bienvenidaOk) {
-        formStatus.textContent = "Recibimos tu información. Si necesitas respuesta inmediata, contáctanos por WhatsApp.";
-      } else {
-        formStatus.textContent = "No pudimos enviar tu mensaje en este momento. Intenta nuevamente o contáctanos por WhatsApp.";
+    if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY && !EMAILJS_PUBLIC_KEY.startsWith("YOUR_")) {
+      try {
+        // Email al admin
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          name, email, phone: phone || "No proporcionado", service, budget, message
+        });
+        notifOk = true;
+        logBackend("[Contacto] Email notificación enviado");
+      } catch (err) {
+        warnBackend("[Contacto] No se pudo enviar notificación:", err.message);
       }
-    });
+
+      try {
+        // Email al cliente
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE_ID, {
+          to_email: email, name, service, phone: phone || "No proporcionado"
+        });
+        bienvenidaOk = true;
+        logBackend("[Contacto] Email bienvenida enviado");
+      } catch (err) {
+        warnBackend("[Contacto] No se pudo enviar bienvenida:", err.message);
+      }
+    } else {
+      warnBackend("[Contacto] EmailJS no configurado, emails no enviados");
+    }
+
+    // PASO 4: Mostrar mensaje de éxito (aunque emails fallen)
+    if (notifOk && bienvenidaOk) {
+      formStatus.textContent = "✅ Tu mensaje fue recibido y enviamos confirmación a tu email.";
+    } else if (notifOk || bienvenidaOk) {
+      formStatus.textContent = "✅ Tu solicitud fue guardada. Te contactaremos pronto por email o WhatsApp.";
+    } else {
+      formStatus.textContent = "✅ Tu solicitud fue guardada correctamente. Te contactaremos por WhatsApp.";
+    }
+
+    // Limpiar formulario
+    form.reset();
+
+  } catch (error) {
+    warnBackend("[Contacto] Error al guardar:", error.message);
+    formStatus.textContent = "❌ Error al guardar. Intenta de nuevo o contacta por WhatsApp.";
+  }
 });
 
 // ===== EMAILJS CONFIG =====
@@ -638,9 +603,9 @@ const EMAILJS_WELCOME_TEMPLATE_ID = "template_fgixsi4"; // Plantilla B: bienveni
 
 if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY) {
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  console.log("[Contacto] Servicio de correo inicializado correctamente.");
+  // Servicio de correo disponible.
 } else {
-  console.warn("[Contacto] Servicio de correo no disponible.");
+  // Servicio de correo no disponible.
 }
 
 // ===== DATABASE CONFIG =====
@@ -657,30 +622,57 @@ const DATABASE_TABLES = {
 };
 
 const isDatabaseConfigured = () => Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+const BACKEND_DEBUG = false;
+const logBackend = (...args) => {
+  if (BACKEND_DEBUG) console.log(...args);
+};
+const warnBackend = (...args) => {
+  if (BACKEND_DEBUG) console.warn(...args);
+};
 
 const postToDatabase = async (table, data, options = {}) => {
-  if (!isDatabaseConfigured()) return { skipped: true };
-
-  const params = options.upsertOnConflict ? `?on_conflict=${options.upsertOnConflict}` : "";
-  const prefer = options.upsertOnConflict ? "resolution=merge-duplicates,return=minimal" : "return=minimal";
-
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
-    method: "POST",
-    headers: {
-      apikey: SUPABASE_ANON_KEY,
-      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-      "Content-Type": "application/json",
-      Prefer: prefer
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Supabase ${table} error: ${response.status} ${errorText}`);
+  if (!isDatabaseConfigured()) {
+    warnBackend("[postToDatabase] Base de datos no configurada");
+    return { skipped: true };
   }
 
-  return { ok: true };
+  const params = options.upsertOnConflict ? `?on_conflict=${options.upsertOnConflict}` : "";
+  const prefer = options.ignoreDuplicates
+    ? "resolution=ignore-duplicates,return=minimal"
+    : options.upsertOnConflict
+      ? "resolution=merge-duplicates,return=minimal"
+      : "return=minimal";
+  const url = `${SUPABASE_URL}/rest/v1/${table}${params}`;
+
+  logBackend("[postToDatabase] Enviando a:", url);
+  logBackend("[postToDatabase] Datos:", data);
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        Prefer: prefer
+      },
+      body: JSON.stringify(data)
+    });
+
+    logBackend("[postToDatabase] Respuesta status:", response.status, response.statusText);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      warnBackend("[postToDatabase] Error en Supabase:", response.status, errorText);
+      throw new Error(`Supabase ${table} error: ${response.status} ${errorText}`);
+    }
+
+    logBackend("[postToDatabase] Guardado en Supabase:", table);
+    return { ok: true };
+  } catch (error) {
+    warnBackend("[postToDatabase] Excepción:", error.message);
+    throw error;
+  }
 };
 
 const getFromDatabase = async (table, query = "select=*") => {
@@ -740,7 +732,7 @@ const applyManagedContent = async () => {
       }
     });
   } catch (error) {
-    console.warn("[Content] No se pudo cargar contenido administrado.", error);
+    warnBackend("[Content] No se pudo cargar contenido administrado.", error);
   }
 };
 
@@ -770,7 +762,7 @@ const upsertSessionTrace = async (sessionId) => {
       language: document.documentElement.lang,
       user_agent: navigator.userAgent
     },
-    { upsertOnConflict: "session_id" }
+    { upsertOnConflict: "session_id", ignoreDuplicates: true }
   );
 };
 
@@ -783,7 +775,7 @@ const saveContactRequestTrace = async (sessionId, payload) => {
     service: payload.service || "No especificado",
     budget: payload.budget || "No indicado",
     message: payload.message || "",
-    notification_ok: payload.notificaciónOk ?? null,
+    notification_ok: payload.notificacionOk ?? null,
     welcome_ok: payload.bienvenidaOk ?? null,
     metadata: payload
   });
@@ -841,9 +833,13 @@ const saveInteractionToDatabase = async (eventType, payload) => {
   localHistory.unshift(record);
   localStorage.setItem("digital-trust-interactions", JSON.stringify(localHistory.slice(0, 250)));
 
-  if (!isDatabaseConfigured()) return;
+  if (!isDatabaseConfigured()) {
+    warnBackend("[saveInteractionToDatabase] BD no configurada, solo localStorage");
+    return;
+  }
 
   try {
+    logBackend("[saveInteractionToDatabase] Iniciando guardado de:", eventType);
     await upsertSessionTrace(sessionId);
     await postToDatabase(DATABASE_TABLES.events, record);
 
@@ -852,6 +848,7 @@ const saveInteractionToDatabase = async (eventType, payload) => {
     }
 
     if (eventType === "contact_form") {
+      logBackend("[saveInteractionToDatabase] Guardando solicitud de contacto...");
       await saveContactRequestTrace(sessionId, payload);
     }
 
@@ -861,8 +858,10 @@ const saveInteractionToDatabase = async (eventType, payload) => {
     ) {
       await saveLeadTrace(sessionId, { ...payload, event_type: eventType });
     }
+    
+    logBackend("[saveInteractionToDatabase] Todo guardado correctamente");
   } catch (error) {
-    console.warn("[Database] No se pudo guardar en Supabase. Quedo respaldo local.", error);
+    warnBackend("[saveInteractionToDatabase] Error al guardar en Supabase:", error.message, error);
   }
 };
 
@@ -1464,3 +1463,6 @@ if ("IntersectionObserver" in window) {
 
 loadMessages();
 applyManagedContent();
+
+
+
